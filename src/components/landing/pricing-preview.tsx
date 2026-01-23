@@ -10,10 +10,10 @@ const tiers = [
     period: "per month",
     popular: false,
     features: [
-      "1 product validation",
-      "10 tests per month",
+      "1 product",
+      "10 interviews/month",
       "Kill/Pivot/Build verdict",
-      "Basic market analysis",
+      "Shareable report",
     ],
   },
   {
@@ -22,10 +22,10 @@ const tiers = [
     period: "per month",
     popular: true,
     features: [
-      "3 product validations",
-      "30 tests per month",
-      "Deep competitor analysis",
-      "Market size estimation",
+      "3 products",
+      "30 interviews/month",
+      "Multiple ICPs per product",
+      "Anti-sycophancy pushback presets",
     ],
   },
   {
@@ -34,10 +34,10 @@ const tiers = [
     period: "per month",
     popular: false,
     features: [
-      "10 product validations",
-      "100 tests per month",
-      "Priority AI processing",
-      "Customer interview scripts",
+      "10 products",
+      "100 interviews/month",
+      "Assumption Board + Reality Check",
+      "Priority processing",
     ],
   },
   {
@@ -46,10 +46,10 @@ const tiers = [
     period: "per month",
     popular: false,
     features: [
-      "20 product validations",
-      "200 tests per month",
-      "1-on-1 strategy support",
+      "20 products",
+      "200 interviews/month",
       "Early feature access",
+      "Shareable decision briefs",
     ],
   },
 ]
@@ -66,6 +66,9 @@ export function PricingPreview() {
           </h2>
           <p className="mt-4 text-lg text-slate-600">
             Choose the plan that fits your validation needs.
+          </p>
+          <p className="mt-2 text-sm font-medium text-indigo-600">
+            Early access pricing from $7.95/mo + free credits
           </p>
         </div>
 

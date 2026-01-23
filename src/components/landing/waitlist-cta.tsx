@@ -103,7 +103,7 @@ export function WaitlistCTA() {
                   disabled={status === "loading"}
                   className="w-full bg-white text-indigo-600 hover:bg-indigo-50 px-8 py-3 h-auto rounded-lg font-semibold sm:w-auto disabled:opacity-50"
                 >
-                  {status === "loading" ? "Joining..." : "Join Waitlist"}
+                  {status === "loading" ? "Joining..." : "Join Waitlist for Early Access"}
                 </Button>
               </div>
 

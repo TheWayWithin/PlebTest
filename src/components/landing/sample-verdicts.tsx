@@ -96,8 +96,8 @@ function VerdictCard({ type, ideaName, ideaDescription, riskScore, confidence, k
             <div className="bg-gray-800/50 rounded-lg p-3">
               <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">Risk Score</div>
               <div className="flex items-baseline gap-2">
-                <span className={`text-2xl font-bold ${c.riskColor}`}>{riskScore}</span>
-                <span className="text-sm text-gray-500">/100</span>
+                <span className={`text-lg font-bold ${c.riskColor}`}>{c.riskLabel}</span>
+                <span className="text-sm text-gray-500">({riskScore})</span>
               </div>
               <div className="mt-2 h-1.5 bg-gray-700 rounded-full overflow-hidden">
                 <div
@@ -144,15 +144,6 @@ function VerdictCard({ type, ideaName, ideaDescription, riskScore, confidence, k
             <p className="text-sm text-gray-300 italic">"{keyObjection}"</p>
           </div>
 
-          {/* CTA Button */}
-          <Button
-            variant="outline"
-            className="w-full border-gray-700 text-gray-400 hover:text-white hover:border-gray-600 cursor-not-allowed opacity-60"
-            disabled
-          >
-            View Full Report
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
         </CardContent>
       </Card>
     </div>
@@ -211,8 +202,15 @@ export function SampleVerdicts() {
           }
         </div>
 
+        {/* Simulated Persona Disclaimer */}
+        <div className="mt-8 text-center">
+          <p className="text-sm text-gray-500 italic">
+            Sample outputs from simulated persona interviews (not real customers).
+          </p>
+        </div>
+
         {/* Patterns Not Predictions Disclaimer */}
-        <div className="mt-12 text-center">
+        <div className="mt-6 text-center">
           <div className="inline-block rounded-xl bg-slate-800/50 border border-slate-700 px-6 py-4 max-w-2xl">
             <p className="text-sm text-slate-400">
               <span className="font-semibold text-slate-300">Patterns, not predictions.</span>{" "}
@@ -230,7 +228,7 @@ export function SampleVerdicts() {
             asChild
           >
             <a href="#waitlist">
-              Join the Waitlist
+              Join Waitlist for Early Access
               <ArrowRight className="w-4 h-4 ml-2" />
             </a>
           </Button>

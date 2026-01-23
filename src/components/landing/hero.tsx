@@ -38,7 +38,7 @@ export function Hero() {
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 h-auto rounded-lg font-semibold sm:w-auto"
               asChild
             >
-              <a href="#waitlist">Join the Waitlist</a>
+              <a href="#waitlist">Join Waitlist for Early Access</a>
             </Button>
             <a
               href="#how-it-works"
