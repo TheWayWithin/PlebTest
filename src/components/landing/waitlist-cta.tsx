@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { posthog } from "@/lib/posthog"
 
 type SubmitStatus = "idle" | "loading" | "success" | "error"
 
@@ -37,6 +38,11 @@ export function WaitlistCTA() {
 
       setStatus("success")
       setEmail("")
+
+      // Track successful signup
+      posthog.capture("waitlist_signup", {
+        source: "landing_page_cta",
+      })
     } catch {
       setStatus("error")
       setErrorMessage("Failed to connect. Please try again.")
