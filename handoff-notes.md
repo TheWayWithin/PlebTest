@@ -1,15 +1,16 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-23 14:45
+> **Last Updated**: 2026-01-23 (Sprint 0.3 created)
 
 ---
 
 ## Current State
 
 **Phase**: 0 - Landing Page
-**Status**: COMPLETE (pending social announcement)
-**Active Task**: task-0.3.2 - Announce on social channels
+**Status**: IN PROGRESS - Sprint 0.3 (Brand Alignment)
+**Active Sprint**: 0.4 - Landing Page Brand Alignment
+**Next Task**: task-0.4.1 - Rewrite hero section
 
 ---
 
@@ -77,12 +78,33 @@
   - plebtest.com returning HTTP 200
 
 ### What Needs to Happen Next
-1. **task-0.3.2**: Announce on social channels (marketer)
-   - Twitter/X post with link
-   - Indie Hackers post (optional)
 
-2. **Phase 1**: Core Loop MVP
-   - Start with task-1.1.1 (Set up Supabase projects)
+**Sprint 0.3 (Brand Alignment)** - 11 tasks to transform messaging:
+
+| Task | Description | Priority | Status |
+|------|-------------|----------|--------|
+| 0.4.1 | Rewrite hero section | p0 | [ ] |
+| 0.4.2 | Rewrite "How It Works" section | p0 | [ ] |
+| 0.4.3 | Add "Who This Is For" section | p0 | [ ] |
+| 0.4.4 | Add "Why Not ChatGPT?" section | p0 | [ ] |
+| 0.4.5 | Add anti-sycophancy visual comparison | p1 | [ ] |
+| 0.4.6 | Add "Patterns, Not Predictions" disclaimer | p1 | [ ] |
+| 0.4.7 | Rewrite sample verdicts with persona quotes | p0 | [ ] |
+| 0.4.8 | Add founder story section | p1 | [ ] |
+| 0.4.9 | Change "we" to "I" language throughout | p0 | [ ] |
+| 0.4.10 | Update solution section copy | p0 | [ ] |
+| 0.4.11 | Deploy brand-aligned landing page | p0 | [ ] |
+
+**Key Message Transformation:**
+- FROM: "AI-powered market analysis" → TO: "AI personas that challenge your assumptions"
+- FROM: Generic startup failure stats → TO: "For founders who dread cold calls"
+- FROM: "We" language → TO: "I" (solo founder authenticity)
+
+**Reference Document:** `/Documents/Ideation/PlebTest Landing Page_ Final Review & Recommendations.md`
+
+**After Sprint 0.3:**
+1. **task-0.3.2**: Announce on social channels (marketer)
+2. **Phase 1**: Core Loop MVP - Start with task-1.1.1
 
 ### Known Blockers
 - None currently
