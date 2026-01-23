@@ -168,6 +168,34 @@
 **Verified**: ls -la confirmed all files created
 **REQUIRES**: Supabase project setup with environment variables to function
 
+### 2026-01-23 11:00 Deliverable: PostHog Analytics (task-0.2.4)
+**Files Created**:
+- `src/lib/posthog.ts` (1.2KB) - PostHog initialization with privacy settings
+- `src/components/providers/posthog-provider.tsx` (0.8KB) - React provider for page tracking
+**Files Modified**:
+- `src/app/layout.tsx` - Added PostHogProvider wrapper
+- `src/components/landing/waitlist-cta.tsx` - Added waitlist_signup event tracking
+- `.env.example` - Added PostHog env vars
+- `package.json` - Added posthog-js dependency
+**Details**:
+- Cookieless mode enabled (persistence: "memory") - no cookie banner needed
+- IP anonymization enabled for privacy
+- Automatic page view tracking on route changes
+- waitlist_signup event fires on successful signup
+- Session recording disabled (can enable later)
+**Build Status**: ✅ `npm run build` passes
+**Verified**: PostHog dashboard shows "Installation Complete", events flowing
+
+### 2026-01-23 11:10 Deliverable: Event Taxonomy v1 (task-0.2.5)
+**Files Created**:
+- `docs/analytics/event-taxonomy.md` (2.5KB) - Event naming conventions and documentation
+**Details**:
+- Naming convention: snake_case, object_action format
+- Current events: waitlist_signup
+- Future events documented: quick_fire_submitted, quick_fire_result_viewed, validation_started, validation_completed, report_downloaded
+- Properties defined for each event
+**Verified**: File created at docs/analytics/event-taxonomy.md
+
 ---
 
 <!-- Format:

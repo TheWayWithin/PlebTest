@@ -150,7 +150,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - **Completed**: POST /api/waitlist, Supabase migration, frontend with loading/error states
   - **REQUIRES**: Supabase project setup with env vars (see handoff-notes.md)
 
-- [ ] **task-0.2.4** Set up PostHog analytics
+- [x] **task-0.2.4** Set up PostHog analytics - ✅ 2026-01-23 11:00
   - Agent: developer
   - Priority: p1
   - Acceptance Criteria:
@@ -161,8 +161,9 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Waitlist signups tracked as events
     - Basic dashboard created
   - Dependencies: task-0.2.2
+  - **Completed**: PostHog integrated with cookieless mode, IP anonymization, page view + waitlist_signup tracking
 
-- [ ] **task-0.2.5** Define event taxonomy v1
+- [x] **task-0.2.5** Define event taxonomy v1 - ✅ 2026-01-23 11:10
   - Agent: developer
   - Priority: p1
   - Acceptance Criteria:
@@ -172,6 +173,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
       - `quick_fire_result_viewed`
     - Event naming conventions established
   - Dependencies: task-0.2.4
+  - **Completed**: Event taxonomy documented at /docs/analytics/event-taxonomy.md
 
 - [ ] **task-0.2.6** Create demo walkthrough
   - Agent: designer
