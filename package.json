@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/TheWayWithin/PlebTest#readme",
   "dependencies": {
+    "@radix-ui/react-slot": "^1.2.4",
+    "@supabase/supabase-js": "^2.91.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^25.0.10",
     "@types/react": "^19.2.9",
@@ -33,6 +35,7 @@
     "lucide-react": "^0.562.0",
     "next": "^16.1.4",
     "postcss": "^8.5.6",
+    "posthog-js": "^1.334.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "tailwind-merge": "^3.4.0",

@@ -1,15 +1,34 @@
+import {
+  Hero,
+  ProblemSection,
+  SolutionSection,
+  HowItWorks,
+  PricingPreview,
+  WaitlistCTA,
+  Footer,
+} from "@/components/landing"
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">PlebTest</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400">
-          Kill duds. Find winners.
-        </p>
-        <p className="mt-8 text-gray-500">
-          Landing page coming soon...
-        </p>
-      </div>
-    </main>
-  );
+    <>
+      {/* Skip to main content link for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:top-4 focus:left-4 focus:rounded-lg"
+      >
+        Skip to main content
+      </a>
+
+      <main id="main-content">
+        <Hero />
+        <ProblemSection />
+        <SolutionSection />
+        <HowItWorks />
+        <PricingPreview />
+        <WaitlistCTA />
+      </main>
+
+      <Footer />
+    </>
+  )
 }

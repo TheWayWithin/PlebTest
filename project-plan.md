@@ -80,18 +80,18 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: none
   - **Completed**: github.com/TheWayWithin/PlebTest, main protected, develop branch created
 
-- [x] **task-0.1.2** Initialize Next.js 15 project - ✅ 2026-01-22 21:17
+- [x] **task-0.1.2** Initialize Next.js project - ✅ 2026-01-22 21:17
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
-    - Next.js 15 with App Router
+    - Next.js 15+ with App Router
     - TypeScript configured
     - Tailwind CSS installed
     - shadcn/ui initialized
   - Dependencies: task-0.1.1
   - **Completed**: Next.js 16.1.4, TypeScript 5.9.3, Tailwind 4.1.18, shadcn/ui new-york
 
-- [ ] **task-0.1.3** Set up Railway projects (staging + production)
+- [x] **task-0.1.3** Set up Railway projects (staging + production) - ✅ 2026-01-22 21:45
   - Agent: operator
   - Priority: p0
   - Acceptance Criteria:
@@ -100,8 +100,10 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Auto-deploy from develop → staging
     - Auto-deploy from main → production
   - Dependencies: task-0.1.1
+  - **Completed**: Single project "PlebTest" with staging/production environments, US East region
+  - Staging URL: plebteststaging-staging.up.railway.app
 
-- [ ] **task-0.1.4** Configure domains
+- [x] **task-0.1.4** Configure domains - ✅ 2026-01-22 22:15
   - Agent: operator
   - Priority: p1
   - Acceptance Criteria:
@@ -109,9 +111,10 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - plebtest.com → Railway production
     - SSL certificates active
   - Dependencies: task-0.1.3
+  - **Completed**: plebtest.com live via Cloudflare + Railway, SSL active
 
 #### 0.2 Landing Page Build
-- [ ] **task-0.2.1** Design landing page layout
+- [x] **task-0.2.1** Design landing page layout - ✅ 2026-01-22 23:52
   - Agent: designer
   - Priority: p0
   - Acceptance Criteria:
@@ -122,8 +125,9 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Waitlist CTA
     - Mobile responsive
   - Dependencies: task-0.1.2
+  - **Completed**: Full design spec at /docs/design/landing-page-spec.md (23KB)
 
-- [ ] **task-0.2.2** Implement landing page
+- [x] **task-0.2.2** Implement landing page - ✅ 2026-01-22 23:58
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -132,8 +136,9 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Fast load time (<3s LCP)
     - Accessible (WCAG 2.1 AA)
   - Dependencies: task-0.2.1
+  - **Completed**: 7 landing page sections + 2 custom UI components, build passes
 
-- [ ] **task-0.2.3** Create waitlist signup form
+- [x] **task-0.2.3** Create waitlist signup form - ✅ 2026-01-23 10:15
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -142,8 +147,10 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Success confirmation message
     - Rate limiting to prevent abuse
   - Dependencies: task-0.2.2
+  - **Completed**: POST /api/waitlist, Supabase migration, frontend with loading/error states
+  - **REQUIRES**: Supabase project setup with env vars (see handoff-notes.md)
 
-- [ ] **task-0.2.4** Set up PostHog analytics
+- [x] **task-0.2.4** Set up PostHog analytics - ✅ 2026-01-23 11:00
   - Agent: developer
   - Priority: p1
   - Acceptance Criteria:
@@ -154,8 +161,9 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Waitlist signups tracked as events
     - Basic dashboard created
   - Dependencies: task-0.2.2
+  - **Completed**: PostHog integrated with cookieless mode, IP anonymization, page view + waitlist_signup tracking
 
-- [ ] **task-0.2.5** Define event taxonomy v1
+- [x] **task-0.2.5** Define event taxonomy v1 - ✅ 2026-01-23 11:10
   - Agent: developer
   - Priority: p1
   - Acceptance Criteria:
@@ -165,8 +173,9 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
       - `quick_fire_result_viewed`
     - Event naming conventions established
   - Dependencies: task-0.2.4
+  - **Completed**: Event taxonomy documented at /docs/analytics/event-taxonomy.md
 
-- [ ] **task-0.2.6** Create demo walkthrough
+- [x] **task-0.2.6** Create demo walkthrough - ✅ 2026-01-23 09:35
   - Agent: designer
   - Priority: p0
   - Acceptance Criteria:
@@ -175,8 +184,9 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Demonstrates anti-sycophancy (persona pushing back)
     - Shows Kill/Pivot/Build outcome examples
   - Dependencies: task-0.2.1
+  - **Completed**: Placeholder mockup component at src/components/landing/demo-preview.tsx (7.5KB) showing 3-stage flow
 
-- [ ] **task-0.2.7** Create sample verdict assets
+- [x] **task-0.2.7** Create sample verdict assets - ✅ 2026-01-23 09:35
   - Agent: designer
   - Priority: p1
   - Acceptance Criteria:
@@ -184,8 +194,9 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Screenshots or mockups for landing page
     - Shows credibility before product exists
   - Dependencies: task-0.2.6
+  - **Completed**: Sample verdicts component at src/components/landing/sample-verdicts.tsx (8.8KB) with 3 example cards
 
-- [ ] **task-0.2.8** Create privacy policy and terms of service
+- [x] **task-0.2.8** Create privacy policy and terms of service - ✅ 2026-01-23 09:35
   - Agent: operator
   - Priority: p0
   - Acceptance Criteria:
@@ -194,6 +205,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Cookie consent banner (if required)
     - GDPR-compliant language
   - Dependencies: task-0.2.2
+  - **Completed**: /privacy (11.6KB) and /terms (17.1KB) pages with GDPR-compliant content, AI disclaimer
 
 #### 0.3 Launch
 - [ ] **task-0.3.1** Deploy to production
