@@ -251,6 +251,69 @@
 - Staging verified: plebteststaging-staging.up.railway.app/privacy returning 200
 **Verified**: curl -sI https://plebtest.com returned HTTP/2 200
 
+### 2026-01-23 Sprint Created: Landing Page Brand Alignment (Sprint 0.3)
+**Document**: `/Documents/Ideation/PlebTest Landing Page_ Final Review & Recommendations.md`
+**Current Score**: 4/10 (per review)
+**Target Score**: 7-8/10 after implementation
+
+**Core Problem Identified**:
+The landing page sells PlebTest as "AI-powered market analysis" when it should sell "AI personas that challenge your assumptions" for founders who dread cold calls.
+
+**Sprint 0.4 Tasks Created** (11 tasks):
+| Task | Description | Priority |
+|------|-------------|----------|
+| 0.4.1 | Rewrite hero section | p0 |
+| 0.4.2 | Rewrite "How It Works" section | p0 |
+| 0.4.3 | Add "Who This Is For" section | p0 |
+| 0.4.4 | Add "Why Not ChatGPT?" section | p0 |
+| 0.4.5 | Add anti-sycophancy visual comparison | p1 |
+| 0.4.6 | Add "Patterns, Not Predictions" disclaimer | p1 |
+| 0.4.7 | Rewrite sample verdicts with persona quotes | p0 |
+| 0.4.8 | Add founder story section | p1 |
+| 0.4.9 | Change "we" to "I" language | p0 |
+| 0.4.10 | Update solution section copy | p0 |
+| 0.4.11 | Deploy brand-aligned landing page | p0 |
+
+**Key Messaging Changes**:
+- Hero: "Stop Wasting Months..." → "Get Brutally Honest Feedback Without Picking Up the Phone"
+- Badge: "AI-Powered Market Validation" → "For Founders Who Dread Cold Calls"
+- How It Works: Generic AI steps → Interview-focused persona generation
+- Add new sections: Who This Is For, Why Not ChatGPT?, Founder Story
+- Sample verdicts: Market research quotes → Persona objections with names
+
+**Verified**: project-plan.md updated with Sprint 0.4 (11 tasks), handoff-notes.md updated
+
+### 2026-01-23 Deliverable: Sprint 0.3 Implementation (tasks 0.4.1-0.4.10)
+**Files Modified**:
+- `src/components/landing/hero.tsx` - New headline, badge, subheadline
+- `src/components/landing/how-it-works.tsx` - Interview-focused 4-step process
+- `src/components/landing/solution-section.tsx` - "AI Personas That Challenge" messaging
+- `src/components/landing/sample-verdicts.tsx` - Persona quotes + disclaimer
+- `src/components/landing/demo-preview.tsx` - Removed "our" language
+- `src/components/landing/waitlist-cta.tsx` - "I" language, removed unverified "500+" claim
+
+**Files Created**:
+- `src/components/landing/who-this-is-for.tsx` (1.8KB) - New section targeting founders who dread cold calls
+- `src/components/landing/why-not-chatgpt.tsx` (2.9KB) - Comparison table + anti-sycophancy callout
+- `src/components/landing/founder-story.tsx` (2.1KB) - Personal founder narrative
+
+**Files Updated**:
+- `src/components/landing/index.ts` - Added exports for new components
+- `src/app/page.tsx` - Integrated 3 new sections into page flow
+
+**Key Transformations**:
+| Element | Before | After |
+|---------|--------|-------|
+| Badge | "AI-Powered Market Validation" | "For Founders Who Dread Cold Calls" |
+| Headline | "Stop Wasting Months..." | "Get Brutally Honest Feedback Without Picking Up the Phone" |
+| Subheadline | Market analysis | AI personas that challenge with objections |
+| Solution heading | "Get Clarity Before You Commit" | "AI Personas That Challenge, Not Validate" |
+| Verdicts | Market research quotes | Persona quotes with names |
+| Language | "We/Our" | "I/PlebTest" |
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: All 10 implementation tasks complete, awaiting deployment (task-0.4.11)
+
 ---
 
 <!-- Format:

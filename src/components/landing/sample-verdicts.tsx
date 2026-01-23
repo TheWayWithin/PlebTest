@@ -167,7 +167,7 @@ export function SampleVerdicts() {
       ideaDescription: "An app that connects dog owners with local dog walkers for on-demand walking services.",
       riskScore: 87,
       confidence: "High",
-      keyObjection: "Market is saturated with established players like Rover and Wag. Customer acquisition costs would be prohibitive without significant differentiation.",
+      keyObjection: "\"I already use Rover. Unless you're half the price, I'm not switching.\" — Sarah, Dog Owner",
     },
     {
       type: "pivot",
@@ -175,7 +175,7 @@ export function SampleVerdicts() {
       ideaDescription: "Generate personalized recipes based on ingredients you have at home using AI.",
       riskScore: 52,
       confidence: "Medium",
-      keyObjection: "Core concept is valid but needs differentiation. Consider focusing on dietary restrictions or meal prep optimization instead of general recipes.",
+      keyObjection: "\"I'd use this for recipes, but I won't pay monthly. Make it one-time.\" — Lisa, Busy Parent",
     },
     {
       type: "build",
@@ -183,7 +183,7 @@ export function SampleVerdicts() {
       ideaDescription: "Automated invoice processing and reconciliation for small accounting firms.",
       riskScore: 23,
       confidence: "High",
-      keyObjection: "Strong market demand with clear pain point. Defined niche with manageable competition. Recommend starting with 3 pilot customers.",
+      keyObjection: "\"I chase payments manually every month. I'd pay $10/mo to stop that.\" — Alex, Freelancer",
     },
   ];
 
@@ -211,15 +211,28 @@ export function SampleVerdicts() {
           }
         </div>
 
+        {/* Patterns Not Predictions Disclaimer */}
+        <div className="mt-12 text-center">
+          <div className="inline-block rounded-xl bg-slate-800/50 border border-slate-700 px-6 py-4 max-w-2xl">
+            <p className="text-sm text-slate-400">
+              <span className="font-semibold text-slate-300">Patterns, not predictions.</span>{" "}
+              PlebTest doesn&apos;t predict revenue or market size. It surfaces patterns of objections and blind spots so you know whether to kill it, pivot, or build.
+            </p>
+          </div>
+        </div>
+
         {/* Bottom CTA */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-8">
           <p className="text-gray-400 mb-4">Ready to get your verdict?</p>
           <Button
             size="lg"
             className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white px-8"
+            asChild
           >
-            Validate Your Idea
-            <ArrowRight className="w-4 h-4 ml-2" />
+            <a href="#waitlist">
+              Join the Waitlist
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </a>
           </Button>
         </div>
       </div>

@@ -3,27 +3,27 @@ import { SectionLabel } from "@/components/ui/section-label"
 const steps = [
   {
     number: "01",
-    title: "Describe Your Idea",
+    title: "Describe Your Idea & Target Customer",
     description:
-      "Tell us about your startup concept in plain English. No pitch deck required.",
+      "Tell me what you're building and who it's for. No pitch deck required.",
   },
   {
     number: "02",
-    title: "AI Analysis",
+    title: "I Generate Skeptical AI Personas",
     description:
-      "Our AI researches your market, competitors, and validates against proven frameworks.",
+      "A panel of realistic customers based on your ICP, skewed toward skeptics who won't sugarcoat their feedback.",
   },
   {
     number: "03",
-    title: "Get Your Verdict",
+    title: "Interview the Personas Your Way",
     description:
-      "Receive a clear Kill, Pivot, or Build recommendation with detailed reasoning.",
+      "Use suggested Mom-Test questions, ask your own, or respond to their pushback. It's a real conversation, not a script.",
   },
   {
     number: "04",
-    title: "Take Action",
+    title: "Get a Kill/Pivot/Build Verdict",
     description:
-      "Follow your personalized roadmap with specific next steps for your situation.",
+      "See the patterns: top objections, risky assumptions, and what to test next in the real world.",
   },
 ]
 

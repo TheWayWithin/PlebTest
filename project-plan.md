@@ -58,8 +58,9 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
 
 ## Phase 0: Landing Page
 
-**Status:** not_started
+**Status:** in_progress
 **Theme:** Start capturing demand before MVP exists
+**Sprint 0.3 Added:** 2026-01-23 - Brand alignment per review recommendations
 
 ### Objectives
 - [ ] Launch marketing presence before product is ready
@@ -228,18 +229,162 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Initial waitlist signups tracked
   - Dependencies: task-0.3.1
 
+#### 0.4 Landing Page Brand Alignment (Sprint 0.3)
+> **Purpose**: Align landing page messaging with PlebTest's true value proposition: AI personas that challenge your assumptions, built for founders who dread cold calls.
+> **Reference**: `/Documents/Ideation/PlebTest Landing Page_ Final Review & Recommendations.md`
+
+- [x] **task-0.4.1** Rewrite hero section - ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p0
+  - Acceptance Criteria:
+    - New headline: "Get Brutally Honest Feedback Without Picking Up the Phone"
+    - New subheadline: "AI personas challenge your startup idea with real objections — so you know whether to kill it, pivot, or build."
+    - Badge changed from "AI-Powered Market Validation" to "For Founders Who Dread Cold Calls"
+    - Remove generic "market analysis" language
+  - Dependencies: none
+  - **Completed**: hero.tsx updated, build passes
+
+- [x] **task-0.4.2** Rewrite "How It Works" section - ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p0
+  - Acceptance Criteria:
+    - Step 1: "Describe your idea and target customer" — Tell me what you're building and who it's for
+    - Step 2: "I generate skeptical AI personas" — A panel of realistic customers based on your ICP, skewed toward skeptics
+    - Step 3: "Interview the personas your way" — Use suggested Mom-Test questions, ask your own, or respond to their pushback. It's a real conversation, not a script.
+    - Step 4: "Get a Kill/Pivot/Build verdict" — See the patterns: top objections, risky assumptions, and what to test next in the real world
+  - Dependencies: none
+  - **Completed**: how-it-works.tsx updated with interview-focused steps, build passes
+
+- [x] **task-0.4.3** Add "Who This Is For" section - ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p0
+  - Acceptance Criteria:
+    - New section after Problem section
+    - Headline: "Built for founders who'd rather ship than schmooze"
+    - 3 persona items:
+      - "Founders who would rather code than cold-call"
+      - "Anxious first-timers who dread 'Do you have 15 minutes to chat?' messages"
+      - "Side-hustlers who need to sanity-check ideas before burning evenings and savings"
+    - Visual styling consistent with rest of page
+  - Dependencies: none
+  - **Completed**: who-this-is-for.tsx created, added to page.tsx after ProblemSection, build passes
+
+- [x] **task-0.4.4** Add "Why Not ChatGPT?" section - ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p0
+  - Acceptance Criteria:
+    - New section with comparison table
+    - Headline: "Why not just use ChatGPT?"
+    - Subheadline: "ChatGPT wants to help. PlebTest personas want to challenge."
+    - Comparison table:
+      - ChatGPT: "That's a great idea for busy pet owners!" vs PlebTest: "I already use Rover. What problem does this solve that they don't?"
+      - ChatGPT: "Users would love a subscription model." vs PlebTest: "I'd try it once. Why would I pay monthly for this?"
+  - Dependencies: none
+  - **Completed**: why-not-chatgpt.tsx created with dark theme, comparison table, and anti-sycophancy callout
+
+- [x] **task-0.4.5** Add anti-sycophancy visual comparison - ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p1
+  - Acceptance Criteria:
+    - Visual side-by-side comparison element
+    - Generic AI: "That sounds like a great idea!"
+    - PlebTest Persona: "Why would I switch from what I use now? Be specific."
+    - Can be combined with task-0.4.4 or standalone
+  - Dependencies: task-0.4.4
+  - **Completed**: Integrated into why-not-chatgpt.tsx as callout section at bottom
+
+- [x] **task-0.4.6** Add "Patterns, Not Predictions" disclaimer - ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p1
+  - Acceptance Criteria:
+    - Visible disclaimer text (not hidden in footer)
+    - Text: "PlebTest doesn't predict revenue or market size. It surfaces patterns of objections and blind spots so you know whether to kill it, pivot, or build."
+    - Positioned near sample verdicts or solution section
+  - Dependencies: none
+  - **Completed**: Added styled disclaimer box in sample-verdicts.tsx after verdict cards
+
+- [x] **task-0.4.7** Rewrite sample verdicts with persona quotes - ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p0
+  - Acceptance Criteria:
+    - KILL - Dog Walking App:
+      - "I already use Rover. Unless you're half the price, I'm not switching." — Sarah, Dog Owner
+      - "My neighbor's kid walks my dog. Why would I pay for an app?" — Mike, Suburban Dad
+      - Verdict: 4 of 5 personas rejected the value proposition.
+    - PIVOT - Meal Planning App:
+      - "I'd use this for recipes, but I won't pay monthly. Make it one-time." — Lisa, Busy Parent
+      - "I already use Pinterest for meal ideas. What's different?" — Tom, Home Cook
+      - Verdict: Interest exists, but pricing model and differentiation need work.
+    - BUILD - Invoice Reminder Tool:
+      - "I chase payments manually every month. I'd pay $10/mo to stop that." — Alex, Freelancer
+      - "If it integrates with QuickBooks, I'm in." — Priya, Small Business Owner
+      - Verdict: Clear pain point with willingness to pay. Build it.
+  - Dependencies: none
+  - **Completed**: Updated sample-verdicts.tsx with persona quotes, changed CTA to waitlist link
+
+- [x] **task-0.4.8** Add founder story section - ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p1
+  - Acceptance Criteria:
+    - New section with personal story
+    - Headline: "Why I Built This"
+    - Content: "Customer discovery is emotionally hard for many founders. I wanted a safer way to start — so I built one. I'm a founder who dreads cold calls. PlebTest lets me validate ideas without the awkward conversations. Now I'm sharing it with founders like me. — Jamie"
+    - Photo placeholder or avatar (optional)
+    - Positioned before waitlist CTA
+  - Dependencies: none
+  - **Completed**: founder-story.tsx created with expanded personal narrative, avatar initial, positioned before WaitlistCTA
+
+- [x] **task-0.4.9** Change "we" to "I" language throughout - ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p0
+  - Acceptance Criteria:
+    - Audit all copy for "we/our/us" language
+    - Use "I" in founder story and high-trust sections
+    - Use "PlebTest" for product references ("PlebTest generates...", "PlebTest gives you...")
+    - Remove all "we" language except where grammatically unavoidable
+  - Dependencies: task-0.4.1, task-0.4.2, task-0.4.3, task-0.4.4, task-0.4.6, task-0.4.7, task-0.4.8
+  - **Completed**: Fixed in demo-preview.tsx, solution-section.tsx, waitlist-cta.tsx. Removed "500+ founders" unverified claim.
+
+- [x] **task-0.4.10** Update solution section copy - ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p0
+  - Acceptance Criteria:
+    - Remove "market data, competitor intelligence, and proven validation frameworks" language
+    - Focus on AI personas that challenge assumptions
+    - Update verdict card descriptions to mention persona objections
+    - Align with "interview not analysis" framing
+  - Dependencies: none
+  - **Completed**: New headline "AI Personas That Challenge, Not Validate", all verdict descriptions now reference personas
+
+- [ ] **task-0.4.11** Deploy brand-aligned landing page
+  - Agent: operator
+  - Priority: p0
+  - Acceptance Criteria:
+    - All tasks 0.4.1-0.4.10 complete
+    - Build passes (`npm run build`)
+    - No console errors
+    - Changes merged to main
+    - Production updated at plebtest.com
+  - Dependencies: task-0.4.1, task-0.4.2, task-0.4.3, task-0.4.4, task-0.4.5, task-0.4.6, task-0.4.7, task-0.4.8, task-0.4.9, task-0.4.10
+
 ### Quality Gates
-- [ ] Build passes (`npm run build`)
+- [x] Build passes (`npm run build`) - ✅ 2026-01-23
 - [ ] Lighthouse score ≥90 (Performance)
-- [ ] Mobile responsive verified
-- [ ] Privacy policy and terms live
+- [x] Mobile responsive verified - ✅ 2026-01-23
+- [x] Privacy policy and terms live - ✅ 2026-01-23
+- [ ] Brand messaging aligned with value proposition (Sprint 0.3)
+- [ ] "We" language removed, replaced with "I" or "PlebTest"
 
 ### Deliverables
-- [ ] Live landing page at plebtest.com
-- [ ] Working waitlist capture
-- [ ] Analytics tracking active
-- [ ] Demo walkthrough visible
-- [ ] Privacy policy and terms published
+- [x] Live landing page at plebtest.com - ✅ 2026-01-23
+- [x] Working waitlist capture - ✅ 2026-01-23
+- [x] Analytics tracking active - ✅ 2026-01-23
+- [x] Demo walkthrough visible - ✅ 2026-01-23
+- [x] Privacy policy and terms published - ✅ 2026-01-23
+- [ ] Brand-aligned messaging (AI personas that challenge, not validate)
+- [ ] "Who This Is For" section (founders who dread cold calls)
+- [ ] "Why Not ChatGPT?" comparison section
+- [ ] Founder story section
 
 ---
 

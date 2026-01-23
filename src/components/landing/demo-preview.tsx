@@ -17,7 +17,7 @@ export function DemoPreview() {
             From Idea to Verdict in Minutes
           </h2>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Watch how PlebTest validates your startup idea through our 3-stage process
+            Watch how PlebTest validates your startup idea through the 3-stage process
           </p>
         </div>
 
@@ -133,8 +133,9 @@ export function DemoPreview() {
           <Button
             size="lg"
             className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white px-8"
+            asChild
           >
-            Try It Now - It's Free
+            <a href="#waitlist">Join the Waitlist</a>
           </Button>
         </div>
       </div>
