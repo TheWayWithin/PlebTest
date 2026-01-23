@@ -5,40 +5,50 @@ import { cn } from "@/lib/utils"
 
 const tiers = [
   {
-    name: "Starter",
-    price: "$29",
-    period: "per validation",
+    name: "Solo",
+    price: "$9.95",
+    period: "per month",
     popular: false,
     features: [
-      "Basic market analysis",
-      "Competitor overview",
+      "1 product validation",
+      "10 tests per month",
       "Kill/Pivot/Build verdict",
-      "PDF report",
+      "Basic market analysis",
+    ],
+  },
+  {
+    name: "Growth",
+    price: "$19.95",
+    period: "per month",
+    popular: true,
+    features: [
+      "3 product validations",
+      "30 tests per month",
+      "Deep competitor analysis",
+      "Market size estimation",
+    ],
+  },
+  {
+    name: "Scale",
+    price: "$29.95",
+    period: "per month",
+    popular: false,
+    features: [
+      "10 product validations",
+      "100 tests per month",
+      "Priority AI processing",
+      "Customer interview scripts",
     ],
   },
   {
     name: "Pro",
-    price: "$79",
-    period: "per validation",
-    popular: true,
-    features: [
-      "Everything in Starter",
-      "Deep competitor analysis",
-      "Market size estimation",
-      "Customer interview scripts",
-      "30-day follow-up check",
-    ],
-  },
-  {
-    name: "Founder Pass",
-    price: "$199",
+    price: "$49.95",
     period: "per month",
     popular: false,
     features: [
-      "Unlimited validations",
-      "Priority AI processing",
-      "1-on-1 strategy call",
-      "Slack community access",
+      "20 product validations",
+      "200 tests per month",
+      "1-on-1 strategy support",
       "Early feature access",
     ],
   },
@@ -60,7 +70,7 @@ export function PricingPreview() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="mt-16 grid gap-8 lg:grid-cols-3">
+        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {tiers.map((tier) => (
             <div
               key={tier.name}

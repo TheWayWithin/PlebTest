@@ -1,15 +1,16 @@
 import Link from "next/link"
-import { Twitter, Linkedin } from "lucide-react"
+import { Twitter, Linkedin, Globe } from "lucide-react"
 
 const footerLinks = [
   { name: "Privacy Policy", href: "/privacy" },
   { name: "Terms of Service", href: "/terms" },
-  { name: "Contact", href: "mailto:hello@plebtest.com" },
+  { name: "Contact", href: "mailto:support@plebtest.com" },
 ]
 
 const socialLinks = [
-  { name: "Twitter", href: "https://twitter.com/plebtest", icon: Twitter },
-  { name: "LinkedIn", href: "https://linkedin.com/company/plebtest", icon: Linkedin },
+  { name: "Build in Public", href: "https://jamiewatters.work", icon: Globe },
+  { name: "Twitter", href: "https://twitter.com/Jamie_within", icon: Twitter },
+  { name: "LinkedIn", href: "https://linkedin.com/in/jamie-watters-solo", icon: Linkedin },
 ]
 
 export function Footer() {
