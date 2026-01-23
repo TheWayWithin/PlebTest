@@ -1,0 +1,571 @@
+# PlebTest Market Research Extraction
+# Source: Documents/foundations/market-research.md
+# Extracted: 2026-01-19
+# Mode: COMPLETENESS
+
+metadata:
+  source_file: "Documents/foundations/market-research.md"
+  research_date: "January 10, 2026"
+  researcher: "Jamie Watters"
+  review_date: "April 10, 2026"
+  business_name: "PlebTest"
+  confidence_level: "High"
+
+executive_summary:
+  description: "PlebTest is an AI-powered customer validation platform targeting founders who won't pick up the phone."
+  market_intersection:
+    - market: "AI Marketing"
+      value: 20400000000
+      unit: "USD"
+    - market: "Synthetic Data"
+      value: 310000000
+      unit: "USD"
+  problem_addressed: "#1 cause of startup failure: lack of market fit (42% of cases)"
+  competitive_position: "High-Signal / Low-Friction - only player targeting 'anxious founders'"
+  break_even: 3
+  break_even_unit: "paying customers"
+
+market_sizing:
+  tam:
+    definition: "Everyone globally who could theoretically use a customer validation tool"
+    components:
+      - segment: "Global new startups annually"
+        value: 50000000
+      - segment: "High-earning independents"
+        value: 5600000
+    total_users: 55600000
+    arpu_yearly: 233.50
+    arpu_monthly: 19.46
+    total_revenue: 12980000000
+    currency: "USD"
+    arpu_calculation:
+      - tier: "Solo"
+        price_monthly: 9.95
+        estimated_percent: 50
+        weighted_value: 4.98
+      - tier: "Growth"
+        price_monthly: 19.95
+        estimated_percent: 25
+        weighted_value: 4.99
+      - tier: "Scale"
+        price_monthly: 29.95
+        estimated_percent: 15
+        weighted_value: 4.49
+      - tier: "Pro"
+        price_monthly: 49.95
+        estimated_percent: 10
+        weighted_value: 5.00
+
+  sam:
+    definition: "Tech-forward founders in English-speaking developed markets who are willing to adopt AI tools for business validation"
+    users: 6640000
+    arpu_yearly: 233.50
+    total_revenue: 1550000000
+    currency: "USD"
+    filters:
+      - "Geographic: English-speaking developed world"
+      - "Behavioral: Tech-forward / AI adopters"
+      - "Budget: Has capacity for $10-50/month tools"
+
+  som:
+    projections:
+      - year: 1
+        users: 1000
+        percent_of_sam: 0.015
+        arr: 233000
+      - year: 2
+        users: 3000
+        percent_of_sam: 0.045
+        arr: 700000
+      - year: 3
+        users: 8000
+        percent_of_sam: 0.12
+        arr: 1870000
+      - year: 4
+        users: 20000
+        percent_of_sam: 0.30
+        arr: 4670000
+      - year: 5
+        users: 32000
+        percent_of_sam: 0.48
+        arr: 7500000
+
+geographic_scope:
+  primary:
+    - "United States"
+    - "United Kingdom"
+    - "Canada"
+    - "Australia"
+    - "New Zealand"
+    - "Ireland"
+  secondary:
+    - "Netherlands"
+    - "Nordics"
+    - "Germany"
+  excluded: "Non-English markets (language/support constraints)"
+
+industry_focus:
+  primary: "SaaS developers/founders"
+  secondary: "Other software/digital product builders"
+  excluded:
+    - "Enterprise"
+    - "Hardware"
+    - "Non-tech"
+
+competitive_landscape:
+  direct_competitors:
+    - name: "Synthetic Users"
+      focus: "General UX"
+      pricing: "$2-$27/interview"
+      target: "UX researchers"
+      weakness_vs_plebtest: "No Mom Test, high variable cost"
+
+    - name: "Ask Rally"
+      focus: "Focus groups"
+      pricing: "$20-$500/mo"
+      target: "Marketers, PMs"
+      weakness_vs_plebtest: "Opinions not validation, expensive"
+
+    - name: "Outset"
+      focus: "Enterprise research"
+      pricing: "Custom/High"
+      target: "Research teams"
+      weakness_vs_plebtest: "Not for solo founders, prohibitive price"
+
+    - name: "ValidatorAI"
+      focus: "Idea analysis"
+      pricing: "Free-$29/mo"
+      target: "Early founders"
+      weakness_vs_plebtest: "Static reports, no simulation, sycophantic"
+
+  positioning:
+    statement: "High-Signal / Low-Friction"
+    description: "Deep assumption validation at accessible pricing, built specifically for the anxious founder who won't pick up the phone"
+    positioning_map:
+      x_axis: "Price (Low → High)"
+      y_axis: "Validation Depth (Surface opinions → Deep assumption testing)"
+      plebtest_position: "Sweet spot: deep validation at accessible pricing"
+
+  differentiators:
+    - name: "Spectator Mode"
+      why_matters: "Optional: removes founder from conversation entirely"
+      defensibility: "Unique positioning"
+
+    - name: "Anti-Sycophancy Engine"
+      why_matters: "Honest feedback, not flattery"
+      defensibility: "Proprietary approach"
+
+    - name: "Mom Test Methodology"
+      why_matters: "Kills bad ideas, doesn't just validate good ones"
+      defensibility: "Methodology expertise"
+
+    - name: "Practitioner-Built"
+      why_matters: "'I am the customer' credibility"
+      defensibility: "Authentic story"
+
+  indirect_competitors:
+    - name: "Do Nothing / Build and Pray"
+      description: "Skip validation entirely"
+    - name: "DIY Customer Interviews"
+      description: "Cold outreach, phone calls (scary)"
+    - name: "Friends & Family Feedback"
+      description: "Comfortable but dishonest"
+    - name: "Reddit / Twitter Polls"
+      description: "Quick but unstructured"
+    - name: "Landing Page Tests"
+      description: "Slower, more expensive"
+
+  competitive_gaps:
+    - "Anxious Founder niche - unserved by competitors"
+    - "Anti-sycophancy - unsolved problem (AI tools too positive)"
+    - "Mom Test methodology - unapplied by competitors"
+    - "Affordable depth - deep tools are enterprise-priced, cheap tools are shallow"
+
+customer_segments:
+  - id: "ICP1"
+    name: "The Builder"
+    archetype: "The Technical Solo Founder"
+    priority: "Primary"
+    score: 32
+    demographics:
+      who: "Developers/engineers who start companies, prefer coding to talking"
+    pain_point: "Paralyzed by cold-calling; would rather build than validate"
+    what_they_value: "Technical proof, efficiency, data over opinions"
+    plebtest_value: "Acts as 'Technical Feasibility Study' for the market"
+    where_found:
+      - "Indie Hackers (17K+ active)"
+      - "Hacker News"
+      - "#buildinpublic Twitter/X"
+    likely_tier: "Solo or Growth ($9.95-$19.95)"
+
+  - id: "ICP2"
+    name: "The Expert"
+    archetype: "The Anxious First-Time Founder"
+    priority: "Primary"
+    score: 29
+    demographics:
+      who: "Domain experts starting their first business, often leaving corporate"
+    pain_point: "Crippling imposter syndrome; fears being 'exposed' as a fraud"
+    what_they_value: "Safe environment to test, confidence building, low-risk learning"
+    plebtest_value: "Provides a 'safe space' to practice and build confidence"
+    where_found:
+      - "Solopreneur communities"
+      - "Career transition groups"
+      - "LinkedIn"
+    likely_tier: "Solo or Growth ($9.95-$19.95)"
+
+  - id: "ICP3"
+    name: "The Power User"
+    archetype: "The Bootstrapped Multi-Product Operator"
+    priority: "Secondary"
+    score: 28
+    demographics:
+      who: "Serial builders managing 3-10+ products/ideas simultaneously"
+    pain_point: "No time for proper validation on each idea; needs to kill bad ones fast"
+    what_they_value: "Speed, efficiency, volume, quick decisions"
+    plebtest_value: "High-velocity validation - hours not weeks per idea"
+    where_found:
+      - "Indie Hackers"
+      - "Twitter/X micro-SaaS community"
+      - "Product Hunt"
+    likely_tier: "Scale or Pro ($29.95-$49.95)"
+
+  - id: "ICP4"
+    name: "The De-Risker"
+    archetype: "The Intrapreneur PM"
+    priority: "Secondary"
+    score: 22
+    demographics:
+      who: "Product managers inside companies who need to pitch new ideas internally"
+    pain_point: "Needs to win internal arguments with data but has no research budget"
+    what_they_value: "Quick 'directional evidence' to support proposals"
+    plebtest_value: "Rapidly generates validation data to de-risk internal pitches"
+    where_found:
+      - "Product management communities"
+      - "LinkedIn"
+    likely_tier: "Growth or Scale ($19.95-$29.95)"
+
+  - id: "ICP5"
+    name: "The Validator"
+    archetype: "The Fractional CPO / Consultant"
+    priority: "Tertiary (Year 3+)"
+    score: 20
+    demographics:
+      who: "Freelance product leaders, startup advisors, consultants"
+    pain_point: "Clients bring 'bad ideas' and expect miracles"
+    what_they_value: "Professional, objective outputs they can share with clients"
+    plebtest_value: "Provides 'Kill/Pivot' reports that protect consultant's reputation"
+    where_found:
+      - "Fractional exec communities"
+      - "Consulting networks"
+      - "LinkedIn"
+    likely_tier: "Pro ($49.95)"
+
+  - id: "ICP6"
+    name: "The Night-Owl"
+    archetype: "The Side-Hustle Optimizer"
+    priority: "Primary"
+    score: 32
+    demographics:
+      who: "Full-time employed, building on the side evenings/weekends"
+    pain_point: "Limited time (9-to-5 job); can't schedule calls during business hours"
+    what_they_value: "Async validation, fits in 'cracks' of their day"
+    plebtest_value: "'Safe lab' to test without scheduling constraints"
+    where_found:
+      - "r/SideProject"
+      - "#buildinpublic"
+      - "solopreneur Twitter/X"
+    likely_tier: "Solo ($9.95)"
+
+  launch_focus: "ICPs 1 + 6 (Builder + Night-Owl)"
+
+customer_journey:
+  awareness:
+    trigger_events:
+      - "Failed launch"
+      - "Built wrong thing"
+      - "Idea paralysis"
+      - "Read Mom Test but can't execute"
+      - "AI agent recommends validation"
+    emotional_state: "Frustrated, anxious, avoiding, procrastinating"
+    information_sources:
+      - "Twitter/X"
+      - "Indie Hackers"
+      - "Podcasts"
+      - "Failure blogs"
+      - "AI assistant recommendations"
+    key_questions:
+      - "How do I validate without talking to people?"
+      - "What tool does the AI suggest?"
+    channels:
+      - "#buildinpublic"
+      - "Indie Hackers"
+      - "Hacker News"
+      - "Reddit"
+      - "LLM recommendations (strategic priority)"
+
+  consideration:
+    evaluation_criteria:
+      practical:
+        - "Price"
+        - "Ease of use"
+        - "Speed to value"
+        - "Quick wins without learning curve"
+      emotional_safety:
+        - "Privacy (no one knows I'm struggling)"
+        - "No judgment"
+        - "Failure handled gently"
+      trust:
+        - "Honesty (anti-sycophancy)"
+        - "Credibility"
+        - "Transparent methodology"
+      commitment:
+        - "Low effort to start"
+        - "Easy to abandon if not working"
+        - "Cancel anytime"
+
+    objections:
+      - type: "Intellectual"
+        objection: "Can AI really simulate real customers?"
+      - type: "Intellectual"
+        objection: "Why pay when I could just ask ChatGPT?"
+      - type: "Trust"
+        objection: "Is this just another tool that tells me I'm great?"
+      - type: "Identity"
+        objection: "Am I a bad founder for using this instead of real interviews?"
+      - type: "Identity"
+        objection: "Is this cope? Am I avoiding the hard work?"
+      - type: "Practical"
+        objection: "What if I make decisions based on this and fail?"
+      - type: "Social"
+        objection: "Can I show this to investors without looking lazy?"
+
+    key_insight: "This audience needs permission to use the tool. Position as 'before you do real interviews' or 'to prepare for real conversations.'"
+
+  purchase:
+    decision_process: "Free trial → first 'aha moment' → sees value → converts"
+    approval_requirements: "None (solo decision)"
+    budget_justification: "Less than one coffee per week"
+    purchase_triggers:
+      - "Stuck on idea"
+      - "New idea excitement"
+      - "Previous launch failure"
+      - "AI agent recommendation"
+    risk_reducers:
+      - "7-day free trial"
+      - "Money-back guarantee"
+      - "Cancel anytime"
+      - "Low entry price"
+
+  post_purchase:
+    expanded_use_cases:
+      - use_case: "Product idea validation"
+        what_they_test: "Is this worth building?"
+        when: "Pre-build"
+      - use_case: "Landing page validation"
+        what_they_test: "Does this copy convert?"
+        when: "Pre-launch"
+      - use_case: "Pricing validation"
+        what_they_test: "Will they pay this much?"
+        when: "Pricing decisions"
+      - use_case: "Feature prioritization"
+        what_they_test: "Which feature matters most?"
+        when: "Roadmap planning"
+      - use_case: "Positioning/messaging"
+        what_they_test: "Does this resonate?"
+        when: "Marketing prep"
+      - use_case: "Customer journey testing"
+        what_they_test: "Where do they drop off?"
+        when: "UX optimization"
+      - use_case: "Pivot validation"
+        what_they_test: "Is this new direction better?"
+        when: "Post-failure"
+
+    retention_model: "PlebTest isn't a one-time 'is my idea good?' tool. It's an ongoing validation partner for every business decision that touches the customer."
+
+unit_economics:
+  cost_per_test: 0.12
+  currency: "USD"
+  fixed_costs_monthly: 50
+  gross_margin_by_tier:
+    - tier: "Solo"
+      tests_per_month: 10
+      cost: 1.20
+      revenue: 9.95
+      gross_margin_dollars: 8.75
+      gross_margin_percent: 88
+    - tier: "Growth"
+      tests_per_month: 30
+      cost: 3.60
+      revenue: 19.95
+      gross_margin_dollars: 16.35
+      gross_margin_percent: 82
+    - tier: "Scale"
+      tests_per_month: 100
+      cost: 12.00
+      revenue: 29.95
+      gross_margin_dollars: 17.95
+      gross_margin_percent: 60
+    - tier: "Pro"
+      tests_per_month: 200
+      cost: 24.00
+      revenue: 49.95
+      gross_margin_dollars: 25.95
+      gross_margin_percent: 52
+
+financial_projections:
+  year_1:
+    churn_rate_monthly: 8
+    monthly_projections:
+      - month: "Feb"
+        new: 10
+        churned: 0
+        total: 10
+        mrr: 195
+      - month: "Mar"
+        new: 20
+        churned: 1
+        total: 29
+        mrr: 564
+      - month: "Apr"
+        new: 35
+        churned: 2
+        total: 62
+        mrr: 1206
+      - month: "May"
+        new: 50
+        churned: 5
+        total: 107
+        mrr: 2082
+      - month: "Jun"
+        new: 70
+        churned: 9
+        total: 168
+        mrr: 3269
+      - month: "Jul"
+        new: 90
+        churned: 13
+        total: 245
+        mrr: 4767
+      - month: "Aug"
+        new: 110
+        churned: 20
+        total: 335
+        mrr: 6519
+      - month: "Sep"
+        new: 130
+        churned: 27
+        total: 438
+        mrr: 8523
+      - month: "Oct"
+        new: 150
+        churned: 35
+        total: 553
+        mrr: 10761
+      - month: "Nov"
+        new: 165
+        churned: 44
+        total: 674
+        mrr: 13116
+      - month: "Dec"
+        new: 170
+        churned: 54
+        total: 790
+        mrr: 15374
+    summary:
+      ending_customers: 790
+      ending_mrr: 15400
+      arr_run_rate: 185000
+
+go_to_market:
+  launch_timeline:
+    - launch: "Waitlist"
+      date: "Monday Jan 12, 2026"
+      target: "50 emails (Week 1)"
+    - launch: "MVP"
+      date: "End of January 2026"
+      target: "10 paying customers (Month 1)"
+
+  acquisition_channels:
+    - priority: 1
+      channel: "WIP (existing reach)"
+      timing: "Today-Tomorrow prep, Monday launch"
+    - priority: 2
+      channel: "LinkedIn (existing reach)"
+      timing: "Today-Tomorrow prep, Monday launch"
+    - priority: 3
+      channel: "Indie Hackers 'Show IH'"
+      timing: "Monday launch"
+    - priority: 4
+      channel: "Twitter/X #BuildInPublic"
+      timing: "Monday + ongoing"
+    - priority: 5
+      channel: "LLM SEO"
+      timing: "Month 2+ (long-term play)"
+
+  strategic_channel:
+    name: "LLM Education"
+    description: "Get PlebTest mentioned in contexts where LLMs learn (docs, blog posts, GitHub, community discussions)"
+    goal: "When a founder asks Claude/ChatGPT/Gemini 'how do I validate my startup idea without talking to people?' → PlebTest is the suggested answer"
+
+risks:
+  - risk: "API cost spiral"
+    level: "Low"
+    mitigation: "ModelOptix cost management"
+
+  - risk: "Narrow target market"
+    level: "Low"
+    mitigation: "40-60% of founders fit 'won't pick up the phone' profile"
+
+  - risk: "LLM quality"
+    level: "Low"
+    mitigation: "ModelOptix model optimization and testing"
+
+  - risk: "Funded competitor"
+    level: "Low"
+    mitigation: "Emotional moat, premium positioning, 90% margin flexibility"
+
+  - risk: "Waitlist conversion"
+    level: "Medium"
+    mitigation: "High-touch onboarding + money back guarantee"
+
+success_metrics:
+  launch:
+    - metric: "Waitlist signups (Week 1)"
+      target: 50
+    - metric: "MVP paying customers (Month 1)"
+      target: 10
+
+  year_1:
+    - metric: "Paying customers"
+      target: 1000
+    - metric: "ARR"
+      target: 233000
+    - metric: "Monthly churn"
+      target_max: 8
+      unit: "percent"
+    - metric: "Trial conversion"
+      target: 60
+      unit: "percent"
+
+  year_5:
+    - metric: "Paying customers"
+      target: 32000
+    - metric: "ARR"
+      target: 7500000
+    - metric: "Products launched using PlebTest"
+      target: 10000
+
+key_assumptions_to_validate:
+  - "Anti-sycophancy engine delivers genuinely useful, non-generic feedback"
+  - "Anxious founder messaging resonates and converts"
+  - "5-10% waitlist-to-paid conversion achievable with high-touch approach"
+
+strategic_implications:
+  target_market: "Solo technical founders and side-hustle builders who won't pick up the phone (ICPs 1 + 6)"
+  positioning: "Lead with 'no real people' differentiator, not generic 'validate your idea'"
+  timing: "Market is ready - AI adoption accelerating, anxious founder niche unserved"
+  key_success_factors:
+    - "Anti-sycophancy quality"
+    - "High-touch onboarding"
+    - "LLM SEO for Month 2+"

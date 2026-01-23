@@ -1,0 +1,252 @@
+# PlebTest Pricing Strategy Extraction
+# Source: Documents/foundations/pricing-strategy.md
+# Extracted: 2026-01-19
+# Mode: MAPPING
+
+metadata:
+  source_file: "Documents/foundations/pricing-strategy.md"
+  version: "1.0"
+  last_updated: "January 12, 2026"
+  business_name: "PlebTest"
+
+philosophy:
+  statement: "Price for the decision, not the tool. Each test that kills a bad idea early saves months of wasted building. We charge a fraction of what one wrong decision costs."
+  principles:
+    - name: "Value-based, not cost-based"
+      description: "Price reflects decisions accelerated, not compute consumed"
+    - name: "Low barrier, clear path up"
+      description: "Solo founders can start at coffee-budget pricing; power users get volume"
+    - name: "Usage-aligned growth"
+      description: "You pay more only when you need more (ideas to test, depth of analysis)"
+    - name: "No punishment for success"
+      description: "Unlimited ideas explored within tier; pay for capacity, not outcomes"
+
+tiers:
+  - name: "Solo"
+    price_monthly: 9.95
+    price_annual: null
+    currency: "USD"
+    primary_metric:
+      name: "Products"
+      limit: 1
+    secondary_metric:
+      name: "Tests/Month"
+      limit: 10
+    target_persona: "Side-hustle builder with ONE idea to validate"
+    stage: "Entry"
+    job_to_be_done: "Validate your one big idea"
+    why_exists: "Entry point. Prove the value before committing more."
+    overt_benefits:
+      - "Validate your one big idea"
+      - "Kill it or green-light it in an hour"
+      - "Less than a coffee a week"
+    fomo:
+      - feature: "Only 1 product"
+        cost: "Got a second idea? You'll have to delete your first to test it."
+      - feature: "10 tests/month"
+        cost: "Run out mid-month? You wait."
+    upgrade_trigger:
+      message: "Got another idea brewing? Growth lets you test 3 at once - find your winner faster."
+
+  - name: "Growth"
+    price_monthly: 19.95
+    price_annual: null
+    currency: "USD"
+    primary_metric:
+      name: "Products"
+      limit: 3
+    secondary_metric:
+      name: "Tests/Month"
+      limit: 30
+    target_persona: "Builder with multiple ideas, wants to find the winner"
+    stage: "Expansion"
+    job_to_be_done: "Compare ideas head-to-head. Kill 2, build 1."
+    why_exists: "Compare ideas head-to-head. Kill 2, build 1."
+    overt_benefits:
+      - "Test 3 ideas, pick the winner"
+      - "Enough volume to iterate and refine"
+      - "Find your best idea, not just validate your first"
+    fomo:
+      - feature: "Only 3 products"
+        cost: "Idea #4 just hit you? No room to test it."
+      - feature: "30 tests/month"
+        cost: "Deep validation on multiple ideas burns through this."
+    upgrade_trigger:
+      message: "Testing more than 3 ideas? Scale gives you room to run - 10 products, 100 tests."
+
+  - name: "Scale"
+    price_monthly: 29.95
+    price_annual: null
+    currency: "USD"
+    primary_metric:
+      name: "Products"
+      limit: 10
+    secondary_metric:
+      name: "Tests/Month"
+      limit: 100
+    target_persona: "Serial builder, rapid-fire validation"
+    stage: "Power Use"
+    job_to_be_done: "Rapid-fire validation across your idea backlog"
+    why_exists: "For builders who generate ideas faster than they can build them. Kill fast, find winners faster."
+    overt_benefits:
+      - "Rapid-fire validation across your idea backlog"
+      - "Never wait to test the next idea"
+      - "Volume pricing for serious builders"
+    fomo:
+      - feature: "10 products max"
+        cost: "10 ideas deep and counting? You'll need more slots."
+      - feature: "100 tests/month"
+        cost: "Heavy validation month? 100 tests goes faster than you think."
+    upgrade_trigger:
+      message: "Validating for clients or running an idea factory? Pro gives you 20 products and 200 tests."
+
+  - name: "Pro"
+    price_monthly: 49.95
+    price_annual: null
+    currency: "USD"
+    primary_metric:
+      name: "Products"
+      limit: 20
+    secondary_metric:
+      name: "Tests/Month"
+      limit: 200
+    target_persona: "Power user, consultant, or agency"
+    stage: "Professional"
+    job_to_be_done: "Validate at agency scale"
+    why_exists: "For people who validate professionally - whether their own portfolio or client ideas."
+    overt_benefits:
+      - "Validate at agency scale"
+      - "Client-ready reports you can share"
+      - "Never hit a ceiling"
+    value_reinforcement:
+      - feature: "20 products"
+        meaning: "Your entire client roster, covered."
+      - feature: "200 tests/month"
+        meaning: "Deep validation on every engagement."
+      - feature: "Top tier"
+        meaning: "You'll never outgrow this."
+
+product_level_marketing_physics:
+  dramatic_difference:
+    the_value: "Answers most founders never get - without losing money to find out the hard way"
+    the_speed: "Minutes, not months"
+    the_mechanism: "A cast of thousands of AI personas, each designed to challenge your idea from a different angle"
+    one_liner: "Get the market truth that costs other founders months and thousands of dollars - in minutes, from thousands of AI personas built to find the holes."
+
+  overt_benefits:
+    primary: "Know whether to kill, pivot, or build - before you waste months guessing"
+    supporting:
+      - "Clear the duds in an hour - stop building things nobody wants"
+      - "Find your winner - test multiple ideas, pick the one worth building"
+      - "No phone calls required - validate without talking to strangers"
+      - "Feedback that finds the holes - not flattery that hides them"
+      - "Prepared if you DO talk - real interviews go better when you already know the objections"
+
+  reasons_to_believe:
+    - name: "The mechanism"
+      evidence: "Each persona starts from YOUR ICP, then we tune personality, psychographics, and demographics - creating a representative population that unlocks the genius of the market"
+    - name: "Practitioner-built"
+      evidence: "Jamie built PlebTest because he needed it - his income depends on it working"
+    - name: "Anti-sycophancy by design"
+      evidence: "The AI is engineered to challenge, not confirm"
+    - name: "Built in public"
+      evidence: "Watch Jamie use PlebTest on his own ideas - full transparency"
+    - name: "Risk reversal"
+      evidence: "7-day free trial + money-back guarantee"
+
+  kitchen_logic:
+    population_building: "Your ICP as the seed. Thousands of trait variations as the population. The genius of crowds - without the interviews."
+    dud_detection: "When personas consistently poke holes, you've got a dud. Kill it fast, move on."
+    diamond_discovery: "When personas love the problem but hate your solution - that's not a dud, that's a pivot. The simulation shows you what they actually want, so you can twist your idea into something they'd pay for."
+    one_liner: "Kill the duds. Pivot the rough diamonds. Build the winners."
+
+  future_proof_points:
+    - "Testimonials: 'X founders validated, Y duds killed, Z winners launched'"
+    - "Performance Data: 'Average time to decision: X minutes'"
+
+  fomo:
+    chatgpt_claude: "You get flattery, not feedback. AI assistants are trained to agree - you'll build the wrong thing with a smile on your face."
+    friends_family: "They love you too much to tell you it's a dud. You'll waste months to discover what they wouldn't say."
+    nothing: "42% of startups fail from no market need. That's the bet you're making."
+    diy_cold_calls: "You'll avoid them forever, or do 3 awkward calls and quit. The anxiety wins."
+
+competitive_comparison:
+  alternatives:
+    - name: "DIY cold calls"
+      cost: "25-50 hours + anxiety"
+      what_you_get: "$1,250-$2,500 of your time for 10-20 calls"
+    - name: "Synthetic Users"
+      cost: "$2-27/interview"
+      what_you_get: "Per-interview pricing adds up fast"
+    - name: "Ask Rally"
+      cost: "$20-500/mo"
+      what_you_get: "Focus groups - opinions, not validation"
+    - name: "ValidatorAI"
+      cost: "Free-$29/mo"
+      what_you_get: "Static reports, no simulation, sycophantic"
+    - name: "ChatGPT/Claude"
+      cost: "$20/mo"
+      what_you_get: "Flattery, not feedback"
+    - name: "Build and pray"
+      cost: "$0 upfront"
+      what_you_get: "3-6 months wasted on wrong idea"
+
+  anchor: "Other founders waste 3-6 months and thousands of dollars building the wrong thing. You spend $9.95 and one hour."
+
+upgrade_triggers:
+  - transition: "Solo → Growth"
+    signal: "Second idea added to backlog"
+    message: "Got another idea brewing? Growth lets you test 3 at once."
+  - transition: "Solo → Growth"
+    signal: "Hit 10 test limit mid-month"
+    message: "Validating fast - good sign. Growth unlocks 30 tests/month."
+  - transition: "Solo → Growth"
+    signal: "Proactive (usage pattern)"
+    message: "You've tested 2 ideas this month. Growth users test 5."
+  - transition: "Growth → Scale"
+    signal: "4th idea waiting to be tested"
+    message: "Idea #4 just hit you? Scale gives you room for 10."
+  - transition: "Growth → Scale"
+    signal: "Burning through 30 tests fast"
+    message: "Validating hard? Scale gives you 100 tests/month."
+  - transition: "Scale → Pro"
+    signal: "Testing for clients or team"
+    message: "Validating for others? Pro gives you 20 products."
+  - transition: "Scale → Pro"
+    signal: "100 tests not enough"
+    message: "Need more volume? Pro doubles your capacity."
+
+objection_handling:
+  - objection: "Can AI really simulate real customers?"
+    response: "It can really kill duds in an hour and find the pivot you'd miss. That's what matters."
+  - objection: "Why pay when I can just ask ChatGPT?"
+    response: "ChatGPT is trained to agree with you. PlebTest is built to challenge you. One makes you feel good, the other makes you ready."
+  - objection: "Am I a bad founder for not doing real interviews?"
+    response: "You're a founder who wants to be prepared. That's not lazy - that's smart."
+  - objection: "What if it says my idea is bad and it's wrong?"
+    response: "Then you're out an hour and a coffee. But if it's right, you just saved 3-6 months."
+  - objection: "Is this just validation theater for investors?"
+    response: "Investors see through theater. This gives you real objections to address - that's what they want to hear."
+
+value_ladder:
+  - stage: "Entry"
+    tier: "Solo"
+    behavior: "Validate one idea"
+    next_step: "Hit limit or get second idea → Growth"
+  - stage: "Expansion"
+    tier: "Growth"
+    behavior: "Compare multiple ideas"
+    next_step: "Need more slots or volume → Scale"
+  - stage: "Power Use"
+    tier: "Scale"
+    behavior: "Rapid-fire validation"
+    next_step: "Client work or max volume → Pro"
+  - stage: "Professional"
+    tier: "Pro"
+    behavior: "Agency-scale validation"
+    next_step: "Ceiling reached - retain"
+
+progression_logic:
+  - "Each tier ~2x price, ~3x capacity"
+  - "Upgrades feel earned, not forced"
+  - "Value increases faster than price"

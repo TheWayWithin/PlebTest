@@ -1,0 +1,294 @@
+# PlebTest ICP/Personas Extraction
+# Source: Documents/foundations/client-success-blueprint.md
+# Extracted: 2026-01-19
+# Mode: MAPPING
+
+metadata:
+  source_file: "Documents/foundations/client-success-blueprint.md"
+  version: "2.0"
+  last_updated: "January 10, 2026"
+  business_name: "PlebTest"
+
+context:
+  document_purpose: "Defines who PlebTest serves, what success looks like for them, and how to identify when someone is a great fit."
+  focus: "Depth over breadth. Better to serve a narrow market exceptionally than to be mediocre for everyone."
+
+primary_persona:
+  name: "The Builder"
+  archetype: "Technical Solo Founder"
+  tagline: "Would rather code than cold-call."
+
+  demographics:
+    role: "Developer, engineer, technical founder"
+    business_stage: "Solo or very early stage (0-2 people)"
+    funding_status: "Bootstrapping or considering external investment"
+    income_source: "Day job, freelance, or early product revenue"
+    geography: "Global - primarily English-speaking markets"
+
+  psychographics:
+    identity: "Identifies as a 'maker' or 'builder' - shipping is the goal"
+    validation_attitude: "Knows validation matters, but dreads the human part"
+    social_preferences: "Prefers async communication over real-time calls"
+    risk_tolerance: "Willing to invest time building, but anxious about social risk"
+    information_processing: "Data-driven decision maker - wants evidence, not gut feels"
+
+  goals:
+    - "Ship products people actually want"
+    - "Avoid wasting months building the wrong thing"
+    - "Validate without painful cold calls"
+    - "Know when to pivot vs. kill vs. build"
+
+  pain_points:
+    - severity: "critical"
+      pain: "Would rather code than cold-call - so they skip validation entirely"
+    - severity: "critical"
+      pain: "Paralyzed by phone anxiety - even thinking about calls creates dread"
+    - severity: "high"
+      pain: "Fears rejection from strangers - much easier to hide behind the keyboard"
+    - severity: "high"
+      pain: "Has built things nobody wanted before - remembers the sting"
+    - severity: "medium"
+      pain: "Knows ChatGPT/friends give sycophantic feedback - wants honest challenge"
+
+  current_workarounds:
+    - workaround: "Asking friends/family"
+      limitation: "They're too nice, tell you what you want to hear"
+    - workaround: "Asking ChatGPT"
+      limitation: "Sycophantic by design - confirms your idea, doesn't challenge it"
+    - workaround: "Building and praying"
+      limitation: "Months wasted when the market says 'no' at launch"
+    - workaround: "Occasional cold emails"
+      limitation: "Response rates are brutal - easier to skip"
+    - workaround: "Not validating at all"
+      limitation: "Just vibes and hope - usually ends badly"
+
+  tech_savviness: "High"
+  willingness_to_pay: "$10-50/month for validation tools"
+  price_sensitivity: "Moderate - will pay for real value, skeptical of fluff"
+
+  where_found:
+    - "Twitter/X #buildinpublic community"
+    - "Indie Hackers forum"
+    - "Hacker News"
+    - "Reddit (r/startups, r/SideProject)"
+    - "Dev-focused Discord servers"
+    - "Product Hunt"
+
+  buying_signals:
+    - "Has launched something that failed (or is afraid to launch)"
+    - "Building something now and feeling uncertain"
+    - "Talks about validation but admits they haven't done any"
+    - "Asks 'how do I know if anyone wants this?'"
+    - "Has phone anxiety they'll admit to"
+
+  quotes:
+    - "I'd rather build ten MVPs than make one cold call."
+    - "I know I should talk to customers, but I just... don't."
+    - "ChatGPT just tells me what I want to hear."
+    - "I've wasted months on ideas nobody wanted before. Never again."
+
+secondary_persona:
+  name: "The Night-Owl"
+  archetype: "Side-Hustle Optimizer"
+  tagline: "Building after hours, validating never."
+
+  demographics:
+    role: "Full-time employed, building on the side"
+    business_stage: "Pre-revenue side project"
+    schedule: "Evenings and weekends only"
+    income_source: "Stable day job income"
+
+  psychographics:
+    validation_attitude: "Wants to validate but can't coordinate with strangers' schedules"
+    time_constraints: "Every hour is precious - no room for async back-and-forth"
+    risk_tolerance: "Lower - has more to lose if side project consumes day job energy"
+
+  goals:
+    - "Validate ideas in evenings/weekends without disrupting day job"
+    - "Move fast in limited available hours"
+    - "Build confidence before quitting job"
+
+  pain_points:
+    - severity: "critical"
+      pain: "Can't schedule calls during business hours - prospects are at work when they're free"
+    - severity: "high"
+      pain: "Limited time, needs async solutions - can't chase people for responses"
+    - severity: "high"
+      pain: "Validation feels like a full-time job on top of their full-time job"
+
+  current_workarounds:
+    - workaround: "Skipping validation entirely"
+      limitation: "Just build and hope"
+    - workaround: "Weekend cold emails"
+      limitation: "Low response rates, slow progress"
+    - workaround: "Social media polls"
+      limitation: "Biased audience, low signal"
+
+  tech_savviness: "Medium-High"
+  willingness_to_pay: "$10-20/month (cost-conscious)"
+
+  where_found:
+    - "Same as Builder - but likely lurking more than posting"
+    - "Twitter late at night"
+    - "Indie Hackers forum threads about side projects"
+
+tertiary_persona:
+  name: "The Expert"
+  archetype: "Anxious First-Time Founder"
+  tagline: "Strong expertise, weak confidence."
+
+  demographics:
+    role: "Domain expert starting first business"
+    background: "Often leaving corporate"
+    expertise_level: "Deep in their domain, shallow in startups"
+
+  psychographics:
+    validation_attitude: "Knows they should validate, terrified of looking stupid"
+    identity: "Expert in their field - founder identity is new and fragile"
+    self_doubt: "Crippling imposter syndrome around startup skills"
+
+  goals:
+    - "Test ideas in a safe environment"
+    - "Build confidence before going public"
+    - "Validate domain expertise translates to viable business"
+
+  pain_points:
+    - severity: "critical"
+      pain: "Strong expertise, weak confidence - knows the domain, doubts the business"
+    - severity: "critical"
+      pain: "Crippling imposter syndrome - fears being 'exposed' as not a 'real' founder"
+    - severity: "high"
+      pain: "Would rather stay quiet than risk looking stupid in front of potential customers"
+
+  current_workarounds:
+    - workaround: "Endless research mode"
+      limitation: "Never actually launches"
+    - workaround: "Asking former colleagues"
+      limitation: "Too close to give honest feedback"
+    - workaround: "Building 'the perfect product' first"
+      limitation: "Perfectionism is procrastination"
+
+  tech_savviness: "Medium"
+  willingness_to_pay: "$10-20/month"
+
+  where_found:
+    - "LinkedIn"
+    - "Industry-specific forums"
+    - "Facebook groups for entrepreneurs"
+
+anti_personas:
+  - name: "The Networker"
+    description: "Enjoys networking and cold outreach"
+    why_not_a_fit: "Doesn't need PlebTest - they'll just pick up the phone"
+
+  - name: "The Validator"
+    description: "Wants validation theater for investors"
+    why_not_a_fit: "Looking for a rubber stamp, not honest feedback. Will be disappointed by Kill verdicts."
+
+  - name: "The Explorer"
+    description: "No specific idea yet - just 'exploring'"
+    why_not_a_fit: "Needs a business idea first. PlebTest validates existing ideas, doesn't generate new ones."
+
+  - name: "The Defender"
+    description: "Defensive about their idea, can't handle truth"
+    why_not_a_fit: "Will blame the tool when they get a Kill verdict. Not ready for honest feedback."
+
+jobs_to_be_done:
+  - job: "When I have a new business idea, I want to know if it's worth building - before I invest months."
+    context: "Idea validation"
+    desired_outcome: "Clear Kill/Pivot/Build verdict with confidence"
+
+  - job: "When I'm stuck on whether to pivot or persist, I want honest feedback - not cheerleading."
+    context: "Decision paralysis"
+    desired_outcome: "Evidence-based direction to move forward"
+
+  - job: "When I'm too anxious to cold-call strangers, I want validation that doesn't require human interaction."
+    context: "Phone anxiety"
+    desired_outcome: "Full validation without talking to anyone"
+
+  - job: "When I'm building in my limited spare time, I want fast answers that fit my schedule."
+    context: "Time constraints"
+    desired_outcome: "Async validation that works evenings/weekends"
+
+  - job: "When I've been burned before by building the wrong thing, I want to protect myself from repeating that mistake."
+    context: "Past failure"
+    desired_outcome: "Confidence that this time is different"
+
+success_definitions:
+  immediate_success:
+    timeframe: "First 30 days"
+    indicators:
+      - "Killed first dud idea (and felt relief, not disappointment)"
+      - "Got a Build verdict and felt confident to proceed"
+      - "Shared a verdict card on social media"
+      - "Said 'I wish I had this before I built [failed product]'"
+
+  long_term_success:
+    timeframe: "6+ months"
+    indicators:
+      - "Validated multiple ideas, launched the winner"
+      - "Using PlebTest as standard part of their process"
+      - "Referring other founders"
+      - "Has a successful product that PlebTest helped validate"
+
+objection_handling:
+  - objection: "I can just ask ChatGPT for free"
+    response: "ChatGPT is designed to agree with you. PlebTest is designed to challenge you. That's why we catch the duds ChatGPT would have encouraged you to build."
+
+  - objection: "AI can't really simulate real customers"
+    response: "You're right - it's not the same as a real conversation. But it's a lot better than no conversation. And it catches 80% of the obvious problems that would have sunk your idea anyway."
+
+  - objection: "I should just do real customer interviews"
+    response: "Yes! And you probably should eventually. But if you're not doing them now, isn't something better than nothing? PlebTest gets you ready for those conversations - or helps you decide they're not worth having."
+
+  - objection: "What if it tells me to kill an idea that would have worked?"
+    response: "Then you're out 10 minutes and $10. Compare that to 3 months building something nobody wants. The asymmetric risk is in your favor."
+
+ideal_customer_profile:
+  demographics:
+    role: "Technical founder, developer, or maker"
+    business_stage: "Pre-revenue or early revenue"
+    team_size: "Solo or 1-2 people"
+    funding: "Bootstrapped or pre-funding"
+
+  behavioral:
+    - "Has at least one specific idea they want to validate"
+    - "Admits they avoid or dread customer calls"
+    - "Values speed and efficiency over perfection"
+    - "Open to honest feedback, even if it hurts"
+
+  psychographic:
+    - "Builder identity - shipping is the goal"
+    - "Data-driven - wants evidence, not vibes"
+    - "Time-conscious - every hour matters"
+    - "Has been burned before (or fears being burned)"
+
+fit_score_criteria:
+  score_10:
+    description: "Perfect fit"
+    criteria:
+      - "Technical founder, admits phone anxiety"
+      - "Has a specific idea right now"
+      - "Has failed before or explicitly fears failure"
+      - "Active in builder communities"
+
+  score_7_9:
+    description: "Great fit"
+    criteria:
+      - "Matches primary persona"
+      - "Open to AI-assisted validation"
+      - "Time-constrained"
+
+  score_4_6:
+    description: "Okay fit"
+    criteria:
+      - "Matches secondary or tertiary persona"
+      - "Might need convincing on AI value"
+
+  score_1_3:
+    description: "Poor fit"
+    criteria:
+      - "Enjoys networking (doesn't need us)"
+      - "No specific idea yet"
+      - "Looking for validation theater"
+      - "Defensive about ideas"

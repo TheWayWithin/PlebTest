@@ -1,0 +1,146 @@
+# PlebTest Vision Extraction
+# Source: Documents/foundations/vision-mission.md
+# Extracted: 2026-01-19
+# Mode: SYNTHESIS
+# QA: 4-LLM consensus review completed 2026-01-19
+
+metadata:
+  source_file: "Documents/foundations/vision-mission.md"
+  version: "3.0"
+  last_updated: "January 8, 2026"
+  business_name: "PlebTest"
+
+vision:
+  statement: "The fear of customer discovery no longer stops anyone. Founders launch knowing, not hoping."
+  elaboration: "Too many good ideas die because their founders are too nervous to pick up the phone. PlebTest changes that by giving founders real answers through AI-powered customer simulations - creating a psychological shield that allows them to validate ideas with brutal honesty and without social anxiety. Move forward prepared, not paralyzed."
+
+mission:
+  statement: "I give founders who dread picking up the phone - or are simply too time-poor - a way to kill bad ideas fast, so they can finally get to the great one."
+  elaboration: "PlebTest uses AI-powered customer simulations to stress-test your assumptions with brutal honesty. Spectator Mode means you never have to talk - just watch, learn, and decide. Technology gets you to 'no' faster. Guardrails help you trust the answer. And thoughtful design makes it painless to hear."
+
+name_meaning:
+  explanation: "The name 'PlebTest' reflects my core belief: true market genius emerges not from the isolated founder, but from the collective, honest feedback of the masses (the 'plebs'), which my AI simulates at scale."
+
+hedgehog_concept:
+  passion: "Helping solopreneurs kill bad ideas faster - so they can succeed sooner on great ones. I build this because I need it myself."
+  best_in_world_at: "Market genius without the phone calls."
+  economic_engine: "Profit per founder across their lifetime of questions."
+  strategic_sweet_spot: "The full genius of the market - for founders who'll never pick up the phone."
+
+value_proposition:
+  for: "founders who'll never pick up the phone - or are too time-poor to do it right"
+  who: "need to validate ideas but dread talking to strangers"
+  product_is: "AI that gives your market a voice"
+  that: "tells you which ideas to kill, pivot, or build - with a decision-ready report you can act on today"
+  unlike: "building and praying - or never launching at all"
+  because:
+    - "I built it for myself - a founder who can't pick up the phone, with a painful history of building blind and sticking with lost causes too long"
+    - "AI simulations challenge your assumptions with brutal honesty"
+    - "The anti-sycophancy engine won't just tell you what you want to hear"
+
+marketing_physics:
+  overt_benefits:
+    - "Clear the duds fast. Find your winner."
+    - "Discover the pivot that turns your dud into a winner."
+    - "Without talking to anyone."
+    - "Get honest feedback, not flattery."
+    - "Save months by not building the wrong thing."
+    - "Build confidence to proceed when it's right."
+    - "If you do talk to real people, you're prepared."
+  dramatic_difference: "Built by a founder who can't pick up the phone - for founders who can't pick up the phone. I use PlebTest myself to tap into the genius of the market, kill my duds, and push my winners to life-changing success."
+  reasons_to_believe:
+    - "I built it for myself - my income depends on it working"
+    - "Anti-sycophancy engine built in - it won't flatter you"
+    - "Built in public - watch me use it"
+    - "Money back guarantee"
+    - "Try it free for 7 days - no risk"
+    - "Every feature came from real pain - I needed it first"
+  kitchen_logic:
+    kills_duds: "Simulated customers tell you what's wrong - fast - so you don't waste months finding out the hard way"
+    finds_winners: "When they can't poke holes, interest runs high, and they'd buy it and tell others - you've got a winner"
+    finds_pivots: "When they love the problem but hate your solution - that's your pivot point. The simulation shows you what they actually want, so you can twist your idea into something they'd pay for"
+
+strategic_positioning:
+  market_position: "Market intelligence for founders who'll never pick up the phone."
+  competitive_advantages:
+    - "Practitioner-built - I am the customer"
+    - "Anti-sycophancy by design - honesty is baked in, not bolted on. My proprietary engine is my moat."
+    - "Spectator Mode - no one else removes the founder from the conversation"
+  customer_promise: "You'll know which ideas to kill and which to build."
+  brand_essence: "Kill duds. Find winners."
+
+bhag:
+  timeframe: "5-Year Vision (By 2031)"
+  targets:
+    - metric: "Founders using PlebTest"
+      value: 50000
+    - metric: "ARR"
+      value: 7500000
+      unit: "USD"
+    - metric: "Valuation"
+      value: 50000000
+      unit: "USD"
+    - metric: "Products launched using PlebTest"
+      value: 10000
+    - metric: "Unicorns helped launch"
+      value: 10
+    - metric: "Billion-dollar solopreneurs"
+      value: 2
+    - metric: "Winners found"
+      value: "thousands"
+      note: "because PlebTest killed the duds first"
+  why_it_matters: "Every founder helped is someone who didn't waste years on the wrong idea. Every dud killed fast is energy freed up for the winner waiting on the other side. PlebTest isn't just a tool - it's the bridge between stuck and launched for founders who would otherwise never validate at all."
+
+core_values:
+  - name: "Brutal Honesty"
+    principle: "I tell the truth, especially when it's hard to hear."
+  - name: "Embrace the No"
+    principle: "Every 'no' is a gift of clarity. Killing duds is progress. Failure is information, not identity."
+  - name: "The Market is the Genius"
+    principle: "I connect you to it. I'm not the oracle."
+  - name: "Speed to Truth"
+    principle: "The faster you know, the faster you can move on or double down."
+  - name: "Accessibility"
+    principle: "Customer discovery should be possible for everyone, not just extroverts."
+
+success_indicators:
+  year_1:
+    timeframe: "2026"
+    metrics:
+      - name: "Founder count"
+        target: 1000
+        description: "paying founders"
+      - name: "ARR"
+        target: 250000
+        unit: "USD"
+      - name: "Trial conversion"
+        target: 60
+        unit: "percent"
+        description: "of trial users convert to paid"
+      - name: "Retention"
+        target: 70
+        unit: "percent"
+        description: "of paid users still active after 6 months"
+      - name: "Success stories"
+        target: 20
+        description: "publicly shared case studies (kill, pivot, or launch)"
+      - name: "Engagement"
+        target: 50
+        unit: "percent"
+        description: "of paying users have validated more than one idea"
+  year_5:
+    timeframe: "By 2031"
+    metrics:
+      - name: "Founder count"
+        target: 50000
+      - name: "ARR"
+        target: 7500000
+        unit: "USD"
+      - name: "Products launched"
+        target: 10000
+      - name: "Unicorns helped"
+        target: 10
+      - name: "Billion-dollar solopreneurs"
+        target: 2
+
+foundation_summary: "This vision and mission represent the strategic foundation for PlebTest - built by a founder who can't pick up the phone, for founders who can't pick up the phone. Kill duds. Find winners."
