@@ -133,8 +133,9 @@ export function DemoPreview() {
           <Button
             size="lg"
             className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white px-8"
+            asChild
           >
-            Try It Now - It's Free
+            <a href="#waitlist">Join the Waitlist</a>
           </Button>
         </div>
       </div>
