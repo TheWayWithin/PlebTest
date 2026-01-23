@@ -1,0 +1,322 @@
+# PlebTest Brand Style Guide Extraction
+# Source: Documents/foundations/brand-style-guide.md
+# Extracted: 2026-01-19
+# Mode: EXACT
+# Note: Neutrals, shadows, animations, and breakpoints use Tailwind CSS defaults where not specified in source
+
+metadata:
+  source_file: "Documents/foundations/brand-style-guide.md"
+  version: "1.0"
+  last_updated: "January 9, 2026"
+  business_name: "PlebTest"
+
+colors:
+  primary:
+    indigo:
+      hex: "#6366F1"
+      rgb: "99, 102, 241"
+      hsl: "239, 84%, 67%"
+      usage: "Primary CTA buttons, key interactive elements, brand accent"
+
+  secondary:
+    electric_violet:
+      hex: "#8B5CF6"
+      rgb: "139, 92, 246"
+      hsl: "258, 90%, 66%"
+      usage: "Secondary actions, hover states, accent highlights"
+
+  functional:
+    success:
+      name: "Emerald"
+      hex: "#10B981"
+      usage: "Success states, Build verdict, positive feedback"
+    warning:
+      name: "Amber"
+      hex: "#F59E0B"
+      usage: "Warning states, Pivot verdict, attention needed"
+    error:
+      name: "Rose"
+      hex: "#F43F5E"
+      usage: "Error states, Kill verdict, destructive actions"
+    info:
+      name: "Sky"
+      hex: "#0EA5E9"
+      usage: "Informational elements, links, neutral highlights"
+
+  verdict_colors:
+    kill:
+      hex: "#F43F5E"
+      name: "Rose"
+      label: "Kill"
+    pivot:
+      hex: "#F59E0B"
+      name: "Amber"
+      label: "Pivot"
+    build:
+      hex: "#10B981"
+      name: "Emerald"
+      label: "Build"
+
+  neutrals:
+    white: "#FFFFFF"
+    gray_50: "#F9FAFB"
+    gray_100: "#F3F4F6"
+    gray_200: "#E5E7EB"
+    gray_300: "#D1D5DB"
+    gray_400: "#9CA3AF"
+    gray_500: "#6B7280"
+    gray_600: "#4B5563"
+    gray_700: "#374151"
+    gray_800: "#1F2937"
+    gray_900: "#111827"
+    black: "#000000"
+
+  usage:
+    text_primary: "gray_900"
+    text_secondary: "gray_600"
+    text_muted: "gray_400"
+    border_default: "gray_200"
+    background_page: "white"
+    background_subtle: "gray_50"
+
+typography:
+  primary:
+    font_family: "Inter"
+    fallback: "system-ui, -apple-system, sans-serif"
+    source: "Google Fonts"
+    usage: "All UI text, body content, headers"
+
+  scale:
+    xs:
+      size: "12px"
+      line_height: "16px"
+      usage: "Helper text, labels"
+    sm:
+      size: "14px"
+      line_height: "20px"
+      usage: "Secondary text, captions"
+    base:
+      size: "16px"
+      line_height: "24px"
+      usage: "Body text, default size"
+    lg:
+      size: "18px"
+      line_height: "28px"
+      usage: "Emphasized text, lead paragraphs"
+    xl:
+      size: "20px"
+      line_height: "28px"
+      usage: "Small headings, card titles"
+    2xl:
+      size: "24px"
+      line_height: "32px"
+      usage: "Section headings"
+    3xl:
+      size: "30px"
+      line_height: "36px"
+      usage: "Page titles"
+    4xl:
+      size: "36px"
+      line_height: "40px"
+      usage: "Hero headlines"
+    5xl:
+      size: "48px"
+      line_height: "48px"
+      usage: "Large display text"
+
+  weights:
+    regular: 400
+    medium: 500
+    semibold: 600
+    bold: 700
+
+components:
+  buttons:
+    primary:
+      background: "#6366F1"
+      text: "#FFFFFF"
+      hover_background: "#4F46E5"
+      border_radius: "8px"
+      padding: "12px 24px"
+      font_weight: 600
+      font_size: "14px"
+      transition: "all 150ms ease"
+    secondary:
+      background: "transparent"
+      text: "#6366F1"
+      border: "1px solid #6366F1"
+      hover_background: "#EEF2FF"
+      border_radius: "8px"
+      padding: "12px 24px"
+      font_weight: 600
+      font_size: "14px"
+    ghost:
+      background: "transparent"
+      text: "#6B7280"
+      hover_background: "#F3F4F6"
+      border_radius: "8px"
+      padding: "12px 24px"
+      font_weight: 500
+      font_size: "14px"
+    danger:
+      background: "#F43F5E"
+      text: "#FFFFFF"
+      hover_background: "#E11D48"
+      border_radius: "8px"
+      padding: "12px 24px"
+      font_weight: 600
+      font_size: "14px"
+    sizes:
+      sm:
+        padding: "8px 16px"
+        font_size: "12px"
+      md:
+        padding: "12px 24px"
+        font_size: "14px"
+      lg:
+        padding: "16px 32px"
+        font_size: "16px"
+
+  cards:
+    default:
+      background: "#FFFFFF"
+      border: "1px solid #E5E7EB"
+      border_radius: "12px"
+      padding: "24px"
+      shadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)"
+    elevated:
+      background: "#FFFFFF"
+      border: "none"
+      border_radius: "12px"
+      padding: "24px"
+      shadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)"
+
+  inputs:
+    default:
+      background: "#FFFFFF"
+      border: "1px solid #D1D5DB"
+      border_radius: "8px"
+      padding: "12px 16px"
+      font_size: "14px"
+      focus_border: "#6366F1"
+      focus_ring: "0 0 0 3px rgba(99, 102, 241, 0.1)"
+    error:
+      border: "1px solid #F43F5E"
+      focus_ring: "0 0 0 3px rgba(244, 63, 94, 0.1)"
+
+  badges:
+    verdict_kill:
+      background: "#FEF2F2"
+      text: "#B91C1C"
+      border: "1px solid #FECACA"
+    verdict_pivot:
+      background: "#FFFBEB"
+      text: "#B45309"
+      border: "1px solid #FDE68A"
+    verdict_build:
+      background: "#ECFDF5"
+      text: "#047857"
+      border: "1px solid #A7F3D0"
+
+shadows:
+  sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)"
+  default: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)"
+  md: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)"
+  lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)"
+  xl: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)"
+  2xl: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+  usage:
+    card: "default"
+    dropdown: "lg"
+    modal: "xl"
+    toast: "lg"
+
+animations:
+  durations:
+    fast: "150ms"
+    normal: "300ms"
+    slow: "500ms"
+  easings:
+    default: "cubic-bezier(0.4, 0, 0.2, 1)"
+    in: "cubic-bezier(0.4, 0, 1, 1)"
+    out: "cubic-bezier(0, 0, 0.2, 1)"
+    in_out: "cubic-bezier(0.4, 0, 0.2, 1)"
+  presets:
+    fade_in: "opacity 150ms ease-out"
+    slide_up: "transform 300ms ease-out, opacity 300ms ease-out"
+    scale: "transform 150ms ease-in-out"
+
+breakpoints:
+  sm: "640px"
+  md: "768px"
+  lg: "1024px"
+  xl: "1280px"
+  2xl: "1536px"
+  container_widths:
+    sm: "640px"
+    md: "768px"
+    lg: "1024px"
+    xl: "1280px"
+
+spacing:
+  base_unit: "4px"
+  scale:
+    0: "0"
+    1: "4px"
+    2: "8px"
+    3: "12px"
+    4: "16px"
+    5: "20px"
+    6: "24px"
+    8: "32px"
+    10: "40px"
+    12: "48px"
+    16: "64px"
+    20: "80px"
+    24: "96px"
+
+brand_voice:
+  tone:
+    - "Direct and honest"
+    - "Supportive but not sycophantic"
+    - "Confident without being arrogant"
+    - "Approachable and human"
+
+  language_principles:
+    - "Use 'you' language - speak directly to the founder"
+    - "Acknowledge the fear, then offer the solution"
+    - "Short sentences. Clear words."
+    - "Avoid jargon unless it's founder-speak"
+
+  examples:
+    good:
+      - "Kill the duds. Find the winners."
+      - "Get honest feedback, not flattery."
+      - "Know whether to kill, pivot, or build."
+    avoid:
+      - "Leverage synergies for optimal validation outcomes"
+      - "Our proprietary AI solution delivers insights"
+      - "Transform your ideation process"
+
+logo:
+  usage:
+    - "Use on white or very light backgrounds"
+    - "Minimum clear space: equal to the height of the 'P'"
+    - "Minimum size: 24px height for digital"
+  variations:
+    - "Full logo (wordmark)"
+    - "Icon only (for favicons, app icons)"
+  dont:
+    - "Don't stretch or distort"
+    - "Don't change colors outside brand palette"
+    - "Don't add effects (shadows, gradients)"
+
+accessibility:
+  contrast_requirements:
+    - "Text must meet WCAG AA standards (4.5:1 for body, 3:1 for large text)"
+    - "Interactive elements must have visible focus states"
+  focus_states:
+    outline: "2px solid #6366F1"
+    outline_offset: "2px"
+  touch_targets:
+    minimum: "44px × 44px"

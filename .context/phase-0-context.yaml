@@ -1,0 +1,92 @@
+# PlebTest Phase 0 Context
+# Phase: Landing Page
+# Generated: 2026-01-21
+# Status: not_started
+
+phase_id: phase-0
+phase_name: "Landing Page"
+status: not_started
+
+context:
+  summary: |
+    Phase 0 establishes PlebTest's marketing presence before the product is ready.
+    The goal is to start capturing demand via a waitlist while the core product
+    is being built in Phase 1. This is a quick phase focused on getting live fast.
+
+  key_decisions:
+    - decision: "Minimal landing page first"
+      rationale: "Capture demand early while building the product"
+      alternatives_considered: "Wait for full MVP before any marketing"
+
+    - decision: "PostHog for analytics from day one"
+      rationale: "Track waitlist signups and page engagement"
+      alternatives_considered: "Simple email list only, no analytics"
+
+    - decision: "Railway for hosting (not Vercel)"
+      rationale: "Consistency with Phase 1 infrastructure, no timeout limits"
+      alternatives_considered: "Vercel for static landing page"
+
+  technical_context:
+    stack_decisions:
+      - "Next.js 15 with App Router"
+      - "Tailwind CSS + shadcn/ui"
+      - "Railway hosting"
+      - "PostHog analytics"
+    patterns:
+      - "Static generation for landing page (fast loads)"
+      - "Server action for waitlist submission"
+    constraints:
+      - "Keep it simple - this is a marketing page, not the app"
+      - "No auth required for Phase 0"
+      - "Waitlist can use simple Supabase table or even a service like ConvertKit"
+
+  dependencies:
+    external:
+      - "GitHub account for repository"
+      - "Railway account for hosting"
+      - "Domain plebtest.com configured"
+      - "PostHog account for analytics"
+    internal: []
+
+current_focus:
+  active_task: null
+  blocked_tasks: []
+  completed_tasks: []
+
+handoff_notes:
+  from_previous_phase: null  # This is the first phase
+  for_next_phase:
+    - "Repository structure established"
+    - "Railway deployment pipeline working"
+    - "Domain configuration complete"
+    - "Can begin Phase 1 infrastructure setup"
+
+quality_requirements:
+  gates:
+    - gate: build
+      required: true
+      command: "npm run build"
+    - gate: lighthouse
+      required: true
+      threshold: 90
+      note: "Performance score must be ≥90"
+  acceptance_bar: |
+    Phase 0 is complete when:
+    - Landing page is live at plebtest.com
+    - Waitlist form captures email addresses
+    - Analytics are tracking page views and signups
+    - SSL is working
+    - Page loads in <3 seconds
+
+task_summary:
+  total_tasks: 8
+  by_priority:
+    p0: 6
+    p1: 2
+  by_agent:
+    operator: 3
+    developer: 3
+    designer: 1
+    marketer: 1
+
+estimated_effort: small

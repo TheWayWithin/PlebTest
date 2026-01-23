@@ -1,0 +1,977 @@
+# PlebTest PRD Extraction
+# Source: Documents/foundations/prds/plebtest-prd-v2.md
+# Extracted: 2026-01-19
+# Mode: COMPLETENESS
+# QA: 4-LLM consensus review completed 2026-01-19
+#
+# IMPORTANT FOR AGENTS:
+# This YAML contains architecture, data models, routes, state machines, and business rules.
+# It does NOT contain the detailed acceptance criteria (Given/When/Then test cases).
+# Each feature includes an `acceptance_criteria_count` indicating how many GWT rows exist.
+# 
+# FOR IMPLEMENTATION DETAILS: Agents MUST refer to the source PRD document at:
+#   Documents/foundations/prds/plebtest-prd-v2.md
+# 
+# The PRD contains ~500 GWT acceptance criteria specifying exact behaviors for:
+# - Form validation rules and error messages
+# - Empty/loading/error state handling
+# - Modal confirmations and user flows
+# - Edge cases and retry logic
+#
+# Workflow: Use this YAML for scaffolding → Use PRD for behavioral implementation
+
+metadata:
+  source_file: "Documents/foundations/prds/plebtest-prd-v2.md"
+  version: "2.0"
+  last_updated: "January 18, 2026"
+  status: "Complete"
+  owner: "Jamie"
+
+product:
+  name: "PlebTest"
+  tagline: "Kill duds. Find winners."
+  type: "SaaS"
+  stage: "MVP"
+  target_launch: "February 2026"
+
+  elevator_pitch: "PlebTest gives founders who can't—or won't—pick up the phone a way to validate ideas using AI customer simulations. Get honest feedback from thousands of AI personas built to challenge your assumptions, not confirm them. Know whether to kill, pivot, or build—in minutes, not months."
+
+  target_users: "Solo founders and side-hustle builders who avoid cold calls but need to validate ideas before wasting months building the wrong thing. Technical builders, time-poor founders, and first-timers with phone anxiety."
+
+vision:
+  statement: "The fear of customer discovery no longer stops anyone. Founders launch knowing, not hoping."
+  mission: "I give founders who dread picking up the phone—or are simply too time-poor—a way to kill bad ideas fast, so they can finally get to the great one."
+
+problem_statement:
+  problem: "Founders skip customer validation because talking to strangers is painful. They build blind, discover too late nobody wants it, and waste months on the wrong idea."
+  evidence:
+    - "42% of startups fail from no market need"
+    - "Founders avoid cold calls due to phone anxiety, introversion, or time constraints"
+    - "ChatGPT/friends give sycophantic feedback that confirms bad ideas"
+  impact:
+    - "3-6 months wasted building the wrong thing"
+    - "Runway burned on features nobody wants"
+    - "Winning ideas sit unbuilt while chasing losers"
+
+personas:
+  primary:
+    name: "The Builder"
+    archetype: "Technical Solo Founder"
+    demographics: "Developers, engineers, technical founders. Solo or very early stage (0-2 people)."
+    goals:
+      - "Ship products people actually want"
+      - "Avoid wasting months building the wrong thing"
+    pain_points:
+      - "Would rather code than cold-call"
+      - "Paralyzed by phone anxiety"
+      - "Fears rejection from strangers"
+    tech_savviness: "High"
+    willingness_to_pay: "$10-50/month"
+    where_found:
+      - "Twitter/X #buildinpublic"
+      - "Indie Hackers"
+      - "Hacker News"
+      - "Reddit"
+
+  secondary:
+    name: "The Night-Owl"
+    archetype: "Side-Hustle Optimizer"
+    demographics: "Full-time employed, building on the side. Pre-revenue side project."
+    goals:
+      - "Validate ideas in evenings/weekends without disrupting day job"
+    pain_points:
+      - "Can't schedule calls during business hours"
+      - "Limited time, needs async solutions"
+    tech_savviness: "Medium-High"
+    willingness_to_pay: "$10-20/month"
+
+  tertiary:
+    name: "The Expert"
+    archetype: "Anxious First-Time Founder"
+    demographics: "Domain experts starting their first business. Often leaving corporate."
+    goals:
+      - "Test ideas in a safe environment"
+      - "Build confidence"
+    pain_points:
+      - "Strong expertise, weak confidence"
+      - "Crippling imposter syndrome"
+    tech_savviness: "Medium"
+    willingness_to_pay: "$10-20/month"
+
+  anti_personas:
+    - "Enjoys networking and cold outreach"
+    - "Wants validation theater for investors"
+    - "No specific idea yet—just 'exploring'"
+    - "Defensive about their idea, can't handle truth"
+
+value_proposition:
+  for: "founders who can't—or won't—pick up the phone"
+  who: "need to validate ideas but dread talking to strangers"
+  product_is: "gives your market a voice"
+  that: "tells you which ideas to kill, pivot, or build"
+  unlike: "building and praying, asking ChatGPT, or forcing yourself through painful cold calls"
+  because: "uses AI personas built to challenge your assumptions, not confirm them—so you hear real objections before you build the wrong thing"
+
+success_metrics:
+  primary:
+    - metric: "Paying Founders"
+      target: 1000
+      timeframe: "Year 1 (2026)"
+      measurement: "Stripe subscription count"
+    - metric: "Trial-to-Paid Conversion"
+      target: 60
+      unit: "percent"
+      timeframe: "Ongoing"
+    - metric: "ARR"
+      target: 250000
+      unit: "USD"
+      timeframe: "Year 1 (2026)"
+
+  secondary:
+    - metric: "Time to First Validation"
+      target: 10
+      unit: "minutes"
+      measurement: "Onboarding analytics"
+    - metric: "Monthly Churn"
+      target_max: 8
+      unit: "percent"
+      note: "Source PRD inconsistency: Section 1.5 says <8%, Section 6.2 says <5%. Clarify with Jamie."
+    - metric: "Public Case Studies"
+      target: 20
+      description: "Published kill/pivot/build stories"
+
+  anti_metrics:
+    - "Vanity signups without activation"
+    - "Feature count over core value delivery"
+    - "Enterprise deals before product-market fit"
+
+# NEW SECTION: Product Health Metrics (from PRD Section 6.2)
+product_health_metrics:
+  - metric: "Time to first Risk Score (Quick Fire)"
+    target: "≤60 seconds"
+    measurement: "Onboarding analytics"
+  - metric: "Time to first verdict"
+    target: "≤10 minutes"
+    measurement: "Onboarding analytics"
+  - metric: "Monthly churn"
+    target: "<5%"
+    measurement: "Cancellations / active subscribers"
+    note: "Source PRD inconsistency: Section 1.5 says <8%, Section 6.2 says <5%. Clarify with Jamie."
+  - metric: "Tests per user per month"
+    target: "3+"
+    measurement: "Usage analytics"
+  - metric: "Report share rate"
+    target: "20%+"
+    measurement: "Shares / reports generated"
+  - metric: "NPS"
+    target: "40+"
+    measurement: "In-app survey"
+
+# NEW SECTION: Leading Indicators (from PRD Section 6.3)
+leading_indicators:
+  - indicator: "Waitlist signups"
+    signal: "Pre-launch demand"
+  - indicator: "Quick Fire completions"
+    signal: "Hook effectiveness"
+  - indicator: "Quick Fire → Go Deeper rate"
+    signal: "Value demonstration working"
+  - indicator: "Trial starts"
+    signal: "Top-of-funnel health"
+  - indicator: "Onboarding completion"
+    signal: "First-run experience quality"
+  - indicator: "Second test run"
+    signal: "User finds value, comes back"
+  - indicator: "Upgrade rate"
+    signal: "Users hitting limits = product-market fit"
+
+glossary:
+  - term: "Validation Test"
+    definition: "A single AI simulation session that evaluates an idea against personas"
+    context: "Core user action"
+
+  - term: "Idea"
+    definition: "A business concept the user wants to validate"
+    context: "User creates and manages these"
+
+  - term: "Proposal"
+    definition: "Document with problem, solution, hypotheses, current workarounds"
+    lifecycle: "Draft → Submitted → Testing → Tested → Archived"
+
+  - term: "Persona"
+    definition: "An AI-simulated customer defined by a combination of traits"
+    context: "Generated from user's ICP with trait variations"
+
+  # NEW: Missing glossary term
+  - term: "Trait"
+    definition: "A variable dimension of a persona: demographics, psychographics, or personality (Big Five: openness, conscientiousness, extraversion, agreeableness, neuroticism)"
+    context: "Attributes within Persona entity, not a separate entity"
+
+  - term: "ICP"
+    definition: "Ideal Customer Profile - target customer description"
+    context: "One ICP generates multiple Personas with trait variations"
+
+  - term: "Session"
+    definition: "A single conversation instance between user and one persona"
+    context: "Container for the interactive validation experience"
+
+  - term: "Verdict"
+    definition: "Outcome: Kill (need not validated), Pivot (need validated but proposal doesn't resonate), Build (both validated)"
+    context: "Primary deliverable"
+
+  - term: "Confidence Score"
+    definition: "Certainty level based on persona consensus, score variance, and user engagement quality"
+    context: "Displayed as High/Medium/Low alongside Verdict"
+
+  - term: "Report"
+    definition: "Full output document containing Verdict plus reasoning and evidence"
+    context: "Deliverable users receive after validation"
+
+  - term: "Anti-Sycophancy Engine"
+    definition: "System ensuring personas challenge rather than confirm"
+    user_facing: "Honest Feedback"
+    context: "Core differentiator"
+
+  - term: "Interactive Mode"
+    definition: "Default experience where user actively participates in conversations with personas"
+    context: "Primary validation method"
+
+  - term: "Spectator Mode"
+    definition: "Optional mode for users to watch AI-driven validation without participating"
+    context: "Powerful option for hands-off validation"
+    includes: "Nudge Buttons for intervention"
+
+  - term: "Quick Fire Mode"
+    definition: "Sub-60-second onboarding hook providing a Risk Score from a single sentence input"
+    context: "Fast value demonstration; lead-in to full validation"
+
+  - term: "Assumption Board"
+    definition: "Primary report output showing each assumption, evidence, confidence score, and recommended next step"
+    context: "Core deliverable structure"
+
+  - term: "Reality Check Panel"
+    definition: "Ethical guardrail in report providing 'Minimum Real-World Validation Plan'"
+    context: "Ensures users don't over-rely on AI validation"
+
+  - term: "Pushback Presets"
+    definition: "User-facing control with three modes: The Cheerleader, The Pragmatist, The Critic"
+    context: "Controls Anti-Sycophancy intensity"
+
+  # NEW: Missing glossary term
+  - term: "Pre-Mortem Mode"
+    definition: "Simulation asking 'The product launched and failed. Why?'"
+    context: "Proactive failure analysis"
+
+  # NEW: Missing glossary term
+  - term: "External Injection"
+    definition: "Feature to ground personas in reality via URL scraping or pasted text"
+    context: "Reality-grounding mechanism"
+
+  # NEW: Missing glossary term
+  - term: "Nudge Buttons"
+    definition: "Spectator Mode controls: Pause, Dig Deeper, Move On"
+    context: "User intervention without typing"
+
+  - term: "Iteration"
+    definition: "A version of a proposal after edits post-test, tracking changes and previous verdict"
+    context: "Supports pivot-and-retest workflow"
+
+# NEW SECTION: UI Sitemap (from PRD Section 2.3)
+ui_sitemap:
+  public:
+    - {route: "/", page: "Landing", description: "Marketing page, waitlist capture"}
+    - {route: "/pricing", page: "Pricing", description: "Plan comparison"}
+    - {route: "/login", page: "Login", description: "User authentication"}
+    - {route: "/register", page: "Register", description: "Account creation"}
+    - {route: "/r/:token", page: "Public Report", description: "Shared report (short URL)"}
+  authenticated:
+    - {route: "/onboarding", page: "Onboarding", description: "First-run experience (Quick Fire Mode)"}
+    - {route: "/dashboard", page: "Dashboard", description: "Overview of ideas, recent tests"}
+    - {route: "/quick-fire", page: "Quick Fire", description: "Fast validation entry point"}
+    - {route: "/ideas", page: "Ideas List", description: "All user's ideas"}
+    - {route: "/ideas/:id", page: "Idea Detail", description: "Single idea with proposals"}
+    - {route: "/ideas/:id/icps", page: "ICPs", description: "ICP management for idea"}
+    - {route: "/icps/:id", page: "ICP Detail", description: "View/edit ICP"}
+    - {route: "/proposals/:id", page: "Proposal Editor", description: "Create/edit proposal"}
+    - {route: "/proposals/:id/assumptions", page: "Assumption Board", description: "Manage and prioritize assumptions"}
+    - {route: "/proposals/:id/test", page: "Run Test", description: "Configure and run validation"}
+    - {route: "/proposals/:id/history", page: "Test History", description: "All test iterations"}
+    - {route: "/tests/:id", page: "Test View", description: "Active test with sessions"}
+    - {route: "/sessions/:id", page: "Session", description: "Live conversation with persona"}
+    - {route: "/reports/:id", page: "Report", description: "Full validation report with Assumption Board"}
+    - {route: "/settings", page: "Settings", description: "Account preferences"}
+    - {route: "/settings/billing", page: "Billing", description: "Plan, usage, payment"}
+    - {route: "/settings/referrals", page: "Referrals", description: "Referral program"}
+
+data_model:
+  entities:
+    - name: "User"
+      attributes:
+        - {name: "id", type: "UUID"}
+        - {name: "email", type: "String"}
+        - {name: "name", type: "String"}
+        - {name: "country", type: "String"}
+        - {name: "subscription_tier", type: "Enum", values: ["Solo", "Growth", "Scale", "Pro"]}
+        - {name: "stripe_customer_id", type: "String"}
+        - {name: "vat_id", type: "String", optional: true}
+        - {name: "created_at", type: "Timestamp"}
+
+    - name: "Idea"
+      attributes:
+        - {name: "id", type: "UUID"}
+        - {name: "user_id", type: "UUID", fk: "User"}
+        - {name: "name", type: "String"}
+        - {name: "quick_fire_score", type: "Integer", nullable: true}
+        - {name: "quick_fire_objection", type: "Text", nullable: true}
+        - {name: "created_at", type: "Timestamp"}
+
+    - name: "Proposal"
+      attributes:
+        - {name: "id", type: "UUID"}
+        - {name: "idea_id", type: "UUID", fk: "Idea"}
+        - {name: "status", type: "Enum", values: ["Draft", "Submitted", "Testing", "Tested", "Cancelled", "Archived"]}
+        - {name: "problem", type: "Text"}
+        - {name: "current_workarounds", type: "Text"}
+        - {name: "solution", type: "Text"}
+        - {name: "hypotheses", type: "Text"}
+        - {name: "pricing_assumption", type: "Text", optional: true}
+        - {name: "competitors", type: "Text", optional: true}
+        - {name: "external_context", type: "Text", optional: true}
+        - {name: "external_source_url", type: "String", optional: true}
+        - {name: "created_at", type: "Timestamp"}
+        - {name: "updated_at", type: "Timestamp"}
+
+    - name: "Assumption"
+      attributes:
+        - {name: "id", type: "UUID"}
+        - {name: "proposal_id", type: "UUID", fk: "Proposal"}
+        - {name: "statement", type: "Text"}
+        - {name: "priority", type: "Integer", range: "1-5"}
+        - {name: "confidence_score", type: "Decimal", nullable: true, range: "0-100"}
+        - {name: "evidence_for", type: "JSON", nullable: true}
+        - {name: "evidence_against", type: "JSON", nullable: true}
+        - {name: "recommended_action", type: "Enum", values: ["Validate", "Pivot", "Kill", "Explore"], nullable: true}
+        - {name: "created_at", type: "Timestamp"}
+
+    - name: "ICP"
+      attributes:
+        - {name: "id", type: "UUID"}
+        - {name: "proposal_id", type: "UUID", fk: "Proposal"}
+        - {name: "name", type: "String"}
+        - {name: "demographics", type: "Text"}
+        - {name: "psychographics", type: "Text"}
+        - {name: "context", type: "Text"}
+        - {name: "pain_intensity", type: "Enum", values: ["Annoying", "Costly", "Blocking"]}
+        - {name: "current_solutions", type: "Text"}
+        - {name: "decision_role", type: "Enum", values: ["Decision-maker", "Influencer", "End-user", "Blocker"]}
+        - {name: "adoption_tendency", type: "Enum", values: ["Early Adopter", "Early Majority", "Late Majority", "Laggard"]}
+        - {name: "created_at", type: "Timestamp"}
+
+    - name: "Persona"
+      attributes:
+        - {name: "id", type: "UUID"}
+        - {name: "icp_id", type: "UUID", fk: "ICP"}
+        - {name: "name", type: "String"}
+        - {name: "demographics", type: "JSON"}
+        - {name: "psychographics", type: "JSON"}
+        - {name: "openness", type: "Integer", range: "1-100"}
+        - {name: "conscientiousness", type: "Integer", range: "1-100"}
+        - {name: "extraversion", type: "Integer", range: "1-100"}
+        - {name: "agreeableness", type: "Integer", range: "1-100"}
+        - {name: "neuroticism", type: "Integer", range: "1-100"}
+        - {name: "skepticism_level", type: "Enum", values: ["Low", "Medium", "High"]}
+        - {name: "generated_at", type: "Timestamp"}
+
+    - name: "Validation Test"
+      attributes:
+        - {name: "id", type: "UUID"}
+        - {name: "proposal_id", type: "UUID", fk: "Proposal"}
+        - {name: "parent_test_id", type: "UUID", nullable: true}
+        - {name: "version", type: "Integer", default: 1}
+        - {name: "test_mode", type: "Enum", values: ["Quick", "Standard", "Deep"]}
+        - {name: "validation_mode", type: "Enum", values: ["Interactive", "Spectator", "PreMortem"]}
+        - {name: "pushback_preset", type: "Enum", values: ["Cheerleader", "Pragmatist", "Critic"]}
+        - {name: "icp_ids", type: "Array"}
+        - {name: "persona_count", type: "Integer"}
+        - {name: "status", type: "Enum", values: ["Pending", "In Progress", "Completed", "Cancelled", "Failed"]}
+        - {name: "report_id", type: "UUID", nullable: true}
+        - {name: "created_at", type: "Timestamp"}
+        - {name: "started_at", type: "Timestamp"}
+        - {name: "completed_at", type: "Timestamp"}
+
+    - name: "Session"
+      attributes:
+        - {name: "id", type: "UUID"}
+        - {name: "validation_test_id", type: "UUID", fk: "Validation Test"}
+        - {name: "persona_id", type: "UUID", fk: "Persona"}
+        - {name: "status", type: "Enum", values: ["Pending", "Active", "Completed", "Abandoned", "Expired"]}
+        - {name: "mode", type: "Enum", values: ["Interactive", "Spectator"]}
+        - {name: "conversation", type: "JSON"}
+        - {name: "message_count", type: "Integer"}
+        - {name: "user_message_count", type: "Integer"}
+        - {name: "nudge_count", type: "Integer"}
+        - {name: "avg_response_time_seconds", type: "Integer"}  # NEW: Was missing
+        - {name: "need_validated", type: "Boolean"}
+        - {name: "solution_resonated", type: "Boolean"}
+        - {name: "key_objections", type: "JSON"}
+        - {name: "anti_sycophancy_triggers", type: "Integer"}
+        - {name: "score", type: "Decimal"}
+        - {name: "llm_model_version", type: "String"}
+        - {name: "prompt_version", type: "String"}
+        - {name: "started_at", type: "Timestamp"}
+        - {name: "completed_at", type: "Timestamp"}
+
+    - name: "Report"
+      attributes:
+        - {name: "id", type: "UUID"}
+        - {name: "validation_test_id", type: "UUID", fk: "Validation Test"}
+        - {name: "verdict", type: "Enum", values: ["Kill", "Pivot", "Build"]}
+        - {name: "confidence_score", type: "Enum", values: ["High", "Medium", "Low"]}
+        - {name: "need_validation_summary", type: "Text"}
+        - {name: "solution_validation_summary", type: "Text"}
+        - {name: "assumption_board", type: "JSON"}
+        - {name: "reality_check_plan", type: "JSON"}
+        - {name: "strongest_signals", type: "JSON"}
+        - {name: "key_objections", type: "JSON"}
+        - {name: "risk_factors", type: "JSON"}
+        - {name: "next_steps", type: "JSON"}
+        - {name: "pivot_suggestions", type: "Text"}
+        - {name: "pre_mortem_findings", type: "JSON", nullable: true}  # NEW: Was missing
+        - {name: "share_token", type: "String"}
+        - {name: "is_public", type: "Boolean"}
+        - {name: "user_rating", type: "Integer", nullable: true, range: "1-5"}
+        - {name: "generation_version", type: "String"}
+        - {name: "generated_at", type: "Timestamp"}
+
+    - name: "Iteration"
+      attributes:
+        - {name: "id", type: "UUID"}
+        - {name: "proposal_id", type: "UUID", fk: "Proposal"}
+        - {name: "iteration_number", type: "Integer"}
+        - {name: "changes_summary", type: "Text"}
+        - {name: "previous_verdict", type: "Enum", values: ["Kill", "Pivot", "Build"]}
+        - {name: "created_at", type: "Timestamp"}
+
+  relationships:
+    - {from: "User", to: "Idea", type: "One-to-Many"}
+    - {from: "Idea", to: "Proposal", type: "One-to-Many"}
+    - {from: "Proposal", to: "ICP", type: "One-to-Many"}
+    - {from: "Proposal", to: "Assumption", type: "One-to-Many"}
+    - {from: "Proposal", to: "Iteration", type: "One-to-Many", max: 10}
+    - {from: "ICP", to: "Persona", type: "One-to-Many"}
+    - {from: "Proposal", to: "Validation Test", type: "One-to-Many"}
+    - {from: "Validation Test", to: "Session", type: "One-to-Many"}
+    - {from: "Validation Test", to: "Report", type: "One-to-One"}
+    - {from: "Session", to: "Persona", type: "Many-to-One"}
+
+state_machines:
+  proposal:
+    states: ["Draft", "Submitted", "Testing", "Tested", "Cancelled", "Archived"]
+    transitions:
+      - {from: "Draft", to: "Submitted"}
+      - {from: "Submitted", to: "Testing"}
+      - {from: "Submitted", to: "Draft"}
+      - {from: "Testing", to: "Tested"}
+      - {from: "Testing", to: "Cancelled"}
+      - {from: "Tested", to: "Draft"}
+      - {from: "Tested", to: "Archived"}
+      - {from: "Cancelled", to: "Draft"}
+      - {from: "Archived", to: "Draft"}
+
+  validation_test:
+    states: ["Pending", "In Progress", "Completed", "Cancelled", "Failed"]
+    transitions:
+      - {from: "Pending", to: "In Progress"}
+      - {from: "Pending", to: "Cancelled"}
+      - {from: "In Progress", to: "Completed"}
+      - {from: "In Progress", to: "Cancelled"}
+      - {from: "In Progress", to: "Failed"}
+      - {from: "Failed", to: "Pending"}
+
+  session:
+    states: ["Pending", "Active", "Completed", "Abandoned", "Expired"]
+    transitions:
+      - {from: "Pending", to: "Active"}
+      - {from: "Pending", to: "Expired"}
+      - {from: "Active", to: "Completed"}
+      - {from: "Active", to: "Abandoned"}
+      - {from: "Active", to: "Expired"}
+    timeout: "30 minutes inactivity → Expired"
+
+  subscription:
+    states: ["Trial", "Active", "Past Due", "Cancelled", "Expired"]
+    transitions:
+      - {from: "Trial", to: "Active"}
+      - {from: "Trial", to: "Expired"}
+      - {from: "Active", to: "Past Due"}
+      - {from: "Active", to: "Cancelled"}
+      - {from: "Past Due", to: "Active"}
+      - {from: "Past Due", to: "Cancelled"}
+      - {from: "Cancelled", to: "Active", condition: "resubscribe within 30 days"}
+      - {from: "Expired", to: "Active"}
+
+  report:
+    states: ["Generating", "Ready", "Public", "Archived"]
+    transitions:
+      - {from: "Generating", to: "Ready"}
+      - {from: "Ready", to: "Public"}
+      - {from: "Ready", to: "Archived"}
+      - {from: "Public", to: "Ready"}
+      - {from: "Public", to: "Archived"}
+
+business_rules:
+  tier_limits:
+    - {tier: "Solo", products: 1, tests_per_month: 10, price: 9.95}
+    - {tier: "Growth", products: 3, tests_per_month: 30, price: 19.95}
+    - {tier: "Scale", products: 10, tests_per_month: 100, price: 29.95}
+    - {tier: "Pro", products: 20, tests_per_month: 200, price: 49.95}
+
+  enforcement:
+    - "IF active_ideas ≥ tier limit THEN block new idea creation"
+    - "IF tests_this_month ≥ tier limit THEN block new tests"
+    - "Tests reset on billing anniversary (not calendar month)"
+    - "Upgrade: new limits apply immediately"
+    - "Downgrade: takes effect next billing cycle"
+
+  verdict_logic:
+    - {need_validation: "<40%", solution_resonance: "Any", verdict: "Kill"}
+    - {need_validation: "40-69%", solution_resonance: "Any", verdict: "Pivot"}
+    - {need_validation: "70%+", solution_resonance: "<60%", verdict: "Pivot"}
+    - {need_validation: "70%+", solution_resonance: "60%+", verdict: "Build"}
+
+  confidence_score:
+    - {level: "High", rule: "Score variance < 15% AND persona_count ≥ 10"}
+    - {level: "Medium", rule: "Variance 15-30% OR persona_count 5-9"}
+    - {level: "Low", rule: "Variance > 30% OR persona_count < 5"}
+
+  iteration_rules:
+    - "IF Proposal edited after Test complete THEN create Iteration record"
+    - "Maximum 10 iterations per proposal"
+
+anti_sycophancy_engine:
+  purpose: "Core differentiator ensuring AI personas challenge user assumptions rather than confirming them"
+
+  skeptic_heavy_default:
+    distribution:
+      - {level: "High", percent: 40, behavior: "Actively challenges claims, asks hard questions, expresses doubt"}
+      - {level: "Medium", percent: 40, behavior: "Balanced but requires proof, probes weak points"}
+      - {level: "Low", percent: 20, behavior: "More receptive but still questions assumptions"}
+    rationale: "Real markets contain more skeptics than enthusiasts. Over-representing skeptics helps founders hear objections early."
+
+  pushback_presets:
+    - {preset: 1, name: "The Cheerleader", description: "Supportive but honest. Will validate real strengths while noting concerns.", use_case: "Early confidence building, identifying what works"}
+    - {preset: 2, name: "The Pragmatist", description: "Balanced, real-world perspective. Questions feasibility and value prop.", use_case: "Standard validation (default)"}
+    - {preset: 3, name: "The Critic", description: "Aggressive devil's advocate. Finds every flaw, challenges everything.", use_case: "Stress-testing before major investment"}
+    default: "The Pragmatist"
+    implementation_notes:
+      - "Preset affects persona system prompts"
+      - "Does NOT change the underlying skepticism distribution"
+      - "User can override per-test"
+
+  interviewer_principles:
+    - {principle: "Ask about their life, not your idea", implementation: "Opens with context questions before introducing solution"}
+    - {principle: "Ask about specifics in the past", implementation: "'Tell me about the last time...' not 'Would you...'"}
+    - {principle: "Talk less, listen more", implementation: "Interviewer speaks < 30% of conversation"}
+    - {principle: "Push past compliments", implementation: "'That's interesting - what would make you actually switch?'"}
+    - {principle: "Seek the truth, not validation", implementation: "Probes for negative signals, doesn't accept surface positivity"}
+
+  quality_criteria:
+    - {metric: "Objections per session", target: "≥ 2", description: "Count of distinct objections raised"}
+    - {metric: "Critical questions asked", target: "≥ 3", description: "Questions challenging core assumptions"}
+    - {metric: "Flip rate", target: "≥ 15%", description: "Sessions where initial positive flips to concern"}
+    - {metric: "No-objection rate", target: "< 10%", description: "Sessions with zero pushback (indicates failure)"}
+    monitoring: "These metrics are tracked per-test and flagged if quality drops"
+
+  # NEW: Input Quality Gates (from PRD Section 2.7.5)
+  input_quality_gates:
+    - {issue: "Vague ICP", warning: "Your ICP is too broad. Results may not be actionable.", suggestion: "Try specifying: industry, company size, or role"}
+    - {issue: "Leading hypotheses", warning: "Your hypothesis contains assumption of success.", suggestion: "Reframe as 'I believe [X] because [Y]'"}
+    - {issue: "Biased source URL", warning: "This URL appears promotional. Results may skew positive.", suggestion: "Consider using customer reviews or forum discussions instead"}
+    - {issue: "Missing problem statement", warning: "No clear problem defined.", suggestion: "What pain does your customer experience today?"}
+
+# NEW SECTION: Compliance (from PRD Section 2.6)
+compliance:
+  data_classification:
+    - {type: "Email", classification: "PII", storage: "Encrypted", retention: "Account lifetime + 90 days"}
+    - {type: "Name", classification: "PII", storage: "Encrypted", retention: "Account lifetime + 90 days"}
+    - {type: "Country", classification: "Personal", storage: "Plain", retention: "Account lifetime + 90 days"}
+    - {type: "Payment details", classification: "Sensitive", storage: "Stripe only (not stored)", retention: "Managed by Stripe"}
+    - {type: "VAT ID", classification: "Business", storage: "Plain", retention: "Account lifetime + 90 days"}
+    - {type: "Proposals", classification: "User content", storage: "Encrypted", retention: "Account lifetime + 90 days"}
+    - {type: "Conversations", classification: "User content", storage: "Encrypted", retention: "Account lifetime + 90 days"}
+    - {type: "External Injection URLs", classification: "User content", storage: "Encrypted", retention: "Account lifetime + 90 days"}
+
+  requirements:
+    - {requirement: "GDPR", applicability: "EU users", implementation: "Data export, deletion on request"}
+    - {requirement: "CCPA", applicability: "CA users", implementation: "Opt-out mechanism"}
+    - {requirement: "Cookie consent", applicability: "All users", implementation: "Consent banner"}
+
+  consent_at_signup:
+    - {item: "Terms of Service", required: true}
+    - {item: "Privacy Policy", required: true}
+    - {item: "Marketing emails", required: false}
+
+features:
+  # AGENT INSTRUCTION: Each feature below includes `acceptance_criteria_count` only.
+  # For the actual GWT (Given/When/Then) acceptance criteria, refer to:
+  #   Source: Documents/foundations/prds/plebtest-prd-v2.md
+  #   Section: "Section 3: Features & Requirements"
+  # 
+  # Each feature in the PRD contains a full GWT table that specifies:
+  # - Exact validation rules and field limits
+  # - Error messages and retry behaviors  
+  # - Empty/loading/error states
+  # - Modal flows and confirmations
+  # - Tier-based blocking and quota enforcement
+  
+  phase_1:
+    - id: "F-001"
+      name: "User Registration"
+      description: "New users select tier, authenticate via OAuth OR email/password, capture payment method"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 29
+      # NEW: Signup offer hierarchy (from PRD F-001)
+      signup_offers:
+        - {priority: 1, offer: "Annual - Pay Now", incentive: "20% off first year"}
+        - {priority: 2, offer: "Annual - 7-day Trial", incentive: "Card upfront, charged day 8"}
+        - {priority: 3, offer: "Monthly - Pay Now", incentive: "20% off first month"}
+        - {priority: 4, offer: "Monthly - 7-day Trial", incentive: "Card upfront, charged day 8"}
+      default_tier: "Growth"
+      auth_options: ["Google", "GitHub", "Email/Password"]
+
+    - id: "F-002"
+      name: "User Login"
+      description: "Returning users authenticate to access their account"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 12
+
+    - id: "F-003"
+      name: "User Logout"
+      description: "Users can securely end their session"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 2
+
+    - id: "F-004"
+      name: "Profile Management"
+      description: "Users can view and update their account details"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 18
+
+    - id: "F-005"
+      name: "Onboarding Flow"
+      description: "First-run experience guiding new users to their first validation via Quick Fire Mode"
+      priority: "Must Have (MVP)"
+      target: "First Risk Score in ≤60 seconds, first full verdict in ≤10 minutes"
+      acceptance_criteria_count: 16
+
+    - id: "F-006"
+      name: "Create Idea"
+      description: "Users can create a new idea to validate"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 10
+
+    - id: "F-007"
+      name: "View Ideas List"
+      description: "Users can view all their ideas"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 12
+
+    - id: "F-008"
+      name: "View Idea Detail"
+      description: "Users can view a single idea with its proposals"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 15
+
+    - id: "F-009"
+      name: "Edit Idea"
+      description: "Users can update an idea's name"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 4
+
+    - id: "F-010"
+      name: "Create Proposal"
+      description: "Users can create a new proposal for an idea"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 26
+
+    - id: "F-011"
+      name: "View Proposal"
+      description: "Users can view a proposal's details and status"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 20
+
+    - id: "F-012"
+      name: "Edit Proposal"
+      description: "Users can update a proposal's content"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 13
+
+    - id: "F-013"
+      name: "Archive/Delete Proposal"
+      description: "Users can archive or delete proposals"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 11
+
+    - id: "F-014"
+      name: "Create ICP"
+      description: "Users can create an Ideal Customer Profile for a proposal"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 17
+
+    - id: "F-015"
+      name: "View ICP"
+      description: "Users can view an ICP's details"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 13
+
+    - id: "F-016"
+      name: "Edit ICP"
+      description: "Users can update an ICP's details"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 10
+
+    - id: "F-017"
+      name: "Delete ICP"
+      description: "Users can delete an ICP"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 10
+
+    - id: "F-018"
+      name: "Configure & Start Validation Test"
+      description: "Users configure and initiate a validation test for their proposal"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 19
+
+    - id: "F-019"
+      name: "View Active Test"
+      description: "Users monitor their running validation test and access sessions"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 22
+
+    - id: "F-020"
+      name: "Interactive Session"
+      description: "User participates in a live conversation with an AI persona (default experience)"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 26
+
+    - id: "F-021"
+      name: "Spectator Session"
+      description: "Optional mode where user watches AI-driven validation with Nudge Button intervention capability"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 18
+
+    - id: "F-022"
+      name: "View Report"
+      description: "Users view the validation report with verdict, Assumption Board, and Reality Check Panel"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 25
+
+    - id: "F-024"
+      name: "Download Report"
+      description: "Users download reports as PDF or JSON for offline use"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 17
+
+    - id: "F-025"
+      name: "View Subscription"
+      description: "Users view their current plan, usage, and billing details"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 16
+
+    - id: "F-026"
+      name: "Upgrade/Downgrade Plan"
+      description: "Users change their subscription tier or billing cycle"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 19
+
+    - id: "F-027"
+      name: "Manage Payment Method"
+      description: "Users update their card, billing details, or VAT ID"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 14
+
+    - id: "F-028"
+      name: "Cancel Subscription"
+      description: "Users cancel their subscription with retention opportunities"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 15
+
+    - id: "F-029"
+      name: "Quick Fire Mode"
+      description: "Sub-60-second onboarding hook that provides a Risk Score and key counter-argument from a single sentence input"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 20
+
+    - id: "F-030"
+      name: "Data Carry-Over"
+      description: "Data from Quick Fire Mode auto-populates a new Full Validation project"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 9
+
+  phase_2:
+    - id: "F-023"
+      name: "Share Report"
+      description: "Users share reports via public links with stakeholders"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 21
+
+    - id: "F-031"
+      name: "External Injection"
+      description: "Ground personas in reality by scraping a URL or pasting raw text for context"
+      priority: "Should Have (MVP)"
+      acceptance_criteria_count: 15
+
+    - id: "F-032"
+      name: "Assumption Import & Prioritization"
+      description: "Allow users to paste a list of their own assumptions and rank them by importance"
+      priority: "Should Have (MVP)"
+      acceptance_criteria_count: 14
+
+    - id: "F-033"
+      name: "The Assumption Board"
+      description: "Primary report output showing each assumption with evidence, confidence score, and recommended next step"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 17
+
+    - id: "F-034"
+      name: "The Reality Check Panel"
+      description: "Ethical guardrail providing a 'Minimum Real-World Validation Plan'"
+      priority: "Must Have (MVP)"
+      acceptance_criteria_count: 13
+
+    - id: "F-035"
+      name: "Pushback Control (Presets)"
+      description: "User-facing control with three named presets to adjust Anti-Sycophancy intensity"
+      priority: "Should Have (MVP)"
+      acceptance_criteria_count: 11
+
+    - id: "F-036"
+      name: "Pre-Mortem Mode"
+      description: "Simulation mode that asks 'The product launched and failed. Why?'"
+      priority: "Should Have (MVP)"
+      acceptance_criteria_count: 13
+
+    - id: "F-037"
+      name: "Nudge Buttons"
+      description: "Three buttons for Spectator Mode users to intervene without typing: Pause, Dig Deeper, Move On"
+      priority: "Should Have (MVP)"
+      acceptance_criteria_count: 16
+
+tech_stack:
+  auth: "Supabase (OAuth: Google, GitHub + email/password)"
+  payment: "Stripe"
+  llm: "OpenRouter (model-agnostic)"
+  database: "Supabase/Postgres"
+  hosting: "Vercel or Railway"
+  email: "TBD"
+  analytics: "TBD"
+  error_tracking: "Sentry (recommended)"
+  web_scraping: "TBD (for External Injection)"
+  cdn: "TBD (for PDF report storage/delivery)"
+
+  integration_points:
+    stripe_webhooks:
+      - "subscription created"
+      - "payment failed"
+      - "subscription cancelled"
+    openrouter:
+      - "persona generation"
+      - "conversation handling"
+      - "report generation"
+    email_service:
+      - "verification"
+      - "password reset"
+      - "trial reminders"
+      - "report ready"
+
+phases:
+  - phase: 0
+    name: "Landing Page"
+    timeline: "Now"
+    deliverables:
+      - "Landing page with positioning"
+      - "Waitlist capture"
+      - "Demo walkthrough"
+      - "Basic analytics"
+
+  - phase: 1
+    name: "Core Loop MVP"
+    timeline: "End January 2026"
+    scope: "Private testing only"
+    deliverables:
+      - "Quick Fire Mode (F-029)"
+      - "Data Carry-Over (F-030)"
+      - "Auth + Basic Billing (F-001 to F-005)"
+      - "Core Validation Loop (F-006 to F-022)"
+      - "Interactive Mode (F-020)"
+      - "Basic Verdict (F-022)"
+      - "Anti-Sycophancy Engine active"
+
+  - phase: 2
+    name: "Full MVP & Virality"
+    timeline: "February 2026"
+    scope: "Public launch"
+    deliverables:
+      - "Spectator Mode + Nudge Buttons (F-021, F-037)"
+      - "The Assumption Board (F-033)"
+      - "The Reality Check Panel (F-034)"
+      - "Pushback Presets (F-035)"
+      - "Pre-Mortem Mode (F-036)"
+      - "External Injection (F-031)"
+      - "Assumption Import (F-032)"
+      - "Shareable Reports (F-023)"
+      - "Full Billing Lifecycle (F-025 to F-028)"
+
+  - phase: 3
+    name: "Scale"
+    timeline: "March - December 2026"
+    deliverables:
+      - "Team/organization accounts"
+      - "API access"
+      - "Side-by-side idea comparison"
+      - "Multi-language support"
+      - "Enterprise SSO"
+
+non_negotiables:
+  - "Card captured upfront (even for trials)"
+  - "AI must challenge, not flatter"
+  - "Reports must be shareable without login"
+  - "Mobile-responsive (founders on the go)"
+  - "Three-environment setup required (dev/staging/production)"
+  - "Quick Fire Mode as primary entry point"
+
+priorities:
+  - priority: 1
+    item: "Quick Fire hook (≤60 sec to Risk Score)"
+  - priority: 2
+    item: "Time to first verdict (≤10 min onboarding)"
+  - priority: 3
+    item: "Anti-sycophancy quality in conversations"
+  - priority: 4
+    item: "Reliable payment flow"
+  - priority: 5
+    item: "Shareable reports for virality"
+
+# NEW SECTION: Open Questions (from PRD Section 7.3)
+open_questions:
+  - question: "Email provider"
+    context: "Transactional emails"
+    decision_by: "Phase 1 start"
+  - question: "Analytics provider"
+    context: "Usage tracking"
+    decision_by: "Phase 2 launch"
+  - question: "Error tracking"
+    context: "Sentry or similar"
+    decision_by: "Phase 1 start"
+  - question: "CDN for PDFs"
+    context: "Report storage/delivery"
+    decision_by: "Phase 2 launch"
+  - question: "Web scraping service"
+    context: "External Injection feature"
+    decision_by: "Phase 2 start"
+
+# Business constraints for development decisions (from Appendix A)
+business_constraints:
+  solo_founder: true
+  budget_conscious: true
+  speed_over_perfection: true
+  must_be_maintainable_by_one_person: true

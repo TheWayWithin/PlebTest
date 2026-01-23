@@ -1,0 +1,185 @@
+# PlebTest Strategic Roadmap Extraction
+# Source: Documents/foundations/strategic-roadmap.md
+# Extracted: 2026-01-19
+# Mode: SYNTHESIS
+
+metadata:
+  source_file: "Documents/foundations/strategic-roadmap.md"
+  version: "1.0"
+  last_updated: "January 12, 2026"
+  business_name: "PlebTest"
+
+executive_summary:
+  description: "PlebTest helps founders who won't pick up the phone validate ideas using AI customer simulations. This roadmap maps the path from Landing Page (tomorrow) through Year 1 targets (1,000 founders, $250K ARR)."
+
+strategic_foundation:
+  ten_year_vision: "The fear of customer discovery no longer stops anyone. Founders launch knowing, not hoping."
+
+  five_year_bhag:
+    timeframe: "2031"
+    targets:
+      - metric: "Founders using PlebTest"
+        value: 50000
+      - metric: "ARR"
+        value: 7500000
+        unit: "USD"
+      - metric: "Products launched"
+        value: 10000
+      - metric: "Unicorns helped launch"
+        value: 10
+
+  three_year_goals:
+    timeframe: "2029"
+    objectives:
+      - category: "Scale"
+        target: "15,000 active founders, $2M ARR"
+      - category: "Proof"
+        target: "500+ public success stories (kills, pivots, launches)"
+      - category: "Product maturity"
+        target: "Full self-serve platform with enterprise/team features"
+
+  one_year_objectives:
+    timeframe: "2026"
+    objectives:
+      - category: "Launch & validate"
+        target: "MVP live, 1,000 paying founders"
+      - category: "Revenue"
+        target: "$250K ARR"
+      - category: "Proof points"
+        target: "20 public case studies proving kill/pivot/build value"
+
+phases:
+  - phase_id: "0"
+    name: "Landing Page"
+    timeline: "Tomorrow"
+    theme: "Start capturing demand before MVP exists"
+    scope:
+      - "Landing page with positioning"
+      - "Email/waitlist capture"
+      - "Basic analytics"
+    success_criteria:
+      - "Live and collecting signups"
+
+  - phase_id: "1"
+    name: "Basic MVP"
+    timeline: "End January 2026"
+    theme: "Core loop working - private testing only"
+    scope:
+      - "Single idea input flow"
+      - "AI persona simulation (3-5 personas)"
+      - "Anti-sycophancy engine active"
+      - "Kill/Pivot/Build verdict"
+      - "Basic report"
+      - "OAuth (login system)"
+      - "Payment integration (ready for Phase 2)"
+    purpose: "Validate the core experience works before going live."
+    success_criteria:
+      - "You complete 5+ test validations"
+      - "Core loop feels solid"
+      - "No critical bugs blocking launch"
+
+  - phase_id: "2"
+    name: "Public Launch"
+    timeline: "February 2026"
+    theme: "Full MVP live - the complete validation experience"
+    scope:
+      - "Everything from Phase 1, plus:"
+      - "Spectator Mode (watch full simulated conversations)"
+      - "Persona customization (define your target customer)"
+      - "Pivot suggestions (show *how* to pivot, not just 'pivot')"
+      - "Saved history / idea portfolio"
+      - "Shareable verdict cards (social-ready visuals)"
+      - "Shareable report links (opt-in public sharing)"
+    success_criteria:
+      - "First paying customers"
+      - "60%+ trial-to-paid conversion"
+      - "Early case studies emerging"
+
+  - phase_id: "3"
+    name: "Scale"
+    timeline: "March - December 2026"
+    theme: "Growth and ecosystem"
+    scope:
+      - "Team/agency accounts"
+      - "API access for integrations"
+      - "Advanced reporting (export, share with investors)"
+      - "Community features (anonymous benchmarking)"
+      - "Enterprise pilots"
+      - "Multi-language support (common languages as demand shows)"
+    success_criteria:
+      - "1,000 paying founders"
+      - "$250K ARR run rate"
+      - "20 public case studies"
+
+milestones:
+  - name: "Landing Page Live"
+    target: "Tomorrow"
+    success_criteria: "Page live, collecting signups"
+    dependencies: "None"
+
+  - name: "Basic MVP Ready"
+    target: "End January 2026"
+    success_criteria: "Core loop works, 5+ test validations, no critical bugs"
+    dependencies: "None"
+
+  - name: "Public Launch"
+    target: "February 2026"
+    success_criteria: "Full MVP live, first paying customers, virality features active"
+    dependencies: "Milestone 1 complete"
+
+  - name: "First 100 Paying Founders"
+    target: "Q2 2026 (April-June)"
+    success_criteria: "100 paying founders, 10+ case studies, 60%+ trial conversion"
+    dependencies: "Public launch complete, marketing in motion"
+
+  - name: "Year 1 Targets"
+    target: "December 2026"
+    success_criteria: "1,000 paying founders, $250K ARR, 20 public case studies"
+    dependencies: "Scale features live, strong word-of-mouth"
+
+risks:
+  - name: "Solo Founder Capacity"
+    description: "building, marketing, supporting alone"
+    likelihood: "High"
+    mitigation: "Ruthless scope control. Cut features fast. Automate support where possible."
+
+  - name: "Anti-Sycophancy Quality"
+    description: "if AI isn't challenging enough, core value prop fails"
+    likelihood: "Medium"
+    mitigation: "Heavy testing during Phase 1. Build feedback loop to catch when verdicts feel 'too easy.'"
+
+  - name: "User Acquisition"
+    description: "getting first 100 paying customers"
+    likelihood: "Medium"
+    mitigation: "Build in public. Shareable verdict cards drive organic discovery. Early case studies prove value."
+
+  - name: "Just Use ChatGPT Objection"
+    description: "founders think they can DIY for free"
+    likelihood: "High"
+    mitigation: "Time is the killer differentiator (hours vs minutes). Persona depth via demographic/psychographic/trait dials is hard to replicate. Anti-sycophancy built in."
+
+not_doing:
+  - item: "B2B / Enterprise First"
+    reason: "Focus is solo founders. Enterprise comes in Phase 3 as pilots, not priority."
+  - item: "Building a Community Platform"
+    reason: "Focus is the core product. Community can come later if users want it."
+  - item: "Multi-Language Support (Year 1)"
+    reason: "English-speaking founders first. Post-MVP, add common languages as demand shows."
+  - item: "Done-For-You Validation Services"
+    reason: "PlebTest is self-serve product only. Keeps focus and scales better."
+
+decision_checkpoints:
+  - checkpoint: "Basic MVP Go"
+    date: "End January"
+    decision: "Go live with public launch or extend private testing?"
+    criteria: "Core loop works, no critical bugs, you feel confident in the experience."
+
+  - checkpoint: "Public Launch Go"
+    date: "February"
+    decision: "Go live publicly or keep iterating privately?"
+    criteria: "Core features tested, OAuth + payment working, virality features ready, you're confident users will pay."
+
+  - checkpoint: "Scale Go"
+    date: "Q2 2026"
+    decision: "Start building Phase 3 features?"
+    criteria: "100+ paying founders, clear demand for team features, sustainable unit economics."

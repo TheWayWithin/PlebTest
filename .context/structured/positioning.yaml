@@ -1,0 +1,128 @@
+# PlebTest Positioning Statement Extraction
+# Source: Documents/foundations/positioning-statement.md
+# Extracted: 2026-01-19
+# Mode: SYNTHESIS
+
+metadata:
+  source_file: "Documents/foundations/positioning-statement.md"
+  version: "2.0"
+  last_updated: "January 11, 2026"
+  business_name: "PlebTest"
+
+core_positioning:
+  for: "founders who can't - or won't - pick up the phone, but need to kill bad ideas fast so they can get to the great one"
+  product_is: "gives your market a voice"
+  that: "tells you which ideas to kill, pivot, or build"
+  so_you: "stop guessing and start building winners"
+  unlike: "forcing yourself through painful cold calls or just asking ChatGPT"
+  our_approach: "AI customer personas built to challenge your assumptions, not validate them - so you hear real objections before you build the wrong thing"
+
+alternative_versions:
+  problem_first:
+    name: "Version A: Problem-First (Emotional Lead)"
+    copy: "For founders who can't - or won't - pick up the phone, PlebTest gives your market a voice so you don't have to. AI personas challenge your assumptions with honest objections—so you know what to kill, pivot, or build."
+    best_for:
+      - "Landing page hero"
+      - "LinkedIn posts"
+      - "Community content"
+
+  outcome_first:
+    name: "Version B: Outcome-First (Results Lead)"
+    copy: "Stop guessing. Start building winners. PlebTest's AI personas tell you which ideas to kill, pivot, or build—with real objections that challenge your assumptions. For founders who can't - or won't - pick up the phone."
+    best_for:
+      - "Cold email"
+      - "Social bios"
+      - "Paid ads"
+
+elevator_pitches:
+  networking_quick: "I help founders who won't pick up the phone decide whether to kill, pivot, or build—using AI personas that actually push back."
+
+  cold_outreach_problem_led: "Most founders skip customer validation because cold-calling strangers is brutal. I built AI personas that do it for them—and tell them whether to kill, pivot, or build."
+
+  podcasts_story_led: "I couldn't pick up the phone to validate my own ideas, so I built AI that does it for me. Now I help other founders figure out what to kill, pivot, or build—before they waste months guessing."
+
+  website_longer: "The market knows which ideas will work—founders just can't access it. I built AI that simulates real customer pushback, so you know whether to kill, pivot, or build before you waste a dime."
+
+customer_profile:
+  who: "Solo founders who build before they talk - by preference, schedule, or fear"
+  problem: "Can't get honest market feedback without cold-calling, so they guess, build, and discover too late nobody wants it"
+  context: "When doubt is louder than momentum - before committing, when stuck, or after a flop"
+  decision_criteria:
+    - "Honest objections"
+    - "Speed to decision"
+    - "No calls"
+    - "Affordable"
+    - "Credible methodology"
+
+competitive_context:
+  primary_alternative: "Staying stuck in 'research mode' (paralysis)"
+  secondary_alternatives:
+    - "DIY cold calls (scary)"
+    - "Friends/family (dishonest)"
+    - "ChatGPT (sycophantic)"
+  your_advantage: "Anti-sycophancy by design - AI that challenges your assumptions, built by a founder who needed it himself"
+  proof_points:
+    - "Specific failure story (wasted months on an idea the market didn't want)"
+    - "42% startup failure stat"
+  emotional_payoff: "Kill bad ideas in hours, not months - stop second-guessing, start building"
+
+value_proposition:
+  functional:
+    - "Simulates market conversations that challenge (not confirm) your assumptions"
+    - "Delivers clear kill/pivot/build verdicts"
+    - "Works when you can't or won't pick up the phone"
+  emotional:
+    - "End the guessing spiral"
+    - "Get honest feedback without cold-calling"
+    - "Move from doubt to clarity"
+  economic:
+    - "Kill bad ideas in hours, not months"
+    - "Protect your runway before you build"
+    - "Costs less than one wasted hour of development"
+
+differentiators:
+  - name: "Frictionless Engagement"
+    why_matters: "AI personas are available, accessible, and never judge. So much easier than scary, hard-to-reach, grumpy humans"
+    defensibility: "Removes the friction that stops founders validating at all"
+
+  - name: "Collective Market Intelligence"
+    why_matters: "An army of diverse personas (each with unique psychographics, demographics, personality) challenges your idea from every angle - delivering insight no single conversation could provide"
+    defensibility: "Unique 'genius of crowds' positioning, persona variation IP, network effects"
+
+  - name: "Anti-Sycophancy Engine"
+    why_matters: "Personas built to challenge and find holes, not validate"
+    defensibility: "Proprietary methodology, channels market truth"
+
+  - name: "Pivot Intelligence"
+    why_matters: "Doesn't just kill bad ideas - identifies when the need is real but the solution is misaligned, then shows you how to pivot through persona insights and actionable suggestions"
+    defensibility: "Moves beyond binary pass/fail to genuine founder coaching"
+
+  - name: "Practitioner-Built"
+    why_matters: "Built by a founder who can't pick up the phone, for founders who can't"
+    defensibility: "Authentic story, trust through shared pain"
+
+messaging_framework:
+  tagline: "Kill duds. Find winners."
+  secondary_tagline: "Kill it. Pivot it. Build it."
+  core_promise: "You'll know which ideas to kill, pivot, or build."
+  emotional_outcome: "Confidence to proceed, permission to stop, or clarity on how to pivot."
+  key_phrase: "The genius of crowds - without the phone calls."
+  one_liner: "PlebTest lets founders validate ideas with AI market personas - so you can kill bad ideas fast without picking up the phone."
+
+usage_guide:
+  - context: "Website hero section"
+    use: "Version A (Problem-First) or Core Positioning Statement"
+  - context: "LinkedIn bio / Twitter bio"
+    use: "One-Liner or Version B (Outcome-First)"
+  - context: "Cold email opening"
+    use: "Version B (Outcome-First)"
+  - context: "Podcast guest intro"
+    use: "Story-led Elevator Pitch"
+  - context: "Product Hunt tagline"
+    use: "Tagline: 'Kill duds. Find winners.'"
+  - context: "Sales conversations"
+    use: "Core Positioning Statement"
+  - context: "Partnership discussions"
+    use: "Core Positioning + Competitive Context"
+  - context: "Networking"
+    use: "Quick Elevator Pitch"

@@ -1,0 +1,142 @@
+# PlebTest Foundations Handoff Manifest
+# Generated: 2026-01-19T00:00:00Z
+# This file tracks the state of all foundation documents and their YAML extractions
+
+version: "2.0.0"
+generated_at: "2026-01-19T00:00:00Z"
+source_directory: "Documents/foundations/"
+output_directory: ".context/structured/"
+
+documents:
+  prd:
+    source: "Documents/foundations/prds/plebtest-prd-v2.md"
+    checksum: "59fd1d67ec2166ddce4240046f6da54293cd8ba4aeb637d92b4269e55050d412"
+    structured_path: ".context/structured/prd.yaml"
+    word_count: 19363
+    status: "present"
+    extraction_status: "complete"
+
+  vision:
+    source: "Documents/foundations/vision-mission.md"
+    checksum: "7687681d27b98ac42f96e4fa7a6d115c2322d86357d23db130e5f089385d54aa"
+    structured_path: ".context/structured/vision.yaml"
+    word_count: 1173
+    status: "present"
+    extraction_status: "complete"
+
+  roadmap:
+    source: "Documents/foundations/strategic-roadmap.md"
+    checksum: "d39a6a794e4d829ff2d58886aa85c581fe497548a82db996332b0f69b2c3ffca"
+    structured_path: ".context/structured/roadmap.yaml"
+    word_count: 906
+    status: "present"
+    extraction_status: "complete"
+
+  icp:
+    source: "Documents/foundations/client-success-blueprint.md"
+    checksum: "06accb1903ba16ea1e53891a4779035ccdec2b6fffd10805d596dcfd22733769"
+    structured_path: ".context/structured/icp.yaml"
+    word_count: 1889
+    status: "present"
+    extraction_status: "complete"
+
+  research:
+    source: "Documents/foundations/market-research.md"
+    checksum: "4ecec4423ee9c87022b454606840bafe95fc03d49bbb01ac4272b8ab0f2e79c1"
+    structured_path: ".context/structured/research.yaml"
+    word_count: 3504
+    status: "present"
+    extraction_status: "complete"
+
+  brand:
+    source: "Documents/foundations/brand-style-guide.md"
+    checksum: "bfeca753210533a6386b362a6cdb892951e756b57fd718c11f8e0f14e587de22"
+    structured_path: ".context/structured/brand.yaml"
+    word_count: 2290
+    status: "present"
+    extraction_status: "complete"
+
+  positioning:
+    source: "Documents/foundations/positioning-statement.md"
+    checksum: "21b7109ef5fba2882504396de5cf8a6c9db9ede477efd9fc9b987fe4c0ab2b6e"
+    structured_path: ".context/structured/positioning.yaml"
+    word_count: 1080
+    status: "present"
+    extraction_status: "complete"
+
+  pricing:
+    source: "Documents/foundations/pricing-strategy.md"
+    checksum: "293c7e196d3c2e780c03a9db336ee047c5a7e29aba04d55c28efd85a6fb58947"
+    structured_path: ".context/structured/pricing.yaml"
+    word_count: 1921
+    status: "present"
+    extraction_status: "complete"
+
+supplementary:
+  build_in_public:
+    source: "Documents/foundations/PlebTest-Build-In-Public-Overview.md"
+    checksum: "aa83e58f5269b2cd6a1a4769c624dc18720f709b611bf48a39b7882a2411b451"
+    word_count: 938
+    status: "present"
+    extraction_status: "not_required"
+    note: "Supplementary document - not a standard foundation category"
+
+validation:
+  required_present:
+    - "prd"
+    - "vision"
+  advisable_present:
+    - "roadmap"
+    - "icp"
+    - "brand"
+    - "positioning"
+    - "pricing"
+    - "research"
+  missing_required: []
+  missing_advisable: []
+  extraction_complete: true
+  all_documents_extracted: true
+
+extraction:
+  approach: "structured_yaml"
+  schemas_used:
+    - "foundation-prd.schema.yaml"
+    - "foundation-vision.schema.yaml"
+    - "foundation-roadmap.schema.yaml"
+    - "foundation-icp.schema.yaml"
+    - "foundation-research.schema.yaml"
+    - "foundation-brand.schema.yaml"
+    - "foundation-positioning.schema.yaml"
+    - "foundation-pricing.schema.yaml"
+
+context_loading_guide:
+  build_mission:
+    - "prd.features"
+    - "prd.tech_stack"
+    - "prd.data_model"
+    - "brand.colors"
+    - "brand.components"
+    - "pricing.tiers"
+
+  design_review:
+    - "brand.*"
+    - "icp.personas"
+    - "positioning.value_proposition"
+
+  marketing:
+    - "positioning.*"
+    - "pricing.product_level_marketing_physics"
+    - "vision.value_proposition"
+    - "research.customer_journey"
+
+  strategy:
+    - "vision.*"
+    - "roadmap.*"
+    - "research.market_sizing"
+    - "icp.pain_points"
+
+  architecture:
+    - "prd.tech_stack"
+    - "prd.data_model"
+    - "prd.state_machines"
+    - "prd.business_rules"
