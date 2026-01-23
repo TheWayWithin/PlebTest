@@ -55,6 +55,36 @@
 
 **Verified**: `npm run build` passes, static pages generated
 
+### 2026-01-22 21:45 Deliverable: Railway Infrastructure (task-0.1.3)
+**Project**: PlebTest (single project with environments)
+**Region**: US East
+**Environments**:
+- `staging` → deploys from `develop` branch
+- `production` → deploys from `main` branch
+
+**URLs**:
+- Staging: https://plebteststaging-staging.up.railway.app ✅
+- Production: https://plebtest-production.up.railway.app ✅
+
+**Verified**: Both environments deployed and verified via WebFetch
+
+### 2026-01-22 22:15 Deliverable: Domain Configuration (task-0.1.4)
+**Domain**: plebtest.com
+**DNS Provider**: Cloudflare (proxied)
+**SSL**: Active via Railway + Cloudflare
+
+**Configuration**:
+- Cloudflare nameservers set in Namecheap
+- CNAME @ → xyoltwez.up.railway.app (Proxied)
+- CNAME www → xyoltwez.up.railway.app (Proxied)
+- MX records preserved for email forwarding
+
+**Live URLs**:
+- Production: https://plebtest.com ✅
+- Staging: https://plebteststaging-staging.up.railway.app ✅
+
+**Verified**: WebFetch confirmed page loads with correct content
+
 ---
 
 <!-- Format:

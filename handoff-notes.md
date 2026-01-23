@@ -1,7 +1,7 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-22 21:17
+> **Last Updated**: 2026-01-22 22:20
 
 ---
 
@@ -9,7 +9,7 @@
 
 **Phase**: 0 - Landing Page
 **Status**: In Progress
-**Active Task**: task-0.1.3 - Set up Railway projects
+**Active Task**: task-0.2.1 - Design landing page layout
 
 ---
 
@@ -36,15 +36,24 @@
   - Next.js 16.1.4 with Turbopack
   - TypeScript, Tailwind v4, shadcn/ui
   - Build passes
+- **task-0.1.3**: Railway infrastructure set up
+  - Single project "PlebTest" with staging/production environments
+  - US East region
+- **task-0.1.4**: Domain configuration complete
+  - plebtest.com live via Cloudflare + Railway
+  - SSL active
 
 ### What Needs to Happen Next
-1. **task-0.1.1**: Create GitHub repository
-   - Repository: plebtest (TBD exact org/user)
-   - Branch protection on main
-   - Create develop branch
+1. **task-0.2.1**: Design landing page layout
+   - Hero section with value proposition
+   - Problem/solution narrative
+   - How it works section
+   - Pricing preview (coming soon)
+   - Waitlist CTA
+   - Mobile responsive
 
-2. **task-0.1.2**: Initialize Next.js 15 project (depends on 0.1.1)
-3. **task-0.1.3**: Set up Railway projects (can run parallel with 0.1.2)
+2. **task-0.2.2**: Implement landing page (depends on 0.2.1)
+3. **task-0.2.3**: Create waitlist signup form (depends on 0.2.2)
 
 ### Known Blockers
 - None currently

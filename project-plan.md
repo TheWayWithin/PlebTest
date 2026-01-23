@@ -80,18 +80,18 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: none
   - **Completed**: github.com/TheWayWithin/PlebTest, main protected, develop branch created
 
-- [x] **task-0.1.2** Initialize Next.js 15 project - ✅ 2026-01-22 21:17
+- [x] **task-0.1.2** Initialize Next.js project - ✅ 2026-01-22 21:17
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
-    - Next.js 15 with App Router
+    - Next.js 15+ with App Router
     - TypeScript configured
     - Tailwind CSS installed
     - shadcn/ui initialized
   - Dependencies: task-0.1.1
   - **Completed**: Next.js 16.1.4, TypeScript 5.9.3, Tailwind 4.1.18, shadcn/ui new-york
 
-- [ ] **task-0.1.3** Set up Railway projects (staging + production)
+- [x] **task-0.1.3** Set up Railway projects (staging + production) - ✅ 2026-01-22 21:45
   - Agent: operator
   - Priority: p0
   - Acceptance Criteria:
@@ -100,8 +100,10 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Auto-deploy from develop → staging
     - Auto-deploy from main → production
   - Dependencies: task-0.1.1
+  - **Completed**: Single project "PlebTest" with staging/production environments, US East region
+  - Staging URL: plebteststaging-staging.up.railway.app
 
-- [ ] **task-0.1.4** Configure domains
+- [x] **task-0.1.4** Configure domains - ✅ 2026-01-22 22:15
   - Agent: operator
   - Priority: p1
   - Acceptance Criteria:
@@ -109,6 +111,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - plebtest.com → Railway production
     - SSL certificates active
   - Dependencies: task-0.1.3
+  - **Completed**: plebtest.com live via Cloudflare + Railway, SSL active
 
 #### 0.2 Landing Page Build
 - [ ] **task-0.2.1** Design landing page layout
