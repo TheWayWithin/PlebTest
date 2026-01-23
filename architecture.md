@@ -20,7 +20,7 @@ PlebTest is an AI-powered idea validation platform for founders who avoid cold c
 
 | Layer | Technology | Why |
 |-------|------------|-----|
-| Frontend | Next.js 15 (App Router) | Modern React, SSR, Turbopack |
+| Frontend | Next.js 16 (App Router) | Modern React, SSR, Turbopack |
 | Styling | Tailwind CSS + shadcn/ui | Fast iteration, accessible components |
 | Backend | Next.js API Routes + pg-boss | Unified codebase, reliable job processing |
 | Database | Supabase (PostgreSQL) | Managed Postgres, RLS, Realtime |
@@ -49,7 +49,7 @@ PlebTest is an AI-powered idea validation platform for founders who avoid cold c
 │    ┌─────────────────────────────────────────────────────────┐              │
 │    │                    Railway                              │              │
 │    │  ┌───────────────────────────────────────────────────┐  │              │
-│    │  │              Next.js 15 Application               │  │              │
+│    │  │              Next.js 16 Application               │  │              │
 │    │  │                                                   │  │              │
 │    │  │  ┌─────────────┐  ┌─────────────┐  ┌───────────┐  │  │              │
 │    │  │  │   Pages     │  │ API Routes  │  │  pg-boss  │  │  │              │
@@ -2090,7 +2090,7 @@ log('error', 'OpenRouter failed', { error: err.message, testId });
 | # | Decision | Choice | Rationale |
 |---|----------|--------|-----------|
 | 1 | Architecture | Monolith | Solo founder, MVP speed, maintainability |
-| 2 | Frontend | Next.js 15 + Tailwind + shadcn/ui | Modern stack, great DX, Turbopack |
+| 2 | Frontend | Next.js 16 + Tailwind + shadcn/ui | Modern stack, great DX, Turbopack |
 | 3 | Hosting | Railway | No timeouts, horizontal scaling, background workers |
 | 4 | Database | Supabase PostgreSQL + RLS | Managed Postgres, integrated auth, realtime |
 | 5 | Auth | Supabase Auth | Integrated with DB, OAuth support, RLS integration |
