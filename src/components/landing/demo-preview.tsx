@@ -135,7 +135,7 @@ export function DemoPreview() {
             className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white px-8"
             asChild
           >
-            <a href="#waitlist">Join the Waitlist</a>
+            <a href="#waitlist">Join Waitlist for Early Access</a>
           </Button>
         </div>
       </div>
