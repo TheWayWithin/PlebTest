@@ -1,11 +1,14 @@
 import {
   Hero,
   ProblemSection,
+  WhoThisIsFor,
+  WhyNotChatGPT,
   SolutionSection,
   HowItWorks,
   DemoPreview,
   SampleVerdicts,
   PricingPreview,
+  FounderStory,
   WaitlistCTA,
   Footer,
 } from "@/components/landing"
@@ -24,11 +27,14 @@ export default function Home() {
       <main id="main-content">
         <Hero />
         <ProblemSection />
+        <WhoThisIsFor />
+        <WhyNotChatGPT />
         <SolutionSection />
         <HowItWorks />
         <DemoPreview />
         <SampleVerdicts />
         <PricingPreview />
+        <FounderStory />
         <WaitlistCTA />
       </main>
 

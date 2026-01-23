@@ -17,7 +17,7 @@ export function DemoPreview() {
             From Idea to Verdict in Minutes
           </h2>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Watch how PlebTest validates your startup idea through our 3-stage process
+            Watch how PlebTest validates your startup idea through the 3-stage process
           </p>
         </div>
 

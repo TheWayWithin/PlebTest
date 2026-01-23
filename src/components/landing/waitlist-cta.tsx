@@ -54,10 +54,10 @@ export function WaitlistCTA() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Be First to Know When We Launch
+            Be First to Know When PlebTest Launches
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-indigo-100">
-            Join 500+ founders on the waitlist. Get early access, founder pricing, and exclusive updates.
+            Get early access, founder pricing, and exclusive updates before public launch.
           </p>
 
           {/* Form */}
@@ -78,7 +78,7 @@ export function WaitlistCTA() {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span className="font-medium">You&apos;re on the list! We&apos;ll be in touch soon.</span>
+                <span className="font-medium">You&apos;re on the list! I&apos;ll be in touch soon.</span>
               </div>
             </div>
           ) : (

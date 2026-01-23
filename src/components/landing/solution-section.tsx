@@ -6,19 +6,19 @@ const verdicts = [
     verdict: "kill" as const,
     title: "Kill",
     description:
-      "Save your time and money. This idea has critical flaws that make success unlikely.",
+      "Personas rejected your value proposition. Better to know now than after months of building.",
   },
   {
     verdict: "pivot" as const,
     title: "Pivot",
     description:
-      "There's potential here, but you need to change direction. We'll show you exactly how.",
+      "Interest exists, but personas raised concerns about pricing, positioning, or differentiation.",
   },
   {
     verdict: "build" as const,
     title: "Build",
     description:
-      "Green light! Your idea shows strong market signals. Here's your roadmap to launch.",
+      "Personas validated the pain point and showed willingness to pay. Time to build.",
   },
 ]
 
@@ -31,10 +31,10 @@ export function SolutionSection() {
           <div>
             <SectionLabel>The Solution</SectionLabel>
             <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Get Clarity Before You Commit
+              AI Personas That Challenge, Not Validate
             </h2>
             <p className="mt-6 text-lg text-slate-600">
-              PlebTest analyzes your startup idea against real market data, competitor intelligence, and proven validation frameworks. In minutes, you&apos;ll know exactly where you stand.
+              PlebTest generates skeptical AI personas based on your target customer. They push back, raise objections, and challenge your assumptions — so you know what to test in the real world.
             </p>
           </div>
 
