@@ -208,7 +208,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - **Completed**: /privacy (11.6KB) and /terms (17.1KB) pages with GDPR-compliant content, AI disclaimer
 
 #### 0.3 Launch
-- [ ] **task-0.3.1** Deploy to production
+- [x] **task-0.3.1** Deploy to production - ✅ 2026-01-23 14:40
   - Agent: operator
   - Priority: p0
   - Acceptance Criteria:
@@ -217,6 +217,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - No console errors
     - Analytics firing
   - Dependencies: task-0.2.3, task-0.2.4, task-0.2.8
+  - **Completed**: PR #2 merged to main, Railway auto-deploy triggered, plebtest.com returning HTTP 200
 
 - [ ] **task-0.3.2** Announce on social channels
   - Agent: marketer

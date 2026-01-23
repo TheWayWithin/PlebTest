@@ -1,15 +1,15 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-23 09:40
+> **Last Updated**: 2026-01-23 14:45
 
 ---
 
 ## Current State
 
 **Phase**: 0 - Landing Page
-**Status**: In Progress
-**Active Task**: task-0.3.1 - Deploy to production
+**Status**: COMPLETE (pending social announcement)
+**Active Task**: task-0.3.2 - Announce on social channels
 
 ---
 
@@ -71,17 +71,18 @@
 - **task-0.2.8**: Privacy & Terms pages ✅ 2026-01-23 09:35
   - /privacy (GDPR-compliant, cookieless analytics explained)
   - /terms (14 sections, AI disclaimer highlighted)
+- **task-0.3.1**: Production deployment ✅ 2026-01-23 14:40
+  - PR #2 merged to main
+  - Railway auto-deploying from main branch
+  - plebtest.com returning HTTP 200
 
 ### What Needs to Happen Next
-1. **task-0.3.1**: Deploy to production (operator)
-   - Landing page live at plebtest.com
-   - SSL working
-   - No console errors
-   - Analytics firing
-
-2. **task-0.3.2**: Announce on social channels (marketer)
+1. **task-0.3.2**: Announce on social channels (marketer)
    - Twitter/X post with link
    - Indie Hackers post (optional)
+
+2. **Phase 1**: Core Loop MVP
+   - Start with task-1.1.1 (Set up Supabase projects)
 
 ### Known Blockers
 - None currently
