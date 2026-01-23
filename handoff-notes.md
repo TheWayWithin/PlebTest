@@ -1,25 +1,26 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-23 (Sprint 0.3 created)
+> **Last Updated**: 2026-01-23 (Sprint 0.5 COMPLETE - deployed to production)
 
 ---
 
 ## Current State
 
-**Phase**: 0 - Landing Page
-**Status**: IN PROGRESS - Sprint 0.3 (Brand Alignment)
-**Active Sprint**: 0.4 - Landing Page Brand Alignment
-**Next Task**: task-0.4.1 - Rewrite hero section
+**Phase**: 0 - Landing Page ✅ COMPLETE
+**Status**: Sprint 0.5 (Final Polish) deployed to production
+**Active Sprint**: None - Phase 0 complete
+**Next Task**: task-0.3.2 - Announce on social channels (marketer) OR Phase 1 kickoff
+**Previous Sprint**: 0.5 (Final Polish) - ✅ COMPLETE, deployed to production 2026-01-23
 
 ---
 
 ## Mission Objectives
 
-1. Launch marketing presence before MVP is ready
-2. Begin building waitlist for launch
-3. Establish brand positioning
-4. Show product credibility with demo assets
+1. ✅ Launch marketing presence before MVP is ready
+2. ✅ Begin building waitlist for launch
+3. ✅ Establish brand positioning
+4. ✅ Show product credibility with demo assets
 
 ---
 
@@ -77,32 +78,32 @@
   - Railway auto-deploying from main branch
   - plebtest.com returning HTTP 200
 
-### What Needs to Happen Next
-
-**Sprint 0.3 (Brand Alignment)** - 11 tasks to transform messaging:
+### Sprint 0.5 (Final Polish) - ✅ ALL COMPLETE
 
 | Task | Description | Priority | Status |
 |------|-------------|----------|--------|
-| 0.4.1 | Rewrite hero section | p0 | [ ] |
-| 0.4.2 | Rewrite "How It Works" section | p0 | [ ] |
-| 0.4.3 | Add "Who This Is For" section | p0 | [ ] |
-| 0.4.4 | Add "Why Not ChatGPT?" section | p0 | [ ] |
-| 0.4.5 | Add anti-sycophancy visual comparison | p1 | [ ] |
-| 0.4.6 | Add "Patterns, Not Predictions" disclaimer | p1 | [ ] |
-| 0.4.7 | Rewrite sample verdicts with persona quotes | p0 | [ ] |
-| 0.4.8 | Add founder story section | p1 | [ ] |
-| 0.4.9 | Change "we" to "I" language throughout | p0 | [ ] |
-| 0.4.10 | Update solution section copy | p0 | [ ] |
-| 0.4.11 | Deploy brand-aligned landing page | p0 | [ ] |
+| 0.5.1 | Replace pricing features with actual Phase 1 features | p0 | ✅ |
+| 0.5.2 | Add early access pricing line | p1 | ✅ |
+| 0.5.3 | Rewrite Problem section (shorter, no uncited stats) | p0 | ✅ |
+| 0.5.4 | Add simulated persona disclaimer | p1 | ✅ |
+| 0.5.5 | Update CTA to "Join Waitlist for Early Access" | p0 | ✅ |
+| 0.5.6 | Remove "View Full Report" buttons | p0 | ✅ |
+| 0.5.7 | Update Risk Score format (High/Medium/Low) | p1 | ✅ |
+| 0.5.8 | Deploy final polish to production | p0 | ✅ |
 
-**Key Message Transformation:**
-- FROM: "AI-powered market analysis" → TO: "AI personas that challenge your assumptions"
-- FROM: Generic startup failure stats → TO: "For founders who dread cold calls"
-- FROM: "We" language → TO: "I" (solo founder authenticity)
+**Changes Implemented:**
+- Pricing features → actual Phase 1 capabilities (interviews, products, shareable reports)
+- Early access pricing line: "Early access pricing from $7.95/mo + free credits"
+- Problem section → shorter, emotional barrier focus, no uncited stats
+- CTAs → "Join Waitlist for Early Access" (urgency)
+- Disclaimers → "Sample outputs from simulated persona interviews"
+- Risk Score format → "High (87)" instead of "87/100"
+- View Full Report buttons removed from verdict cards
+- PR #5 merged to main, production deployed
 
-**Reference Document:** `/Documents/Ideation/PlebTest Landing Page_ Final Review & Recommendations.md`
+### What Needs to Happen Next
 
-**After Sprint 0.3:**
+**Phase 0 Complete! Next Steps:**
 1. **task-0.3.2**: Announce on social channels (marketer)
 2. **Phase 1**: Core Loop MVP - Start with task-1.1.1
 
@@ -123,7 +124,7 @@
 |-------------|--------|--------|
 | Development | localhost:3000 | Ready |
 | Staging | plebteststaging-staging.up.railway.app | Live |
-| Production | plebtest.com | Live |
+| Production | plebtest.com | Live ✅ Sprint 0.5 deployed |
 
 ### Environment Variables Set
 Both staging and production have:
@@ -143,10 +144,11 @@ Both staging and production have:
 
 ---
 
-## Files Changed This Session
+## Files Changed This Session (Sprint 0.5)
 
-- `src/components/landing/demo-preview.tsx` - Demo walkthrough placeholder (NEW)
-- `src/components/landing/sample-verdicts.tsx` - Sample verdict cards (NEW)
-- `src/components/landing/index.ts` - Added exports for new components
-- `src/app/privacy/page.tsx` - Privacy policy page (NEW)
-- `src/app/terms/page.tsx` - Terms of service page (NEW)
+- `src/components/landing/pricing-preview.tsx` - Updated features to Phase 1 capabilities, added early access line
+- `src/components/landing/problem-section.tsx` - Rewritten (shorter, emotional barrier framing)
+- `src/components/landing/sample-verdicts.tsx` - Risk Score format, removed View Full Report buttons, added disclaimer
+- `src/components/landing/hero.tsx` - CTA updated to "Join Waitlist for Early Access"
+- `src/components/landing/demo-preview.tsx` - CTA updated
+- `src/components/landing/waitlist-cta.tsx` - CTA updated
