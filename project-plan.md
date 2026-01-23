@@ -114,7 +114,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - **Completed**: plebtest.com live via Cloudflare + Railway, SSL active
 
 #### 0.2 Landing Page Build
-- [ ] **task-0.2.1** Design landing page layout
+- [x] **task-0.2.1** Design landing page layout - ✅ 2026-01-22 23:52
   - Agent: designer
   - Priority: p0
   - Acceptance Criteria:
@@ -125,8 +125,9 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Waitlist CTA
     - Mobile responsive
   - Dependencies: task-0.1.2
+  - **Completed**: Full design spec at /docs/design/landing-page-spec.md (23KB)
 
-- [ ] **task-0.2.2** Implement landing page
+- [x] **task-0.2.2** Implement landing page - ✅ 2026-01-22 23:58
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -135,6 +136,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Fast load time (<3s LCP)
     - Accessible (WCAG 2.1 AA)
   - Dependencies: task-0.2.1
+  - **Completed**: 7 landing page sections + 2 custom UI components, build passes
 
 - [ ] **task-0.2.3** Create waitlist signup form
   - Agent: developer

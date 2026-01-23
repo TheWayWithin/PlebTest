@@ -1,34 +1,60 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+  display: "swap",
+  variable: "--font-inter",
+})
 
 export const metadata: Metadata = {
-  title: "PlebTest - Kill duds. Find winners.",
-  description: "AI-powered idea validation for founders who can't—or won't—pick up the phone.",
-};
+  title: "PlebTest - AI-Powered Startup Validation",
+  description:
+    "Get an AI-powered market analysis in minutes. Know if your startup idea is worth pursuing before you write a single line of code. Kill, Pivot, or Build - get clarity before you commit.",
+  keywords: [
+    "startup validation",
+    "market analysis",
+    "AI validation",
+    "business idea validation",
+    "startup testing",
+    "market research",
+    "competitor analysis",
+  ],
+  authors: [{ name: "PlebTest" }],
+  creator: "PlebTest",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://plebtest.com",
+    siteName: "PlebTest",
+    title: "PlebTest - AI-Powered Startup Validation",
+    description:
+      "Get an AI-powered market analysis in minutes. Know if your startup idea is worth pursuing before you write a single line of code.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PlebTest - AI-Powered Startup Validation",
+    description:
+      "Get an AI-powered market analysis in minutes. Know if your startup idea is worth pursuing before you write a single line of code.",
+    creator: "@plebtest",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" className={inter.variable}>
+      <body className="min-h-screen bg-white font-sans antialiased">
         {children}
       </body>
     </html>
-  );
+  )
 }

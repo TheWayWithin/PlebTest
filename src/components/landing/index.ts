@@ -1,0 +1,7 @@
+export { Hero } from "./hero"
+export { ProblemSection } from "./problem-section"
+export { SolutionSection } from "./solution-section"
+export { HowItWorks } from "./how-it-works"
+export { PricingPreview } from "./pricing-preview"
+export { WaitlistCTA } from "./waitlist-cta"
+export { Footer } from "./footer"

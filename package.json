@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/TheWayWithin/PlebTest#readme",
   "dependencies": {
+    "@radix-ui/react-slot": "^1.2.4",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^25.0.10",
     "@types/react": "^19.2.9",

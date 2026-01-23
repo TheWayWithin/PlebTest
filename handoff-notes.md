@@ -1,7 +1,7 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-22 22:20
+> **Last Updated**: 2026-01-22 23:52
 
 ---
 
@@ -9,7 +9,7 @@
 
 **Phase**: 0 - Landing Page
 **Status**: In Progress
-**Active Task**: task-0.2.1 - Design landing page layout
+**Active Task**: task-0.2.3 - Create waitlist signup form (API)
 
 ---
 
@@ -42,18 +42,30 @@
 - **task-0.1.4**: Domain configuration complete
   - plebtest.com live via Cloudflare + Railway
   - SSL active
+- **task-0.2.1**: Landing page design complete ✅ 2026-01-22 23:52
+  - Full specification at `/docs/design/landing-page-spec.md`
+  - 7 sections: Hero, Problem, Solution, How It Works, Pricing Preview, Waitlist CTA, Footer
+  - Complete copy for all text elements
+  - shadcn/ui component mappings
+  - Responsive breakpoint behaviors
+  - Color and typography specifications
+  - Animation recommendations
+- **task-0.2.2**: Landing page implementation complete ✅ 2026-01-22 23:58
+  - All 7 sections implemented in `src/components/landing/`
+  - Custom components: `section-label.tsx`, `verdict-card.tsx`
+  - shadcn components added: button, card, input, badge
+  - `npm run build` passes
+  - Waitlist form is frontend-only (captures email in local state)
 
 ### What Needs to Happen Next
-1. **task-0.2.1**: Design landing page layout
-   - Hero section with value proposition
-   - Problem/solution narrative
-   - How it works section
-   - Pricing preview (coming soon)
-   - Waitlist CTA
-   - Mobile responsive
+1. **task-0.2.3**: Create waitlist signup form API (READY TO START)
+   - POST `/api/waitlist` endpoint
+   - Store emails in Supabase `waitlist` table
+   - Update `waitlist-cta.tsx` to call the API
+   - Handle duplicate emails gracefully
 
-2. **task-0.2.2**: Implement landing page (depends on 0.2.1)
-3. **task-0.2.3**: Create waitlist signup form (depends on 0.2.2)
+2. **task-0.2.4**: Set up PostHog analytics (depends on 0.2.2)
+3. **task-0.2.5**: Define event taxonomy v1
 
 ### Known Blockers
 - None currently
