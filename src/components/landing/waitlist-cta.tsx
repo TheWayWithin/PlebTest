@@ -4,16 +4,42 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
+type SubmitStatus = "idle" | "loading" | "success" | "error"
+
 export function WaitlistCTA() {
   const [email, setEmail] = useState("")
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [status, setStatus] = useState<SubmitStatus>("idle")
+  const [errorMessage, setErrorMessage] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // For now, just show success state
-    // Backend integration will be added in task-0.2.3
-    if (email) {
-      setIsSubmitted(true)
+    if (!email) return
+
+    setStatus("loading")
+    setErrorMessage("")
+
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        setStatus("error")
+        setErrorMessage(data.error || "Something went wrong")
+        return
+      }
+
+      setStatus("success")
+      setEmail("")
+    } catch {
+      setStatus("error")
+      setErrorMessage("Failed to connect. Please try again.")
     }
   }
 
@@ -29,7 +55,7 @@ export function WaitlistCTA() {
           </p>
 
           {/* Form */}
-          {isSubmitted ? (
+          {status === "success" ? (
             <div className="mt-10">
               <div className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-6 py-4 text-white">
                 <svg
@@ -62,16 +88,25 @@ export function WaitlistCTA() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full max-w-md bg-white border-0 px-4 py-3 h-auto text-slate-900 placeholder:text-slate-400 sm:w-80"
+                  disabled={status === "loading"}
+                  className="w-full max-w-md bg-white border-0 px-4 py-3 h-auto text-slate-900 placeholder:text-slate-400 sm:w-80 disabled:opacity-50"
                 />
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full bg-white text-indigo-600 hover:bg-indigo-50 px-8 py-3 h-auto rounded-lg font-semibold sm:w-auto"
+                  disabled={status === "loading"}
+                  className="w-full bg-white text-indigo-600 hover:bg-indigo-50 px-8 py-3 h-auto rounded-lg font-semibold sm:w-auto disabled:opacity-50"
                 >
-                  Join Waitlist
+                  {status === "loading" ? "Joining..." : "Join Waitlist"}
                 </Button>
               </div>
+
+              {/* Error message */}
+              {status === "error" && errorMessage && (
+                <p className="mt-4 text-sm text-red-200">
+                  {errorMessage}
+                </p>
+              )}
             </form>
           )}
 

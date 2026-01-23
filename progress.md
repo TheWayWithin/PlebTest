@@ -138,6 +138,36 @@
 **Build Status**: ✅ `npm run build` passes, static page generated
 **Verified**: ls -la confirmed 14 component files in src/components/
 
+### 2026-01-23 10:05 Deliverable: Pricing & Contact Updates
+**Files Modified**:
+- `src/components/landing/pricing-preview.tsx` - Updated to 4 tiers from pricing.yaml
+- `src/components/landing/footer.tsx` - Updated contact links
+**Details**:
+- Pricing now shows: Solo ($9.95), Growth ($19.95), Scale ($29.95), Pro ($49.95)
+- Grid changed from 3 to 4 columns
+- Footer links: jamiewatters.work, @Jamie_within, linkedin.com/in/jamie-watters-solo
+- Email: support@plebtest.com
+**Verified**: `npm run build` passes, pushed to staging
+
+### 2026-01-23 10:15 Deliverable: Waitlist API (task-0.2.3)
+**Files Created**:
+- `src/lib/supabase.ts` (0.4KB) - Supabase client initialization
+- `src/app/api/waitlist/route.ts` (1.4KB) - POST endpoint for waitlist signups
+- `supabase/migrations/20260123000000_create_waitlist.sql` (0.9KB) - Database migration
+- `.env.example` (0.4KB) - Environment variables template
+**Files Modified**:
+- `src/components/landing/waitlist-cta.tsx` - Added API call, loading/error states
+- `package.json` - Added @supabase/supabase-js dependency
+**Details**:
+- POST `/api/waitlist` accepts email, validates format, stores in Supabase
+- Uses service_role key for server-side inserts with RLS
+- Upsert with `ignoreDuplicates: true` handles duplicate emails gracefully
+- Frontend shows loading spinner, error messages, success confirmation
+- Migration creates `waitlist` table with email (unique), created_at, RLS policies
+**Build Status**: ✅ `npm run build` passes, API route shows as dynamic
+**Verified**: ls -la confirmed all files created
+**REQUIRES**: Supabase project setup with environment variables to function
+
 ---
 
 <!-- Format:

@@ -138,7 +138,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-0.2.1
   - **Completed**: 7 landing page sections + 2 custom UI components, build passes
 
-- [ ] **task-0.2.3** Create waitlist signup form
+- [x] **task-0.2.3** Create waitlist signup form - ✅ 2026-01-23 10:15
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -147,6 +147,8 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Success confirmation message
     - Rate limiting to prevent abuse
   - Dependencies: task-0.2.2
+  - **Completed**: POST /api/waitlist, Supabase migration, frontend with loading/error states
+  - **REQUIRES**: Supabase project setup with env vars (see handoff-notes.md)
 
 - [ ] **task-0.2.4** Set up PostHog analytics
   - Agent: developer

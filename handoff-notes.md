@@ -1,7 +1,7 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-22 23:52
+> **Last Updated**: 2026-01-23 10:15
 
 ---
 
@@ -9,7 +9,7 @@
 
 **Phase**: 0 - Landing Page
 **Status**: In Progress
-**Active Task**: task-0.2.3 - Create waitlist signup form (API)
+**Active Task**: task-0.2.4 - Set up PostHog analytics
 
 ---
 
@@ -56,15 +56,23 @@
   - shadcn components added: button, card, input, badge
   - `npm run build` passes
   - Waitlist form is frontend-only (captures email in local state)
+- **task-0.2.3**: Waitlist API complete ✅ 2026-01-23 10:15
+  - POST `/api/waitlist` endpoint created
+  - Supabase migration for `waitlist` table
+  - Frontend updated with loading/error/success states
+  - Duplicate emails handled via upsert
+  - **REQUIRES**: Supabase project setup (see below)
 
 ### What Needs to Happen Next
-1. **task-0.2.3**: Create waitlist signup form API (READY TO START)
-   - POST `/api/waitlist` endpoint
-   - Store emails in Supabase `waitlist` table
-   - Update `waitlist-cta.tsx` to call the API
-   - Handle duplicate emails gracefully
+1. **BLOCKER**: Set up Supabase for waitlist to work:
+   - Create Supabase project at supabase.com
+   - Run migration: `supabase/migrations/20260123000000_create_waitlist.sql`
+   - Add env vars to Railway (both staging and production):
+     - `NEXT_PUBLIC_SUPABASE_URL`
+     - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+     - `SUPABASE_SERVICE_ROLE_KEY`
 
-2. **task-0.2.4**: Set up PostHog analytics (depends on 0.2.2)
+2. **task-0.2.4**: Set up PostHog analytics (READY)
 3. **task-0.2.5**: Define event taxonomy v1
 
 ### Known Blockers
