@@ -239,6 +239,18 @@
 - Consistent dark theme styling
 **Verified**: ls -la confirmed both files created, npm run build shows both routes static
 
+### 2026-01-23 14:40 Deliverable: Production Deployment (task-0.3.1)
+**Action**: Merged develop → main via PR #2
+**URL**: https://github.com/TheWayWithin/PlebTest/pull/2
+**Details**:
+- PR created from develop to main
+- Resolved merge conflicts via rebase
+- PR merged at 2026-01-23T14:38:27Z
+- Railway auto-deployment triggered from main branch
+- Production: plebtest.com returning HTTP 200
+- Staging verified: plebteststaging-staging.up.railway.app/privacy returning 200
+**Verified**: curl -sI https://plebtest.com returned HTTP/2 200
+
 ---
 
 <!-- Format:

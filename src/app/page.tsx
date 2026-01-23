@@ -3,6 +3,8 @@ import {
   ProblemSection,
   SolutionSection,
   HowItWorks,
+  DemoPreview,
+  SampleVerdicts,
   PricingPreview,
   WaitlistCTA,
   Footer,
@@ -24,6 +26,8 @@ export default function Home() {
         <ProblemSection />
         <SolutionSection />
         <HowItWorks />
+        <DemoPreview />
+        <SampleVerdicts />
         <PricingPreview />
         <WaitlistCTA />
       </main>
