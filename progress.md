@@ -34,6 +34,27 @@
   - Admin enforcement enabled
 **Verified**: `gh api repos/TheWayWithin/PlebTest/branches` confirmed both branches, main protected
 
+### 2026-01-22 21:17 Deliverable: Next.js Project Initialization (task-0.1.2)
+**Files Created**:
+- `package.json` - Project config with Next.js scripts
+- `tsconfig.json` - TypeScript configuration
+- `tailwind.config.ts` - Tailwind CSS config
+- `postcss.config.mjs` - PostCSS configuration
+- `next.config.ts` - Next.js configuration
+- `components.json` - shadcn/ui configuration
+- `src/app/layout.tsx` - Root layout
+- `src/app/page.tsx` - Home page
+- `src/app/globals.css` - Global styles with Tailwind v4
+- `src/lib/utils.ts` - shadcn utility functions
+
+**Stack**:
+- Next.js 16.1.4 (Turbopack)
+- TypeScript 5.9.3
+- Tailwind CSS 4.1.18
+- shadcn/ui (new-york style)
+
+**Verified**: `npm run build` passes, static pages generated
+
 ---
 
 <!-- Format:

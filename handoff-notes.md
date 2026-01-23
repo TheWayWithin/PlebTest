@@ -1,7 +1,7 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-22 20:50
+> **Last Updated**: 2026-01-22 21:17
 
 ---
 
@@ -9,7 +9,7 @@
 
 **Phase**: 0 - Landing Page
 **Status**: In Progress
-**Active Task**: task-0.1.2 - Initialize Next.js 15 project
+**Active Task**: task-0.1.3 - Set up Railway projects
 
 ---
 
@@ -32,6 +32,10 @@
 - **task-0.1.1**: GitHub repo created (github.com/TheWayWithin/PlebTest)
   - main branch with protection enabled
   - develop branch created
+- **task-0.1.2**: Next.js project initialized
+  - Next.js 16.1.4 with Turbopack
+  - TypeScript, Tailwind v4, shadcn/ui
+  - Build passes
 
 ### What Needs to Happen Next
 1. **task-0.1.1**: Create GitHub repository

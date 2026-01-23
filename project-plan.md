@@ -80,7 +80,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: none
   - **Completed**: github.com/TheWayWithin/PlebTest, main protected, develop branch created
 
-- [ ] **task-0.1.2** Initialize Next.js 15 project
+- [x] **task-0.1.2** Initialize Next.js 15 project - ✅ 2026-01-22 21:17
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -89,6 +89,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Tailwind CSS installed
     - shadcn/ui initialized
   - Dependencies: task-0.1.1
+  - **Completed**: Next.js 16.1.4, TypeScript 5.9.3, Tailwind 4.1.18, shadcn/ui new-york
 
 - [ ] **task-0.1.3** Set up Railway projects (staging + production)
   - Agent: operator
