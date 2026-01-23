@@ -1,7 +1,7 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-23 11:15
+> **Last Updated**: 2026-01-23 09:40
 
 ---
 
@@ -9,7 +9,7 @@
 
 **Phase**: 0 - Landing Page
 **Status**: In Progress
-**Active Task**: task-0.2.6 - Create demo walkthrough
+**Active Task**: task-0.3.1 - Deploy to production
 
 ---
 
@@ -62,19 +62,26 @@
 - **task-0.2.5**: Event taxonomy complete ✅ 2026-01-23 11:10
   - Documented at `/docs/analytics/event-taxonomy.md`
   - Naming conventions: snake_case, object_action format
+- **task-0.2.6**: Demo preview placeholder ✅ 2026-01-23 09:35
+  - Browser-chrome mockup at `src/components/landing/demo-preview.tsx`
+  - 3-stage flow visualization (Quick Fire → Full Validation → Verdict)
+- **task-0.2.7**: Sample verdict cards ✅ 2026-01-23 09:35
+  - 3 example verdicts at `src/components/landing/sample-verdicts.tsx`
+  - Kill (Uber for Dog Walking), Pivot (AI Recipe Generator), Build (B2B Invoice Automation)
+- **task-0.2.8**: Privacy & Terms pages ✅ 2026-01-23 09:35
+  - /privacy (GDPR-compliant, cookieless analytics explained)
+  - /terms (14 sections, AI disclaimer highlighted)
 
 ### What Needs to Happen Next
-1. **task-0.2.6**: Create demo walkthrough (designer)
-   - 90-second video OR interactive Figma prototype
-   - Shows Quick Fire → Full Validation → Verdict flow
+1. **task-0.3.1**: Deploy to production (operator)
+   - Landing page live at plebtest.com
+   - SSL working
+   - No console errors
+   - Analytics firing
 
-2. **task-0.2.7**: Create sample verdict assets (designer)
-   - 3 sample reports: Kill / Pivot / Build examples
-   - Screenshots or mockups for landing page
-
-3. **task-0.2.8**: Create privacy policy and terms of service (operator)
-   - /privacy page
-   - /terms page
+2. **task-0.3.2**: Announce on social channels (marketer)
+   - Twitter/X post with link
+   - Indie Hackers post (optional)
 
 ### Known Blockers
 - None currently
@@ -115,12 +122,8 @@ Both staging and production have:
 
 ## Files Changed This Session
 
-- `src/components/landing/pricing-preview.tsx` - Updated pricing tiers
-- `src/components/landing/footer.tsx` - Updated contact links
-- `src/lib/supabase.ts` - Supabase client
-- `src/app/api/waitlist/route.ts` - Waitlist API endpoint
-- `src/lib/posthog.ts` - PostHog initialization
-- `src/components/providers/posthog-provider.tsx` - PostHog provider
-- `src/components/landing/waitlist-cta.tsx` - API + event tracking
-- `docs/analytics/event-taxonomy.md` - Event documentation
-- `supabase/migrations/20260123000000_create_waitlist.sql` - DB migration
+- `src/components/landing/demo-preview.tsx` - Demo walkthrough placeholder (NEW)
+- `src/components/landing/sample-verdicts.tsx` - Sample verdict cards (NEW)
+- `src/components/landing/index.ts` - Added exports for new components
+- `src/app/privacy/page.tsx` - Privacy policy page (NEW)
+- `src/app/terms/page.tsx` - Terms of service page (NEW)

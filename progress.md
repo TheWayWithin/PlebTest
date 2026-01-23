@@ -196,6 +196,49 @@
 - Properties defined for each event
 **Verified**: File created at docs/analytics/event-taxonomy.md
 
+### 2026-01-23 09:35 Deliverable: Demo Preview Placeholder (task-0.2.6)
+**Files Created**:
+- `src/components/landing/demo-preview.tsx` (7.5KB) - Demo walkthrough placeholder component
+**Details**:
+- Browser-chrome styled mockup showing validation flow
+- 3-stage visualization: Quick Fire → Full Validation → Verdict
+- Animated glow effects and hover states
+- Disabled play button with "Demo video coming soon" text
+- Uses indigo/violet/emerald brand colors
+- Responsive grid layout
+**Verified**: ls -la confirmed file created, npm run build passes
+
+### 2026-01-23 09:35 Deliverable: Sample Verdict Cards (task-0.2.7)
+**Files Created**:
+- `src/components/landing/sample-verdicts.tsx` (8.8KB) - Sample verdict showcase component
+**Details**:
+- 3 example verdict cards: Kill, Pivot, Build
+- Each shows risk score (with progress bar), confidence level, key finding
+- Example ideas: "Uber for Dog Walking" (Kill), "AI Recipe Generator" (Pivot), "B2B Invoice Automation" (Build)
+- Glow effects and gradient headers per verdict type
+- Disabled "View Full Report" buttons
+**Verified**: ls -la confirmed file created, npm run build passes
+
+### 2026-01-23 09:35 Deliverable: Privacy Policy & Terms of Service (task-0.2.8)
+**Files Created**:
+- `src/app/privacy/page.tsx` (11.6KB) - Privacy policy page at /privacy
+- `src/app/terms/page.tsx` (17.1KB) - Terms of service page at /terms
+**Details**:
+- Privacy Policy includes:
+  - Data collection (email, usage data via PostHog)
+  - Cookieless analytics explanation
+  - GDPR rights (access, deletion, portability, rectification)
+  - Data retention policies
+  - Third-party services disclosure
+- Terms of Service includes:
+  - 14 comprehensive sections
+  - AI-generated content disclaimer (highlighted box)
+  - "Results are simulations, not guarantees" emphasis
+  - Liability limitations, warranty disclaimers
+- Both pages cross-link to each other in footer
+- Consistent dark theme styling
+**Verified**: ls -la confirmed both files created, npm run build shows both routes static
+
 ---
 
 <!-- Format:

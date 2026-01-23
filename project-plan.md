@@ -175,7 +175,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-0.2.4
   - **Completed**: Event taxonomy documented at /docs/analytics/event-taxonomy.md
 
-- [ ] **task-0.2.6** Create demo walkthrough
+- [x] **task-0.2.6** Create demo walkthrough - ✅ 2026-01-23 09:35
   - Agent: designer
   - Priority: p0
   - Acceptance Criteria:
@@ -184,8 +184,9 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Demonstrates anti-sycophancy (persona pushing back)
     - Shows Kill/Pivot/Build outcome examples
   - Dependencies: task-0.2.1
+  - **Completed**: Placeholder mockup component at src/components/landing/demo-preview.tsx (7.5KB) showing 3-stage flow
 
-- [ ] **task-0.2.7** Create sample verdict assets
+- [x] **task-0.2.7** Create sample verdict assets - ✅ 2026-01-23 09:35
   - Agent: designer
   - Priority: p1
   - Acceptance Criteria:
@@ -193,8 +194,9 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Screenshots or mockups for landing page
     - Shows credibility before product exists
   - Dependencies: task-0.2.6
+  - **Completed**: Sample verdicts component at src/components/landing/sample-verdicts.tsx (8.8KB) with 3 example cards
 
-- [ ] **task-0.2.8** Create privacy policy and terms of service
+- [x] **task-0.2.8** Create privacy policy and terms of service - ✅ 2026-01-23 09:35
   - Agent: operator
   - Priority: p0
   - Acceptance Criteria:
@@ -203,6 +205,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Cookie consent banner (if required)
     - GDPR-compliant language
   - Dependencies: task-0.2.2
+  - **Completed**: /privacy (11.6KB) and /terms (17.1KB) pages with GDPR-compliant content, AI disclaimer
 
 #### 0.3 Launch
 - [ ] **task-0.3.1** Deploy to production
