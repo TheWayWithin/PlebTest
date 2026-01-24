@@ -1,7 +1,7 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-24 18:00 (task-1.1.1 COMPLETE)
+> **Last Updated**: 2026-01-24 15:50 (Quick Fire UI complete)
 
 ---
 
@@ -9,8 +9,42 @@
 
 **Phase**: 1 - Core Loop MVP
 **Status**: In Progress
-**Last Completed**: task-1.1.1 - Set up Supabase projects ✅
-**Next Task**: task-1.1.2 - Initialize local Supabase for development
+**Last Completed**: task-1.3.3 - Implement Quick Fire UI (F-029) ✅
+**Next Task**: task-1.3.4 - Implement Data Carry-Over (F-030)
+
+### Quick Fire UI (task-1.3.3) ✅
+**Location**: `src/components/quick-fire/`
+**Files**: 8 components (quick-fire.tsx, input, loading, result, error, gauge, badge, index)
+**Integrated**: Hero section of landing page
+
+**Features**:
+- State machine: input → loading → result/error
+- Animated SVG gauge with score counter
+- Color-coded risk levels (emerald/amber/rose)
+- Error handling (rate_limit, validation, server_error)
+- "Go Deeper" → /signup, "Test Another" → reset
+
+### Quick Fire API (task-1.3.2) ✅
+**Endpoint**: POST /api/quick-fire
+**Files**:
+- `src/lib/ratelimit.ts` - Upstash rate limiter (10/hour per IP)
+- `src/lib/openrouter.ts` - AI integration (claude-3-haiku)
+- `src/app/api/quick-fire/route.ts` - API endpoint
+
+**Response Format**:
+```json
+{ "riskScore": 73, "riskLevel": "HIGH", "keyObjection": "Crowded market..." }
+```
+
+### Upstash Redis Configuration (task-1.15.1) ✅
+**Database**: plebtest-redis
+**Endpoint**: https://fitting-grouper-34390.upstash.io
+**Region**: us-east-1 (matches Railway)
+
+**Environment Variables**:
+- `UPSTASH_REDIS_REST_URL` - Set in staging ✅, production ✅
+- `UPSTASH_REDIS_REST_TOKEN` - Set in staging ✅, production ✅
+- `OPENROUTER_API_KEY` - Set in staging ✅, production ✅
 **Previous Phase**: 0 - Landing Page ✅ COMPLETE (2026-01-24)
 **Production URL**: https://plebtest.com ✅
 
@@ -24,6 +58,127 @@
 - Builder: nixpacks (not Railpack)
 - Node.js: 20 (via .node-version and railway.toml)
 - Supabase client: lazy initialization
+
+### Local Development Setup
+- **Local Supabase**: `supabase start` (Docker required)
+- **Studio**: http://127.0.0.1:54323
+- **API**: http://127.0.0.1:54321
+- **Database**: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+- **Env file**: `.env.local` contains local credentials
+- **Note**: Run `supabase stop` when done, `supabase start` to resume
+
+### Quick Fire UI Design (task-1.3.1)
+**Design Spec**: `/docs/design/quick-fire-ui-spec.md` (16KB)
+
+**Component Structure**:
+```
+QuickFire/
+├── QuickFire.tsx (main + state management)
+├── QuickFireInput.tsx
+├── QuickFireLoading.tsx
+├── QuickFireResult.tsx
+├── QuickFireError.tsx
+├── RiskScoreGauge.tsx (SVG animation)
+├── RiskLevelBadge.tsx
+└── ObjectionBox.tsx
+```
+
+**Key Design Decisions**:
+- Semi-circular gauge for Risk Score (visual impact)
+- Color-coded: Rose (High 71-100), Amber (Medium 31-70), Emerald (Low 0-30)
+- Staggered animations: gauge → badge → objection → CTA
+- Placement: Hero section recommended
+
+**API Contract**:
+```typescript
+POST /api/quick-fire { idea: string } // 10-200 chars
+Response: { riskScore: number, riskLevel: 'LOW'|'MEDIUM'|'HIGH', keyObjection: string }
+```
+
+**BLOCKED**: Implementation requires task-1.15.1 (Upstash Redis) for rate limiting
+
+### Logout Implementation (task-1.2.4)
+**Components**:
+- `LogoutButton` (`src/components/auth/logout-button.tsx`) - Client component with loading state
+  - Variants: default, ghost, link
+  - Calls signOut server action, then router.push('/') + router.refresh()
+- `Header` (`src/components/layout/header.tsx`) - Server component
+  - Checks auth state, shows different nav for auth'd vs unauth'd users
+  - Includes LogoutButton for authenticated users
+
+**Pages with Logout Access**:
+- `/dashboard` - Header with logout button
+- `/settings` - Header + dedicated logout section
+
+### Auth Pages (task-1.2.2, task-1.2.3)
+**Routes**:
+- `/signup` - Two-step: tier selection (Solo/Growth) → OAuth/email form
+- `/login` - OAuth buttons + email/password form
+
+**Components**:
+- `src/components/auth/oauth-buttons.tsx` - Google/GitHub OAuth
+- `src/components/auth/signup-form.tsx` - Email/password + terms consent
+
+**Server Actions** (`src/lib/auth/actions.ts`):
+- `signUpWithEmail(formData)` - Creates auth user + users record
+- `signInWithEmail(formData)` - Password login
+- `signOut()` - Signs out user
+
+**Database Tiers**: solo, growth, scale, pro (NOT 'studio' or 'free')
+
+### Authentication Setup (task-1.2.1)
+**Routes**:
+- `/auth/callback` - OAuth callback handler
+- `/auth/error` - Auth error display page
+
+**Middleware** (`src/middleware.ts`):
+- Refreshes session on every request
+- Protects: `/dashboard`, `/account`, `/settings`
+- Redirects auth'd users from: `/login`, `/signup`
+
+**OAuth Setup Guide**: `docs/auth-setup.md`
+- Manual steps required in Supabase dashboard
+- Google + GitHub OAuth instructions included
+
+**Redirect URLs to configure in Supabase**:
+```
+http://localhost:3000/auth/callback
+https://plebteststaging-staging.up.railway.app/auth/callback
+https://plebtest.com/auth/callback
+```
+
+### Supabase Clients (task-1.1.5)
+**Location**: `src/lib/supabase/`
+- `client.ts` - Browser client (use in Client Components)
+- `server.ts` - Server client (use in Server Components, Route Handlers, Server Actions)
+- `admin.ts` - Admin client (bypasses RLS, server-only)
+- `index.ts` - Barrel exports: `createClient`, `createServerClient`, `createAdminClient`
+
+**Types**: `src/types/database.types.ts` (964 lines, auto-generated)
+
+**Usage**:
+```typescript
+// Client Component
+import { createClient } from "@/lib/supabase";
+const supabase = createClient();
+
+// Server Component
+import { createServerClient } from "@/lib/supabase";
+const supabase = await createServerClient();
+
+// Admin operations (server-only)
+import { createAdminClient } from "@/lib/supabase";
+const admin = createAdminClient();
+```
+
+### Database Schema (task-1.1.3, task-1.1.4)
+**Migration File**: `supabase/migrations/20260124000001_create_core_schema.sql`
+- **13 Tables**: users, ideas, proposals, assumptions, icps, personas, validation_tests, sessions, reports, iterations, webhook_events, usage_tracking, waitlist
+- **17 ENUMs**: All from architecture.md (subscription_tier, verdict, etc.)
+- **43 RLS Policies**: Full CRUD for all tables with ownership chains
+- **10 Indexes**: Performance indexes on FKs and common queries
+- **4 Triggers**: updated_at auto-update on users, ideas, proposals, icps
+- **Verified**: `supabase db reset` applies both migrations successfully
 
 ---
 

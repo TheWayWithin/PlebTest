@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowDown } from "lucide-react"
+import { QuickFire } from "@/components/quick-fire"
 
 export function Hero() {
   return (
@@ -31,23 +31,26 @@ export function Hero() {
             AI personas challenge your startup idea with real objections — so you know whether to kill it, pivot, or build.
           </p>
 
-          {/* CTAs */}
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Button
-              size="lg"
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 h-auto rounded-lg font-semibold sm:w-auto"
-              asChild
-            >
-              <a href="#waitlist">Join Waitlist for Early Access</a>
-            </Button>
-            <a
-              href="#how-it-works"
-              className="inline-flex items-center gap-2 text-slate-600 hover:text-indigo-600 font-medium transition-colors"
-            >
-              See How It Works
-              <ArrowDown className="w-4 h-4" aria-hidden="true" />
-            </a>
+          {/* Quick Fire Section */}
+          <div className="mt-12">
+            <QuickFire />
           </div>
+
+          {/* Divider */}
+          <div className="flex items-center gap-4 max-w-md mx-auto my-8">
+            <div className="flex-1 h-px bg-slate-200" />
+            <span className="text-slate-500 text-sm">or scroll to learn more</span>
+            <div className="flex-1 h-px bg-slate-200" />
+          </div>
+
+          {/* See How It Works link */}
+          <a
+            href="#how-it-works"
+            className="inline-flex items-center gap-2 text-slate-600 hover:text-indigo-600 font-medium transition-colors"
+          >
+            See How It Works
+            <ArrowDown className="w-4 h-4" aria-hidden="true" />
+          </a>
         </div>
       </div>
     </section>

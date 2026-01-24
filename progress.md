@@ -400,6 +400,297 @@ The landing page sells PlebTest as "AI-powered market analysis" when it should s
 - Staging project (plebtest-staging) already existed from Phase 0
 **Verified**: plebtest.com deployed successfully with production Supabase connection
 
+### 2026-01-24 19:00 Deliverable: Local Supabase Development Environment (task-1.1.2)
+**Files Created**:
+- `.env.local` (0.7KB) - Local development environment variables
+**Configuration**:
+- `supabase init` completed (config.toml created)
+- `supabase start` running successfully
+- Waitlist migration auto-applied from Phase 0
+**Local URLs**:
+- Studio: http://127.0.0.1:54323
+- API: http://127.0.0.1:54321
+- Database: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+**Note**: Stopped aimpactscanner-mvp project to free ports 54321-54324
+**Verified**: `supabase start` output shows "Started supabase local development setup"
+
+### 2026-01-24 20:00 Deliverable: Database Schema & RLS (task-1.1.3, task-1.1.4)
+**File Created**: `supabase/migrations/20260124000001_create_core_schema.sql` (24.8KB, 794 lines)
+**Description**: Complete database schema from architecture.md implemented
+**Details**:
+- **17 ENUMs**: subscription_tier, proposal_status, validation_test_status, session_status, session_mode, test_mode, validation_mode, pushback_preset, verdict, confidence_level, subscription_status, report_status, pain_intensity, decision_role, adoption_tendency, skepticism_level, assumption_action
+- **12 Tables**: users, ideas, proposals, assumptions, icps, personas, validation_tests, sessions, reports, iterations, webhook_events, usage_tracking
+- **43 RLS Policies**: Full CRUD policies for all tables with proper ownership chains
+- **10 Indexes**: Performance indexes on foreign keys and commonly queried columns
+- **4 Triggers**: updated_at auto-update on users, ideas, proposals, icps
+- **All foreign key relationships** established between tables
+**Verification**:
+```
+supabase db reset:
+- Applying migration 20260123000000_create_waitlist.sql... ✅
+- Applying migration 20260124000001_create_core_schema.sql... ✅
+- Finished supabase db reset on branch develop
+
+psql verification:
+- 13 tables (verified via \dt public.*)
+- 43 RLS policies (verified via pg_policies count)
+```
+**Note**: RLS policies implemented as part of schema migration (tasks 1.1.3 and 1.1.4 completed together)
+
+### 2026-01-24 14:03 Deliverable: Supabase Client Setup (task-1.1.5)
+**Files Created**:
+- `src/lib/supabase/client.ts` - Browser client using @supabase/ssr
+- `src/lib/supabase/server.ts` - Server client with cookie handling for Next.js
+- `src/lib/supabase/admin.ts` - Admin client (service role, server-only)
+- `src/lib/supabase/index.ts` - Barrel export with named exports
+- `src/types/database.types.ts` - Generated TypeScript types (964 lines)
+
+**Files Deleted**:
+- `src/lib/supabase.ts` - Old basic client replaced by new modular structure
+
+**Package Added**:
+- @supabase/ssr - SSR utilities for Next.js integration
+
+**Verified**:
+```
+ls -la src/lib/supabase/  # All 4 files present
+ls -la src/types/database.types.ts  # 31KB, 964 lines
+npm run build  # ✅ Compiled successfully
+```
+
+---
+
+### 2026-01-24 14:25 Deliverable: Environment Variables Configuration (task-1.1.6)
+**Files Created/Updated**:
+- `.env.example` - Comprehensive template with all 16 environment variables documented
+- `.env.local` - Updated with Phase 1 variable placeholders (commented out)
+- `docs/env-vars-checklist.md` - Tracking matrix showing which vars are set per environment
+
+**Variables Already Configured** (per handoff-notes):
+- Staging & Production: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, NEXT_PUBLIC_POSTHOG_KEY
+
+**Variables To Add When Needed**:
+- NEXT_PUBLIC_APP_URL (Phase 1.2 - Auth)
+- OPENROUTER_API_KEY (Phase 1.3 - Quick Fire)
+- STRIPE_* keys (Phase 1.13 - Billing)
+- UPSTASH_* keys (Phase 1.3 - Rate Limiting)
+- RESEND_API_KEY (Phase 1.8 - Emails)
+- DATABASE_URL (Phase 1.7 - Background Jobs)
+
+**Note**: Incremental approach - add keys as tasks require them rather than all at once.
+
+### 2026-01-24 14:30 Deliverable: Supabase Auth Configuration (task-1.2.1)
+**Files Created**:
+- `src/app/auth/callback/route.ts` - OAuth callback handler (exchanges code for session)
+- `src/app/auth/error/page.tsx` - User-friendly auth error page
+- `src/middleware.ts` - Session refresh + route protection middleware
+- `docs/auth-setup.md` - Complete OAuth setup guide (Google & GitHub)
+
+**Auth Configuration**:
+- OAuth callback route handles code exchange and error redirects
+- Middleware protects `/dashboard`, `/account`, `/settings` routes
+- Middleware redirects authenticated users away from `/login`, `/signup`
+- Error page provides clear messages for OAuth failures
+
+**Manual Steps Required** (documented in docs/auth-setup.md):
+1. Configure Google OAuth in Google Cloud Console
+2. Configure GitHub OAuth in GitHub Developer Settings
+3. Add OAuth credentials to Supabase dashboard
+4. Add redirect URLs to Supabase: localhost, staging, production
+
+**Build Note**: Next.js 16 shows deprecation warning for "middleware" → "proxy" rename (still functional)
+
+**Verified**: `npm run build` passes, all routes generated correctly
+
+### 2026-01-24 14:40 Deliverable: Registration Flow (task-1.2.2, F-001)
+**Files Created**:
+- `src/app/(auth)/layout.tsx` - Auth layout with centered card, logo, footer
+- `src/app/(auth)/signup/page.tsx` - Two-step signup: tier selection → authentication
+- `src/app/(auth)/login/page.tsx` - Login with OAuth and email options
+- `src/components/auth/oauth-buttons.tsx` - Google/GitHub OAuth buttons
+- `src/components/auth/signup-form.tsx` - Email/password form with terms consent
+- `src/lib/auth/actions.ts` - Server actions for signUp, signIn, signOut
+
+**Files Updated**:
+- `src/app/auth/callback/route.ts` - Now creates user record in public.users after OAuth
+
+**Features**:
+- Tier selection: Solo ($7.95/mo) or Growth ($19.95/mo)
+- OAuth: Google and GitHub sign-in (tier stored in localStorage)
+- Email/Password: Form validation, email confirmation
+- Terms consent: Required checkbox linking to /privacy and /terms
+- User record creation in public.users with selected tier
+
+**Database Tier Note**: Changed 'studio' to 'growth' to match database enum values (solo, growth, scale, pro)
+
+**Verified**: `npm run build` passes, /signup and /login routes generated
+
+### 2026-01-24 14:45 Deliverable: Login Flow (task-1.2.3, F-002)
+**Note**: Login page was implemented as part of task-1.2.2 deliverable.
+
+**Features Verified**:
+- OAuth login (Google/GitHub buttons)
+- Email/Password login with signInWithEmail server action
+- Redirect to /dashboard after successful login
+- Session persistence via Supabase cookie handling
+
+**Files** (created in task-1.2.2):
+- `src/app/(auth)/login/page.tsx` - Login page UI
+- `src/lib/auth/actions.ts` - Contains signInWithEmail action
+
+---
+
+### 2026-01-24 14:55 Deliverable: Logout Functionality (task-1.2.4, F-003)
+**Files Created**:
+- `src/components/auth/logout-button.tsx` (2.2KB) - Reusable logout button with loading state
+- `src/components/layout/header.tsx` (2.0KB) - Header with auth-aware navigation
+- `src/components/layout/index.ts` - Barrel export for layout components
+- `src/app/dashboard/page.tsx` (1.1KB) - Protected dashboard page with Header
+- `src/app/settings/page.tsx` (1.9KB) - Protected settings page with logout section
+
+**Files Modified**:
+- `src/lib/auth/actions.ts` - Added comment to signOut action
+
+**Features**:
+- LogoutButton component with loading spinner during sign out
+- Supports 3 variants: default, ghost, link
+- Header component checks auth state server-side
+- Shows different navigation for authenticated vs unauthenticated users
+- Dashboard page shows welcome message and getting started card
+- Settings page shows account info and dedicated logout section
+- All pages redirect to home (/) after logout
+
+**Acceptance Criteria**:
+- ✅ Logout button in header/settings
+- ✅ Clears session (calls supabase.auth.signOut())
+- ✅ Redirects to home page (router.push('/'))
+
+**Build Status**: ✅ `npm run build` passes, /dashboard and /settings routes generated
+**Verified**: ls -la confirmed all 5 files exist on filesystem
+
+---
+
+### 2026-01-24 15:00 Deliverable: Quick Fire UI Design (task-1.3.1)
+**File Created**: `/docs/design/quick-fire-ui-spec.md` (16KB)
+**Description**: Complete design specification for Quick Fire UI component
+
+**Design Coverage**:
+- **4 States**: Input, Loading, Result, Error (validation, rate limit, API)
+- **Visual Design**: All colors, typography, spacing documented
+- **Responsive**: Desktop and mobile layouts specified
+- **Animations**: Gauge fill (1s), staggered element reveals
+- **Accessibility**: Keyboard nav, screen reader support, WCAG AA compliance
+
+**Key Design Decisions**:
+- Semi-circular gauge for Risk Score (visual impact)
+- Color-coded risk levels: Rose (High), Amber (Medium), Emerald (Low)
+- Staggered reveal animation for result elements
+- "Go Deeper - Get Full Analysis" as conversion CTA
+- Placement recommended: Hero section integration
+
+**Component Structure**:
+```
+QuickFire/
+├── QuickFire.tsx (main + state management)
+├── QuickFireInput.tsx
+├── QuickFireLoading.tsx
+├── QuickFireResult.tsx
+├── QuickFireError.tsx
+├── RiskScoreGauge.tsx (SVG animation)
+├── RiskLevelBadge.tsx
+└── ObjectionBox.tsx
+```
+
+**API Contract Documented**:
+- POST /api/quick-fire { idea: string }
+- Response: { riskScore, riskLevel, keyObjection }
+
+**Verified**: ls -la confirmed 16KB file at /docs/design/quick-fire-ui-spec.md
+
+---
+
+### 2026-01-24 15:15 Deliverable: Upstash Redis Setup (task-1.15.1)
+**Database**: plebtest-redis
+**Endpoint**: https://fitting-grouper-34390.upstash.io
+**Region**: N. Virginia, USA (us-east-1)
+**Plan**: Pay as You Go (Free tier)
+
+**Environment Variables Added**:
+- `UPSTASH_REDIS_REST_URL` → Railway staging ✅, Railway production ✅
+- `UPSTASH_REDIS_REST_TOKEN` → Railway staging ✅, Railway production ✅
+
+**Unblocks**:
+- task-1.3.2 (Quick Fire API with rate limiting)
+- task-1.15.2 (Rate limiting middleware)
+- task-1.2.6 (Auth endpoint rate limiting)
+
+**Verified**: User confirmed credentials added to both Railway environments, deploys triggered
+
+---
+
+### 2026-01-24 15:35 Deliverable: Quick Fire API Endpoint (task-1.3.2)
+**Files Created**:
+- `src/lib/ratelimit.ts` (1.6KB) - Upstash rate limiter with IP extraction
+- `src/lib/openrouter.ts` (3.6KB) - OpenRouter AI integration with claude-3-haiku
+- `src/app/api/quick-fire/route.ts` (4.2KB) - POST endpoint with validation and error handling
+
+**Packages Added**:
+- `@upstash/ratelimit` - Sliding window rate limiting
+- `@upstash/redis` - Redis client for Upstash
+
+**Features**:
+- **Rate Limiting**: 10 requests/hour per IP (sliding window)
+- **Input Validation**: 10-200 characters, trimmed
+- **AI Model**: anthropic/claude-3-haiku (fast, cost-effective)
+- **Token Budget**: 150 max_tokens enforced
+- **Anti-Sycophancy**: Prompt instructs AI to be skeptical, not encouraging
+
+**API Contract**:
+```
+POST /api/quick-fire
+Request:  { idea: string }
+Response: { riskScore: number, riskLevel: 'LOW'|'MEDIUM'|'HIGH', keyObjection: string }
+Errors:   { error: 'rate_limit'|'validation'|'server_error', message?, retryAfter? }
+```
+
+**Deferred to Phase 2**:
+- Per-fingerprint limit (20/day) - requires client-side fingerprinting
+- CAPTCHA after 3 requests/hour - requires CAPTCHA service
+
+**Build Status**: ✅ `npm run build` passes, /api/quick-fire route shows as dynamic
+**Verified**: ls -la confirmed all 3 files exist on filesystem
+
+**Environment Configured**: OPENROUTER_API_KEY added to Railway staging ✅ + production ✅ (2026-01-24 15:40)
+
+---
+
+### 2026-01-24 15:50 Deliverable: Quick Fire UI Implementation (task-1.3.3)
+**Files Created** (8 files in `src/components/quick-fire/`):
+- `quick-fire.tsx` (3.1KB) - Main orchestrator with state machine (input/loading/result/error)
+- `quick-fire-input.tsx` (2.7KB) - Textarea with character counter and validation
+- `quick-fire-loading.tsx` (1.8KB) - Animated loading state with pulsing icon
+- `quick-fire-result.tsx` (2.3KB) - Result display with gauge, badge, objection, CTAs
+- `quick-fire-error.tsx` (2.1KB) - Error handling for rate_limit/validation/server_error
+- `risk-score-gauge.tsx` (3.4KB) - Animated SVG semi-circular gauge
+- `risk-level-badge.tsx` (0.9KB) - Color-coded risk level badge (emerald/amber/rose)
+- `index.ts` (0.4KB) - Barrel exports
+
+**Files Modified**:
+- `src/components/landing/hero.tsx` - Integrated QuickFire component below headline
+
+**Features**:
+- Client-side state management with useCallback for performance
+- Animated gauge with score counting animation (1.5s duration)
+- Color-coded risk levels: emerald (Low), amber (Medium), rose (High)
+- Character counter with validation feedback (10-200 chars)
+- Error handling for all API error types with retry functionality
+- "Go Deeper" CTA linking to /signup
+- "Test Another" reset functionality
+- Light theme styling consistent with landing page
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: `ls -la src/components/quick-fire/` confirms 8 files (21KB total)
+
 ---
 
 ### 2026-01-24 Issue: Railway Deployment Failures
