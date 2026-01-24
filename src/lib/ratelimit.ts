@@ -8,10 +8,21 @@
 import { Ratelimit } from "@upstash/ratelimit"
 import { Redis } from "@upstash/redis"
 
-// Initialize Redis client (lazy - only throws on actual use if missing)
+// Validate env vars are present
+const redisUrl = process.env.UPSTASH_REDIS_REST_URL
+const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN
+
+if (!redisUrl || !redisToken) {
+  console.error("Missing Upstash Redis credentials:", {
+    hasUrl: !!redisUrl,
+    hasToken: !!redisToken,
+  })
+}
+
+// Initialize Redis client
 const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+  url: redisUrl || "",
+  token: redisToken || "",
 })
 
 /**

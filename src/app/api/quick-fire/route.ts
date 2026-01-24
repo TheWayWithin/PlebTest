@@ -35,6 +35,23 @@ export async function POST(
   request: NextRequest
 ): Promise<NextResponse<SuccessResponse | ErrorResponse>> {
   try {
+    // 0. Validate environment configuration
+    const missingEnvVars: string[] = []
+    if (!process.env.UPSTASH_REDIS_REST_URL) missingEnvVars.push("UPSTASH_REDIS_REST_URL")
+    if (!process.env.UPSTASH_REDIS_REST_TOKEN) missingEnvVars.push("UPSTASH_REDIS_REST_TOKEN")
+    if (!process.env.OPENROUTER_API_KEY) missingEnvVars.push("OPENROUTER_API_KEY")
+
+    if (missingEnvVars.length > 0) {
+      console.error("Quick Fire: Missing environment variables:", missingEnvVars)
+      return NextResponse.json(
+        {
+          error: "server_error" as const,
+          message: "Service configuration error",
+        },
+        { status: 503 }
+      )
+    }
+
     // 1. Rate limiting check
     const clientIP = getClientIP(request)
     const { success, reset } = await quickFireRatelimit.limit(clientIP)
@@ -108,8 +125,12 @@ export async function POST(
     // 5. Return success response (no database write for Quick Fire)
     return NextResponse.json(analysis, { status: 200 })
   } catch (error) {
-    // Log error for debugging (in production, use proper logging service)
-    console.error("Quick Fire API error:", error)
+    // Log detailed error for debugging
+    console.error("Quick Fire API error:", {
+      name: error instanceof Error ? error.name : "Unknown",
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+    })
 
     // Check for specific error types
     if (error instanceof Error) {
@@ -130,6 +151,18 @@ export async function POST(
           {
             error: "server_error" as const,
             message: "AI analysis service unavailable",
+          },
+          { status: 503 }
+        )
+      }
+
+      // Upstash Redis errors
+      if (error.message.includes("Upstash") || error.message.includes("Redis") || error.message.includes("UNAUTHORIZED")) {
+        console.error("Upstash Redis error - check credentials")
+        return NextResponse.json(
+          {
+            error: "server_error" as const,
+            message: "Rate limiting service error",
           },
           { status: 503 }
         )
