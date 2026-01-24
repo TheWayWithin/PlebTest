@@ -33,6 +33,14 @@ export const metadata: Metadata = {
     title: "PlebTest - AI-Powered Startup Validation",
     description:
       "Get an AI-powered market analysis in minutes. Know if your startup idea is worth pursuing before you write a single line of code.",
+    images: [
+      {
+        url: "https://plebtest.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "PlebTest - AI-Powered Startup Validation",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -40,6 +48,7 @@ export const metadata: Metadata = {
     description:
       "Get an AI-powered market analysis in minutes. Know if your startup idea is worth pursuing before you write a single line of code.",
     creator: "@plebtest",
+    images: ["https://plebtest.com/og-image.png"],
   },
   robots: {
     index: true,
