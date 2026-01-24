@@ -54,10 +54,23 @@ export async function POST(
 
     // 1. Rate limiting check
     const clientIP = getClientIP(request)
-    const { success, reset } = await quickFireRatelimit.limit(clientIP)
+    let rateLimitResult: { success: boolean; reset: number }
 
-    if (!success) {
-      const retryAfter = Math.ceil((reset - Date.now()) / 1000)
+    try {
+      rateLimitResult = await quickFireRatelimit.limit(clientIP)
+    } catch (rateLimitError) {
+      console.error("Rate limit check failed:", rateLimitError)
+      return NextResponse.json(
+        {
+          error: "server_error" as const,
+          message: "Rate limiting service unavailable",
+        },
+        { status: 503 }
+      )
+    }
+
+    if (!rateLimitResult.success) {
+      const retryAfter = Math.ceil((rateLimitResult.reset - Date.now()) / 1000)
       return NextResponse.json(
         {
           error: "rate_limit" as const,
@@ -120,7 +133,19 @@ export async function POST(
     }
 
     // 4. Analyze the idea with AI
-    const analysis = await analyzeIdea(idea)
+    let analysis
+    try {
+      analysis = await analyzeIdea(idea)
+    } catch (aiError) {
+      console.error("AI analysis failed:", aiError)
+      return NextResponse.json(
+        {
+          error: "server_error" as const,
+          message: "AI analysis service unavailable",
+        },
+        { status: 503 }
+      )
+    }
 
     // 5. Return success response (no database write for Quick Fire)
     return NextResponse.json(analysis, { status: 200 })
