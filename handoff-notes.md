@@ -1,17 +1,29 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-23 (Sprint 0.5 COMPLETE - deployed to production)
+> **Last Updated**: 2026-01-24 18:00 (task-1.1.1 COMPLETE)
 
 ---
 
 ## Current State
 
-**Phase**: 0 - Landing Page ✅ COMPLETE
-**Status**: Sprint 0.5 (Final Polish) deployed to production
-**Active Sprint**: None - Phase 0 complete
-**Next Task**: task-0.3.2 - Announce on social channels (marketer) OR Phase 1 kickoff
-**Previous Sprint**: 0.5 (Final Polish) - ✅ COMPLETE, deployed to production 2026-01-23
+**Phase**: 1 - Core Loop MVP
+**Status**: In Progress
+**Last Completed**: task-1.1.1 - Set up Supabase projects ✅
+**Next Task**: task-1.1.2 - Initialize local Supabase for development
+**Previous Phase**: 0 - Landing Page ✅ COMPLETE (2026-01-24)
+**Production URL**: https://plebtest.com ✅
+
+### Supabase Configuration
+| Environment | Project | ID |
+|-------------|---------|-----|
+| Staging | plebtest-staging | (existing) |
+| Production | PlebTest | wemszisfzevffudenqzi |
+
+### Railway Deployment Fix Applied
+- Builder: nixpacks (not Railpack)
+- Node.js: 20 (via .node-version and railway.toml)
+- Supabase client: lazy initialization
 
 ---
 

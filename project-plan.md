@@ -49,8 +49,8 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
 
 | Phase | Name | Status |
 |-------|------|--------|
-| 0 | Landing Page | not_started |
-| 1 | Core Loop MVP | not_started |
+| 0 | Landing Page | complete ✅ |
+| 1 | Core Loop MVP | in_progress |
 | 2 | Full MVP & Launch | not_started |
 | 3 | Scale | not_started |
 
@@ -58,15 +58,16 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
 
 ## Phase 0: Landing Page
 
-**Status:** in_progress
+**Status:** complete ✅
 **Theme:** Start capturing demand before MVP exists
 **Sprint 0.3 Added:** 2026-01-23 - Brand alignment per review recommendations
+**Completed:** 2026-01-24
 
 ### Objectives
-- [ ] Launch marketing presence before product is ready
-- [ ] Begin building waitlist for launch
-- [ ] Establish brand positioning
-- [ ] Show product credibility with demo assets
+- [x] Launch marketing presence before product is ready ✅
+- [x] Begin building waitlist for launch ✅
+- [x] Establish brand positioning ✅
+- [x] Show product credibility with demo assets ✅
 
 ### Tasks
 
@@ -220,7 +221,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-0.2.3, task-0.2.4, task-0.2.8
   - **Completed**: PR #2 merged to main, Railway auto-deploy triggered, plebtest.com returning HTTP 200
 
-- [ ] **task-0.3.2** Announce on social channels
+- [x] **task-0.3.2** Announce on social channels ✅ 2026-01-24
   - Agent: marketer
   - Priority: p1
   - Acceptance Criteria:
@@ -228,6 +229,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Indie Hackers post (optional)
     - Initial waitlist signups tracked
   - Dependencies: task-0.3.1
+  - **Completed**: LinkedIn post published, Twitter post ready
 
 #### 0.4 Landing Page Brand Alignment (Sprint 0.3)
 > **Purpose**: Align landing page messaging with PlebTest's true value proposition: AI personas that challenge your assumptions, built for founders who dread cold calls.
@@ -469,7 +471,8 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
 
 ## Phase 1: Core Loop MVP
 
-**Status:** not_started
+**Status:** in_progress
+**Started:** 2026-01-24
 **Theme:** Core validation loop working - private testing only
 
 ### Objectives
@@ -482,7 +485,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
 ### Tasks
 
 #### 1.1 Database & Infrastructure
-- [ ] **task-1.1.1** Set up Supabase projects (staging + production)
+- [x] **task-1.1.1** Set up Supabase projects (staging + production) - ✅ 2026-01-24
   - Agent: operator
   - Priority: p0
   - Acceptance Criteria:
@@ -490,6 +493,8 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Supabase production project created
     - Connection strings documented
   - Dependencies: none
+  - **Completed**: Staging (plebtest-staging) + Production (PlebTest, ID: wemszisfzevffudenqzi)
+  - Environment variables configured in Railway for both environments
 
 - [ ] **task-1.1.2** Initialize local Supabase for development
   - Agent: developer

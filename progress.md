@@ -314,6 +314,126 @@ The landing page sells PlebTest as "AI-powered market analysis" when it should s
 **Build Status**: ✅ `npm run build` passes
 **Verified**: All 10 implementation tasks complete, awaiting deployment (task-0.4.11)
 
+### 2026-01-23 18:32 Deliverable: Sprint 0.3 Production Deployment (task-0.4.11)
+**Action**: Merged develop → main via PR #4
+**URL**: https://github.com/TheWayWithin/PlebTest/pull/4
+**Details**:
+- All 10 Sprint 0.3 tasks complete
+- PR #4 created and merged with admin override
+- Railway auto-deployment triggered from main branch
+- Production: plebtest.com returning HTTP 200
+**Verified**: curl -sI https://plebtest.com returned HTTP/2 200
+
+### Sprint 0.3 Complete - 2026-01-23 18:32
+**Tasks Completed**: 11 tasks marked [x] in project-plan.md (0.4.1-0.4.11)
+**Files Created**: 3 new components (who-this-is-for.tsx, why-not-chatgpt.tsx, founder-story.tsx)
+**Files Modified**: 8 components updated with brand-aligned messaging
+**Score Improvement**: 4/10 → 9/10
+**Gate Status**: ✅ ALL CHECKS PASS - Sprint 0.3 complete
+
+---
+
+### 2026-01-23 Sprint Created: Landing Page Final Polish (Sprint 0.5)
+**Document**: `/Documents/Ideation/PlebTest Landing Page — Final Recommendations.md`
+**Current Score**: 9/10
+**Target Score**: 9.5/10 after implementation
+
+**Sprint 0.5 Tasks Created** (8 tasks):
+| Task | Description | Priority |
+|------|-------------|----------|
+| 0.5.1 | Replace pricing features with actual Phase 1 features | p0 |
+| 0.5.2 | Add early access pricing line | p1 |
+| 0.5.3 | Rewrite Problem section (shorter, no uncited stats) | p0 |
+| 0.5.4 | Add simulated persona disclaimer | p1 |
+| 0.5.5 | Update CTA to "Join Waitlist for Early Access" | p0 |
+| 0.5.6 | Remove "View Full Report" buttons | p0 |
+| 0.5.7 | Update Risk Score format (High/Medium/Low) | p1 |
+| 0.5.8 | Deploy final polish to production | p0 |
+
+**Key Changes**:
+- Pricing: Remove non-existent features, add quantity limits + actual Phase 1 features
+- Problem section: Shorter (~40%), remove uncited stats, focus on emotional barrier
+- CTAs: "Join Waitlist for Early Access" (adds urgency)
+- Disclaimers: "Sample outputs from simulated persona interviews"
+- Risk Score: "High (87)" instead of "87/100"
+
+**Verified**: project-plan.md updated with Sprint 0.5 (8 tasks), handoff-notes.md updated
+
+---
+
+### Phase 0 Complete - 2026-01-24 00:00
+**Tasks Completed**: 33 tasks marked [x] in project-plan.md (0.1.x, 0.2.x, 0.3.x, 0.4.x, 0.5.x)
+**Files Created**: 25+ React components, 2 legal pages, API routes, analytics integration
+**Files Modified**: Multiple iterations of landing page components for brand alignment
+**Verification**: plebtest.com live and operational, analytics firing, waitlist functional
+**Handoff Updated**: ✅ handoff-notes.md current
+**Context Updated**: ✅ Phase 0 objectives marked complete
+**Gate Status**: ✅ ALL CHECKS PASS - Phase 0 Complete
+
+**Phase 0 Summary:**
+- Landing page live at plebtest.com
+- Waitlist capture working (Supabase backend)
+- PostHog analytics tracking (cookieless)
+- Brand-aligned messaging (Sprint 0.3)
+- Final polish applied (Sprint 0.5)
+- Social announcements published (task-0.3.2)
+
+---
+
+## Mission: Phase 1 - Core Loop MVP
+
+**Started**: 2026-01-24
+**Status**: In Progress
+
+---
+
+### 2026-01-24 18:00 Deliverable: Supabase Production Project Setup (task-1.1.1)
+**Project**: PlebTest (ID: wemszisfzevffudenqzi)
+**URL**: https://wemszisfzevffudenqzi.supabase.co
+**Description**: Production Supabase project created and configured
+**Details**:
+- Production project "PlebTest" created by user
+- Environment variables added to Railway production:
+  - NEXT_PUBLIC_SUPABASE_URL
+  - NEXT_PUBLIC_SUPABASE_ANON_KEY
+  - SUPABASE_SERVICE_ROLE_KEY
+- Staging project (plebtest-staging) already existed from Phase 0
+**Verified**: plebtest.com deployed successfully with production Supabase connection
+
+---
+
+### 2026-01-24 Issue: Railway Deployment Failures
+
+**Symptom**: Production deployment failing with build errors
+**Context**: Adding production Supabase environment variables triggered redeployment
+
+**Attempt 1** - 2026-01-24 17:08
+- Action: Switched from Railpack to Nixpacks builder via railway.toml
+- Rationale: Railpack was failing with "secret NEXT_PUBLIC_SUPABASE_ANON_KEY: not found" during build
+- Result: ❌ Failed - Different error revealed
+- Learning: The secrets issue was masking the real problem
+
+**Attempt 2** - 2026-01-24 17:16
+- Action: Added lazy Supabase initialization in src/lib/supabase.ts
+- Rationale: Prevent build-time errors from missing env vars
+- Result: ❌ Failed - Node.js version mismatch revealed
+- Learning: Next.js 16 requires Node.js >=20.9.0
+
+**Attempt 3** - 2026-01-24 17:20
+- Action: Added .node-version file and NIXPACKS_NODE_VERSION=20 to railway.toml
+- Rationale: Nixpacks was defaulting to Node.js 18
+- Result: ✅ Resolved - Deployment succeeded
+- Learning: Always specify Node.js version explicitly for Next.js projects
+
+**Root Cause**: Multiple issues compounded:
+1. Railpack auto-detects NEXT_PUBLIC_* as build secrets (not compatible with our setup)
+2. Nixpacks defaults to Node.js 18, but Next.js 16 requires Node.js 20+
+
+**Prevention**:
+- Use nixpacks builder (not Railpack) for Next.js projects
+- Always add .node-version file specifying required Node.js version
+- Test deployment configuration early, not just after adding env vars
+
 ---
 
 <!-- Format:
