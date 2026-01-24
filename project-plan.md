@@ -356,7 +356,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: none
   - **Completed**: New headline "AI Personas That Challenge, Not Validate", all verdict descriptions now reference personas
 
-- [ ] **task-0.4.11** Deploy brand-aligned landing page
+- [x] **task-0.4.11** Deploy brand-aligned landing page - ✅ 2026-01-23 18:32
   - Agent: operator
   - Priority: p0
   - Acceptance Criteria:
@@ -366,14 +366,91 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Changes merged to main
     - Production updated at plebtest.com
   - Dependencies: task-0.4.1, task-0.4.2, task-0.4.3, task-0.4.4, task-0.4.5, task-0.4.6, task-0.4.7, task-0.4.8, task-0.4.9, task-0.4.10
+  - **Completed**: PR #4 merged to main, Railway deployed, plebtest.com live
+
+#### 0.5 Landing Page Final Polish (Sprint 0.5)
+> **Purpose**: Final refinements based on consolidated LLM feedback (GPT, DeepSeek, Claude). Score 9/10 → 9.5/10.
+> **Reference**: `/Documents/Ideation/PlebTest Landing Page — Final Recommendations.md`
+
+- [x] **task-0.5.1** Replace pricing features with actual Phase 1 features ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p0
+  - Acceptance Criteria:
+    - Solo ($9.95/mo): 1 product, 10 interviews/month, Kill/Pivot/Build verdict, Shareable report
+    - Growth ($19.95/mo): 3 products, 30 interviews/month, Multiple ICPs per product, Anti-sycophancy pushback presets
+    - Scale ($29.95/mo): 10 products, 100 interviews/month, Assumption Board + Reality Check plan, Priority processing
+    - Pro ($49.95/mo): 20 products, 200 interviews/month, Early feature access, Shareable decision briefs
+  - Dependencies: none
+
+- [x] **task-0.5.2** Add early access pricing line ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p1
+  - Acceptance Criteria:
+    - Text: "Early access pricing from $7.95/mo + free credits"
+    - Positioned below pricing grid
+  - Dependencies: task-0.5.1
+
+- [x] **task-0.5.3** Rewrite Problem section (shorter, emotional barrier framing) ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p0
+  - Acceptance Criteria:
+    - Remove uncited stats ("6-12 months", "$30,000+")
+    - Remove "Emotional Devastation" language
+    - Shorten by ~40%
+    - New framing: "The hardest part of validation isn't building — it's picking up the phone..."
+  - Dependencies: none
+
+- [x] **task-0.5.4** Add simulated persona disclaimer ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p1
+  - Acceptance Criteria:
+    - Text: "Sample outputs from simulated persona interviews (not real customers)."
+    - Positioned above or below sample verdicts
+  - Dependencies: none
+
+- [x] **task-0.5.5** Update CTA text to "Join Waitlist for Early Access" ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p0
+  - Acceptance Criteria:
+    - All "Join the Waitlist" buttons → "Join Waitlist for Early Access"
+    - Applies to: Hero, Demo section, Sample verdicts section, Waitlist CTA section
+  - Dependencies: none
+
+- [x] **task-0.5.6** Remove "View Full Report" buttons from verdict cards ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p0
+  - Acceptance Criteria:
+    - Remove non-functional "View Full Report" buttons from sample-verdicts.tsx
+  - Dependencies: none
+
+- [x] **task-0.5.7** Update Risk Score format to include label ✅ 2026-01-23
+  - Agent: developer
+  - Priority: p1
+  - Acceptance Criteria:
+    - Kill: "Risk Score: High (87)" instead of "87/100"
+    - Pivot: "Risk Score: Medium (52)"
+    - Build: "Risk Score: Low (23)"
+  - Dependencies: none
+
+- [x] **task-0.5.8** Deploy final polish to production ✅ 2026-01-23
+  - Agent: operator
+  - Priority: p0
+  - Acceptance Criteria:
+    - All tasks 0.5.1-0.5.7 complete
+    - Build passes
+    - Changes merged to main
+    - Production updated
+  - Dependencies: task-0.5.1, task-0.5.2, task-0.5.3, task-0.5.4, task-0.5.5, task-0.5.6, task-0.5.7
 
 ### Quality Gates
 - [x] Build passes (`npm run build`) - ✅ 2026-01-23
 - [ ] Lighthouse score ≥90 (Performance)
 - [x] Mobile responsive verified - ✅ 2026-01-23
 - [x] Privacy policy and terms live - ✅ 2026-01-23
-- [ ] Brand messaging aligned with value proposition (Sprint 0.3)
-- [ ] "We" language removed, replaced with "I" or "PlebTest"
+- [x] Brand messaging aligned with value proposition (Sprint 0.3) - ✅ 2026-01-23
+- [x] "We" language removed, replaced with "I" or "PlebTest" - ✅ 2026-01-23
+- [x] Pricing features match Phase 1 capabilities (Sprint 0.5) - ✅ 2026-01-23
+- [x] No uncited statistics (Sprint 0.5) - ✅ 2026-01-23
 
 ### Deliverables
 - [x] Live landing page at plebtest.com - ✅ 2026-01-23
@@ -381,10 +458,12 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
 - [x] Analytics tracking active - ✅ 2026-01-23
 - [x] Demo walkthrough visible - ✅ 2026-01-23
 - [x] Privacy policy and terms published - ✅ 2026-01-23
-- [ ] Brand-aligned messaging (AI personas that challenge, not validate)
-- [ ] "Who This Is For" section (founders who dread cold calls)
-- [ ] "Why Not ChatGPT?" comparison section
-- [ ] Founder story section
+- [x] Brand-aligned messaging (AI personas that challenge, not validate) - ✅ 2026-01-23
+- [x] "Who This Is For" section (founders who dread cold calls) - ✅ 2026-01-23
+- [x] "Why Not ChatGPT?" comparison section - ✅ 2026-01-23
+- [x] Founder story section - ✅ 2026-01-23
+- [x] Accurate pricing features (Sprint 0.5) - ✅ 2026-01-23
+- [x] Trust-building disclaimers (Sprint 0.5) - ✅ 2026-01-23
 
 ---
 
