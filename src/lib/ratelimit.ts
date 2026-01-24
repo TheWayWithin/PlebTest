@@ -3,41 +3,66 @@
  *
  * Uses Upstash Redis for serverless-compatible rate limiting.
  * Quick Fire: 10 requests per hour per IP address.
+ *
+ * Uses lazy initialization to avoid issues with env vars at build time.
  */
 
 import { Ratelimit } from "@upstash/ratelimit"
 import { Redis } from "@upstash/redis"
 
-// Validate env vars are present
-const redisUrl = process.env.UPSTASH_REDIS_REST_URL
-const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN
-
-if (!redisUrl || !redisToken) {
-  console.error("Missing Upstash Redis credentials:", {
-    hasUrl: !!redisUrl,
-    hasToken: !!redisToken,
-  })
-}
-
-// Initialize Redis client
-const redis = new Redis({
-  url: redisUrl || "",
-  token: redisToken || "",
-})
+// Lazy-initialized instances
+let redis: Redis | null = null
+let ratelimit: Ratelimit | null = null
 
 /**
- * Quick Fire rate limiter
+ * Get or create the Redis client (lazy initialization)
+ */
+function getRedis(): Redis {
+  if (!redis) {
+    const url = process.env.UPSTASH_REDIS_REST_URL
+    const token = process.env.UPSTASH_REDIS_REST_TOKEN
+
+    if (!url || !token) {
+      throw new Error(
+        `Missing Upstash Redis credentials: url=${!!url}, token=${!!token}`
+      )
+    }
+
+    redis = new Redis({ url, token })
+  }
+  return redis
+}
+
+/**
+ * Get or create the Quick Fire rate limiter (lazy initialization)
  *
  * Limits: 10 requests per hour per IP address
  * Algorithm: Sliding window for fair distribution
- * Analytics: Enabled for monitoring
  */
-export const quickFireRatelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(10, "1 h"),
-  analytics: true,
-  prefix: "plebtest:quickfire",
-})
+function getQuickFireRatelimit(): Ratelimit {
+  if (!ratelimit) {
+    ratelimit = new Ratelimit({
+      redis: getRedis(),
+      limiter: Ratelimit.slidingWindow(10, "1 h"),
+      analytics: true,
+      prefix: "plebtest:quickfire",
+    })
+  }
+  return ratelimit
+}
+
+/**
+ * Rate limit check for Quick Fire endpoint
+ *
+ * @param identifier - Usually client IP address
+ * @returns Promise with success flag and reset timestamp
+ */
+export async function checkQuickFireRateLimit(
+  identifier: string
+): Promise<{ success: boolean; reset: number }> {
+  const limiter = getQuickFireRatelimit()
+  return limiter.limit(identifier)
+}
 
 /**
  * Extract client IP address from request headers

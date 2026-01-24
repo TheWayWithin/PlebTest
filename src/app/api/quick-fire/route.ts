@@ -10,7 +10,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server"
-import { quickFireRatelimit, getClientIP } from "@/lib/ratelimit"
+import { checkQuickFireRateLimit, getClientIP } from "@/lib/ratelimit"
 import { analyzeIdea, QuickFireAnalysis } from "@/lib/openrouter"
 
 // Input validation constants
@@ -57,7 +57,7 @@ export async function POST(
     let rateLimitResult: { success: boolean; reset: number }
 
     try {
-      rateLimitResult = await quickFireRatelimit.limit(clientIP)
+      rateLimitResult = await checkQuickFireRateLimit(clientIP)
     } catch (rateLimitError) {
       console.error("Rate limit check failed:", rateLimitError)
       return NextResponse.json(
