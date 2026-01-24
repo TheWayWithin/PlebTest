@@ -727,6 +727,45 @@ Errors:   { error: 'rate_limit'|'validation'|'server_error', message?, retryAfte
 
 ---
 
+### 2026-01-24 16:30 Issue: Quick Fire API 503 Error - Upstash Token Typo
+
+**Symptom**: Quick Fire API returning 503 "Rate limiting service unavailable"
+
+**Context**: Testing Quick Fire feature on staging after UI implementation
+
+**Attempt 1** - 2026-01-24 16:00
+- Action: Added better error logging and granular try/catch to API route
+- Rationale: Identify which service was failing
+- Result: ❌ Failed - Still generic 503, but narrowed to rate limiting service
+- Learning: Granular error handling helps isolate issues
+
+**Attempt 2** - 2026-01-24 16:15
+- Action: Converted ratelimit.ts from eager to lazy initialization
+- Rationale: Suspected env vars not available at module load time in serverless
+- Result: ❌ Failed - Still 503 after deployment
+- Learning: Lazy initialization is still best practice, but wasn't the root cause
+
+**Attempt 3** - 2026-01-24 16:30
+- Action: Tested Upstash credentials directly via curl
+- Rationale: Verify credentials work outside of application
+- Result: ❌ WRONGPASS error - credentials invalid
+- Learning: Always test external service credentials directly when debugging
+
+**Attempt 4** - 2026-01-24 16:45
+- Action: Compared token in Railway vs Upstash dashboard
+- Rationale: Token in Railway might have typo
+- Result: ✅ Resolved - Found typo: `1` (number one) vs `l` (lowercase L) in token
+- Learning: Copy tokens using copy button, not manual typing. Monospace fonts make 1/l hard to distinguish.
+
+**Root Cause**: Upstash token in Railway staging had typo - `ZDV1OGRj` instead of `ZDVlOGRj`
+
+**Prevention**:
+- Always use copy button when copying API tokens/credentials
+- Test credentials with curl before assuming app code is wrong
+- Add credential validation script to deployment checklist
+
+---
+
 <!-- Format:
 ### [YYYY-MM-DD HH:MM] Deliverable: [Name]
 **File(s)**: [paths]

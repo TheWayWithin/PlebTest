@@ -118,6 +118,38 @@ main branch    → GitHub → Railway Production → plebtest.com
 
 ---
 
+## Production Deployment Protection [CRITICAL]
+
+### 🚫 ABSOLUTE RULE: Never Deploy to Production Without Explicit Approval
+
+**Context**: Production (plebtest.com) has a live landing page and waitlist that must be preserved until the user explicitly decides to launch Phase 1 features.
+
+**Claude MUST NEVER:**
+1. Create a PR from `develop` to `main` without user explicitly requesting it
+2. Merge any PR to `main` without user explicitly approving it
+3. Push directly to `main` branch
+4. Run `railway up -e production` or any production deployment command
+5. Assume that "deploy" means production - always clarify
+
+**Safe Actions (allowed without asking):**
+- Push to `develop` branch (deploys to staging only)
+- Create PRs from feature branches to `develop`
+- Test on staging environment
+
+**When User Says "Deploy":**
+1. ALWAYS ask: "Deploy to staging or production?"
+2. If staging: Proceed with `git push origin develop`
+3. If production: Confirm again: "This will replace the live landing page. Are you sure?"
+
+**Production Deployment Checklist** (when user explicitly requests):
+- [ ] User has explicitly said "deploy to production" or "merge to main"
+- [ ] All features have been tested on staging
+- [ ] User has confirmed they want to replace the live site
+- [ ] PR created with clear description of what's changing
+- [ ] User has approved the PR in GitHub (required review)
+
+---
+
 ## Communication Preferences
 
 **User has ADHD** - adapt communication style accordingly:
