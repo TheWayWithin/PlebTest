@@ -91,8 +91,11 @@ export function IcpView({ idea, proposal, icp: initialIcp }: IcpViewProps) {
     setIcp(updatedIcp);
   };
 
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+
   const handleDelete = async () => {
     setIsDeleting(true);
+    setDeleteError(null);
     try {
       const response = await fetch(`/api/ideas/${idea.id}/proposals/${proposal.id}/icps/${icp.id}`, {
         method: 'DELETE',
@@ -100,9 +103,23 @@ export function IcpView({ idea, proposal, icp: initialIcp }: IcpViewProps) {
 
       if (response.ok) {
         router.push(`/ideas/${idea.id}/proposals/${proposal.id}`);
+        return;
       }
+
+      const errorData = await response.json();
+
+      if (response.status === 409) {
+        // ICP is in use by active tests
+        setDeleteError(errorData.details || 'Cannot delete ICP while it is used in active tests.');
+        setIsDeleting(false);
+        return;
+      }
+
+      setDeleteError(errorData.error || 'Failed to delete ICP');
+      setIsDeleting(false);
     } catch (error) {
       console.error('Error deleting ICP:', error);
+      setDeleteError('An unexpected error occurred');
       setIsDeleting(false);
     }
   };
@@ -188,6 +205,11 @@ export function IcpView({ idea, proposal, icp: initialIcp }: IcpViewProps) {
                     Ideal Customer Profile.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
+                {deleteError && (
+                  <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
+                    <p className="text-red-400 text-sm">{deleteError}</p>
+                  </div>
+                )}
                 <AlertDialogFooter>
                   <AlertDialogCancel className="bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700 hover:text-white">
                     Cancel

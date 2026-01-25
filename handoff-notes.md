@@ -1,7 +1,7 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-25 (View/Edit ICP implemented)
+> **Last Updated**: 2026-01-25 17:30 (Test configuration UI implemented)
 
 ---
 
@@ -9,8 +9,79 @@
 
 **Phase**: 1 - Core Loop MVP
 **Status**: In Progress
-**Last Completed**: task-1.5.5 - Implement View/Edit ICP (F-015, F-016) ✅
-**Next Task**: task-1.5.6 - Implement Delete ICP (F-017)
+**Last Completed**: task-1.7.1 - Implement test configuration UI (F-018) ✅
+**Next Task**: task-1.7.2 - Set up pg-boss for background jobs
+
+### Test Configuration UI (task-1.7.1) ✅
+**Implementation**: Complete test configuration interface for starting validation tests
+
+**Files Created**:
+- `src/lib/validations/test.ts` - Zod schema + tier limits + mode options
+- `src/components/tests/test-config-form.tsx` - Full configuration form
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/test/new/page.tsx` - Config page
+- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/tests/route.ts` - POST/GET API
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/page.tsx` - Test view placeholder
+
+**Files Modified**:
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/proposal-view.tsx` - Added "Start Test" CTA
+
+**shadcn Components Added**: slider, radio-group, checkbox, alert
+**npm Package Added**: @hookform/resolvers
+
+**Test Mode Options**:
+- Quick: 5 personas, ~5 min
+- Standard: 10 personas, ~15 min
+- Deep: 20 personas, ~30 min
+
+**Tier Limits (tests/month)**:
+- Solo: 10 tests, max 10 personas
+- Growth: 30 tests, max 20 personas
+- Scale: 100 tests, max 50 personas
+- Pro: 200 tests, max 100 personas
+
+**Pushback Presets**: cheerleader, pragmatist, critic
+
+**Navigation**:
+- Proposal view → "Start Test" button → /test/new → configure → submit → /tests/[testId]
+
+### Persona Generation Service (task-1.6.1) ✅
+**Implementation**: Complete persona generation with AI and Big Five traits
+
+**Files Created**:
+- `src/types/persona.ts` - TypeScript types (PersonaDemographics, PersonaPsychographics, BigFiveTraits, SkepticismLevel)
+- `src/lib/services/persona-generator.ts` - Main service
+
+**Files Modified**:
+- `src/lib/openrouter.ts` - Added generic `callOpenRouter()` function
+
+**Key Functions**:
+- `generatePersonas(icpId, count)` - Main entry point
+- `getPersonasForICP(icpId)` - Fetch existing
+- `deletePersonasForICP(icpId)` - Clear for regeneration
+- `getPersonaById(personaId)` - Single lookup
+
+**Skepticism Distribution**: 40% high, 40% medium, 20% low
+**AI Model**: openai/gpt-4o-mini (cost-effective)
+
+**Usage Example**:
+```typescript
+import { generatePersonas } from '@/lib/services/persona-generator';
+const personas = await generatePersonas(icpId, 5); // Generate 5 personas
+```
+
+### Delete ICP Safeguard (task-1.5.6) ✅
+**Implementation**: Active test check before ICP deletion
+
+**Files Modified**:
+- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/icps/[icpId]/route.ts` - Added active test check to DELETE handler
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/icps/[icpId]/icp-view.tsx` - Added 409 error handling
+
+**Features**:
+- Before deletion, queries `validation_tests` for tests using this ICP
+- Checks `icp_ids` array contains the ICP ID AND status is 'pending' or 'in_progress'
+- Returns 409 Conflict with descriptive message if ICP is blocked
+- Frontend displays error in delete confirmation dialog
+- User can dismiss error and try again later
 
 ### View/Edit ICP (task-1.5.5) ✅
 **Implementation**: Full ICP view page with edit dialog and delete functionality
@@ -33,8 +104,6 @@
 - ICPs list on proposal view page with clickable cards
 - Add ICP button on proposal page
 - Color-coded pain intensity badges
-
-**Note**: Delete ICP already implemented in this task's API route, but task-1.5.6 covers UX refinements if any
 
 ### Create ICP (task-1.5.4) ✅
 **Implementation**: Full ICP creation form with all schema fields

@@ -211,6 +211,33 @@ export async function DELETE(
       return NextResponse.json({ error: 'ICP not found' }, { status: 404 });
     }
 
+    // Check if ICP is used in any active validation tests
+    const { data: activeTests, error: testCheckError } = await supabase
+      .from('validation_tests')
+      .select('id')
+      .eq('proposal_id', proposalId)
+      .contains('icp_ids', [icpId])
+      .in('status', ['pending', 'in_progress']);
+
+    if (testCheckError) {
+      console.error('Error checking active tests:', testCheckError);
+      return NextResponse.json(
+        { error: 'Failed to verify ICP usage' },
+        { status: 500 }
+      );
+    }
+
+    if (activeTests && activeTests.length > 0) {
+      return NextResponse.json(
+        {
+          error: 'Cannot delete ICP while it is used in active tests',
+          details: `This ICP is currently assigned to ${activeTests.length} active test(s). Please complete or cancel these tests before deleting the ICP.`,
+          activeTestCount: activeTests.length
+        },
+        { status: 409 }
+      );
+    }
+
     // Delete the ICP
     const { error: deleteError } = await supabase
       .from('icps')

@@ -1,16 +1,17 @@
 /**
  * OpenRouter AI Integration
  *
- * Handles AI analysis for Quick Fire feature using OpenRouter API.
- * Uses claude-3-haiku for speed and cost efficiency.
+ * Handles AI analysis for PlebTest features using OpenRouter API.
+ * Provides both specialized functions (analyzeIdea, generateProposal)
+ * and a generic callOpenRouter function for flexible AI tasks.
  */
 
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
-// Model selection: claude-3-haiku for fast, cost-effective analysis
-const MODEL = "anthropic/claude-3-haiku"
+// Default model for quick analysis
+const DEFAULT_MODEL = "anthropic/claude-3-haiku"
 
-// Token budget enforcement
+// Token budget enforcement for quick fire
 const MAX_TOKENS = 150
 
 export interface QuickFireAnalysis {
@@ -36,6 +37,72 @@ interface OpenRouterResponse {
  * @param idea - The startup idea to analyze (10-200 chars)
  * @returns Risk score, level, and key objection
  */
+/**
+ * Generic OpenRouter API call function.
+ * Use this for flexible AI tasks where you need custom prompts.
+ *
+ * @param prompt - The user prompt to send
+ * @param model - Model to use (default: gpt-4o-mini for cost efficiency)
+ * @param maxTokens - Maximum tokens for response
+ * @param systemPrompt - Optional system prompt
+ * @returns The AI response text or null if failed
+ */
+export async function callOpenRouter(
+  prompt: string,
+  model: string = "openai/gpt-4o-mini",
+  maxTokens: number = 1000,
+  systemPrompt?: string
+): Promise<string | null> {
+  const apiKey = process.env.OPENROUTER_API_KEY
+
+  if (!apiKey) {
+    console.error("OPENROUTER_API_KEY environment variable is required")
+    return null
+  }
+
+  const messages: Array<{ role: string; content: string }> = []
+
+  if (systemPrompt) {
+    messages.push({ role: "system", content: systemPrompt })
+  }
+  messages.push({ role: "user", content: prompt })
+
+  try {
+    const response = await fetch(OPENROUTER_API_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://plebtest.com",
+        "X-Title": "PlebTest",
+      },
+      body: JSON.stringify({
+        model,
+        max_tokens: maxTokens,
+        messages,
+      }),
+    })
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error("OpenRouter API error:", response.status, errorText)
+      return null
+    }
+
+    const data: OpenRouterResponse = await response.json()
+
+    if (!data.choices || data.choices.length === 0) {
+      console.error("No response from AI model")
+      return null
+    }
+
+    return data.choices[0].message.content.trim()
+  } catch (error) {
+    console.error("OpenRouter API call failed:", error)
+    return null
+  }
+}
+
 export async function analyzeIdea(idea: string): Promise<QuickFireAnalysis> {
   const apiKey = process.env.OPENROUTER_API_KEY
 
@@ -69,7 +136,7 @@ Be concise. One key objection only.`
       "X-Title": "PlebTest Quick Fire",
     },
     body: JSON.stringify({
-      model: MODEL,
+      model: DEFAULT_MODEL,
       max_tokens: MAX_TOKENS,
       messages: [
         { role: "system", content: systemPrompt },
@@ -176,7 +243,7 @@ Key Objection to Address: ${keyObjection}`;
       "X-Title": "PlebTest Proposal Generator",
     },
     body: JSON.stringify({
-      model: MODEL,
+      model: DEFAULT_MODEL,
       max_tokens: 500, // More tokens for proposal generation
       messages: [
         { role: "system", content: systemPrompt },

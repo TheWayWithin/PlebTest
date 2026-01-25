@@ -702,13 +702,14 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.4.2
   - **Completed**: EditIdeaDialog added, PUT /api/ideas/[id] endpoint, New Proposal button wired to /ideas/[id]/proposals/new
 
-- [ ] **task-1.4.4** Implement Edit Idea (F-009)
+- [x] **task-1.4.4** Implement Edit Idea (F-009) - ✅ 2026-01-25
   - Agent: developer
   - Priority: p1
   - Acceptance Criteria:
-    - Edit idea name
-    - Save changes
+    - Edit idea name ✅
+    - Save changes ✅
   - Dependencies: task-1.4.3
+  - **Completed**: Already implemented in task-1.4.3 (EditIdeaDialog, PUT endpoint)
 
 #### 1.5 Proposal & ICP Management
 - [x] **task-1.5.1** Implement Create Proposal (F-010) - ✅ 2026-01-25
@@ -762,28 +763,30 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.5.4
   - **Completed**: ICP detail view page, edit dialog, GET/PUT/DELETE API endpoints, ICPs list on proposal view
 
-- [ ] **task-1.5.6** Implement Delete ICP (F-017)
+- [x] **task-1.5.6** Implement Delete ICP (F-017) - ✅ 2026-01-25
   - Agent: developer
   - Priority: p1
   - Acceptance Criteria:
-    - Delete button with confirmation
-    - Cannot delete if used in active test
+    - Delete button with confirmation ✅
+    - Cannot delete if used in active test ✅
   - Dependencies: task-1.5.5
+  - **Completed**: Active test check added to DELETE API, 409 error handling in frontend
 
 #### 1.6 Persona Generation
-- [ ] **task-1.6.1** Implement persona generation service
+- [x] **task-1.6.1** Implement persona generation service - ✅ 2026-01-25
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
-    - Takes ICP as input
-    - Generates N personas with trait variations
-    - Big Five personality traits assigned
-    - Skepticism level distribution (40% high, 40% medium, 20% low)
-    - Saves to personas table
+    - Takes ICP as input ✅
+    - Generates N personas with trait variations ✅
+    - Big Five personality traits assigned ✅
+    - Skepticism level distribution (40% high, 40% medium, 20% low) ✅
+    - Saves to personas table ✅
   - Dependencies: task-1.5.4
+  - **Completed**: persona-generator.ts service with AI generation, Big Five traits, skepticism distribution
 
 #### 1.7 Validation Tests & Workers
-- [ ] **task-1.7.1** Implement test configuration UI (F-018)
+- [x] **task-1.7.1** Implement test configuration UI (F-018) - ✅ 2026-01-25 17:26
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -795,6 +798,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Tier limit check
     - Start test button
   - Dependencies: task-1.5.4, task-1.6.1
+  - **Completed**: Full test configuration UI with ICP selection, persona count slider, test/validation/pushback mode selectors, tier-based limits, API route for test creation, test view page placeholder
 
 - [ ] **task-1.7.2** Set up pg-boss for background jobs
   - Agent: developer

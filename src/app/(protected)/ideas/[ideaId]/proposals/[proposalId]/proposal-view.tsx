@@ -24,6 +24,7 @@ import {
   Plus,
   UserCircle,
   ChevronRight,
+  FlaskConical,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -503,6 +504,31 @@ export function ProposalView({ idea, proposal: initialProposal, icps }: Proposal
             </div>
           )}
         </section>
+
+        {/* Start Test CTA */}
+        {!isArchived && icps.length > 0 && (
+          <section className="bg-gradient-to-r from-orange-500/10 to-orange-600/10 border border-orange-500/30 rounded-xl p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-lg bg-orange-500/20 flex items-center justify-center">
+                  <FlaskConical className="w-6 h-6 text-orange-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-white">Ready to Validate?</h3>
+                  <p className="text-gray-400 text-sm">
+                    Run AI-powered interviews with {icps.length} ICP{icps.length > 1 ? 's' : ''} to test your assumptions
+                  </p>
+                </div>
+              </div>
+              <Link href={`/ideas/${idea.id}/proposals/${proposal.id}/test/new`}>
+                <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                  <FlaskConical className="w-4 h-4 mr-2" />
+                  Start Test
+                </Button>
+              </Link>
+            </div>
+          </section>
+        )}
       </div>
 
       {/* Next Steps */}

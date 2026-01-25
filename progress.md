@@ -863,6 +863,113 @@ Landing Page → Quick Fire → Click "Go Deeper"
 **Build Status**: ✅ `npm run build` passes
 **Verified**: Files exist, pushed to staging
 
+### 2026-01-25 Deliverable: Persona Generation Service (task-1.6.1)
+
+**Files Created**:
+- `src/types/persona.ts` (2.5KB) - TypeScript types for personas
+- `src/lib/services/persona-generator.ts` (14.5KB) - Main persona generation service
+
+**Files Modified**:
+- `src/lib/openrouter.ts` - Added generic `callOpenRouter()` function
+
+**Implementation**:
+- `generatePersonas(icpId, count)` - Main function:
+  - Fetches ICP from database
+  - Pre-assigns skepticism levels (40% high, 40% medium, 20% low)
+  - Calls OpenRouter AI (gpt-4o-mini) to generate realistic persona details
+  - Generates Big Five traits based on skepticism level
+  - Batch inserts into personas table
+  - Returns created Persona[] array
+- `getPersonasForICP()` - Fetch existing personas
+- `deletePersonasForICP()` - Clear personas for regeneration
+- `getPersonaById()` - Single persona lookup
+
+**Big Five Trait Algorithm**:
+- High skepticism: higher Neuroticism (60-90), lower Agreeableness (20-50)
+- Medium skepticism: balanced traits (40-70 range)
+- Low skepticism: lower Neuroticism (20-50), higher Agreeableness (60-90)
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: ls -la confirmed all 3 files exist on filesystem
+
+---
+
+### 2026-01-25 Deliverable: Delete ICP Safeguard (task-1.5.6)
+
+**Files Modified**:
+- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/icps/[icpId]/route.ts` - Added active test check
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/icps/[icpId]/icp-view.tsx` - Added 409 error handling
+
+**Implementation**:
+- DELETE endpoint now queries `validation_tests` table before deletion
+- Checks if ICP ID exists in `icp_ids` array where status IN ('pending', 'in_progress')
+- Returns 409 Conflict with descriptive message if ICP is in active tests
+- Frontend handles 409 by displaying error message in delete confirmation dialog
+- Error message shows count of active tests blocking deletion
+
+**Acceptance Criteria**:
+- ✅ Delete button with confirmation (already existed from task-1.5.5)
+- ✅ Cannot delete if used in active test (NEW - 409 Conflict response)
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: ls -la confirmed file updated (8380 bytes)
+
+---
+
+### 2026-01-25 17:26 Deliverable: Test Configuration UI (task-1.7.1)
+
+**Files Created**:
+- `src/lib/validations/test.ts` (3.8KB) - Zod schemas, tier limits, mode options
+- `src/components/tests/test-config-form.tsx` (16KB) - Full configuration form component
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/test/new/page.tsx` (4KB) - Test config page
+- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/tests/route.ts` (7KB) - POST/GET endpoints
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/page.tsx` (7.8KB) - Test view placeholder
+
+**Files Modified**:
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/proposal-view.tsx` - Added "Start Test" CTA button
+
+**shadcn/ui Components Added**:
+- slider, radio-group, checkbox, alert (via npx shadcn@latest add)
+
+**Dependencies Installed**:
+- @hookform/resolvers (for zodResolver)
+
+**Implementation**:
+- **Validation Schema** (`test.ts`):
+  - `createTestSchema` with icp_ids[], persona_count, test_mode, validation_mode, pushback_preset
+  - TEST_MODE_OPTIONS: quick (5 personas, ~5min), standard (10, ~15min), deep (20, ~30min)
+  - VALIDATION_MODE_OPTIONS: interactive, spectator
+  - PUSHBACK_PRESET_OPTIONS: cheerleader, pragmatist, critic
+  - TIER_LIMITS: solo=10/mo, growth=30/mo, scale=100/mo, pro=200/mo
+
+- **Form Component** (`test-config-form.tsx`):
+  - ICP selection with checkboxes
+  - Test mode radio selection with availability gating by tier
+  - Persona count slider (1 to tier max)
+  - Validation mode radio selection
+  - Pushback preset radio selection
+  - Tests remaining banner
+  - Summary section before submit
+
+- **API Route** (`tests/route.ts`):
+  - POST: Creates validation_test record, checks tier limits, increments usage_tracking
+  - GET: Lists all tests for a proposal
+  - Full ownership verification (idea → proposal → user chain)
+
+- **Test View Page**: Placeholder showing test status, config summary, coming soon notice
+
+**Acceptance Criteria**:
+- ✅ Select ICPs to include (checkbox list)
+- ✅ Choose persona count (slider)
+- ✅ Select test mode (Quick/Standard/Deep radio)
+- ✅ Select validation mode (Interactive/Spectator radio)
+- ✅ Select pushback preset (Cheerleader/Pragmatist/Critic radio)
+- ✅ Tier limit check (remaining tests banner, max personas enforced)
+- ✅ Start test button (linked from proposal view)
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: ls -la confirmed all 6 files created on filesystem (2026-01-25 17:26)
+
 ---
 
 ## Issues & Resolutions
