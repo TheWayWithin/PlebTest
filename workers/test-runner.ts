@@ -15,6 +15,8 @@ import type {
 } from '../src/lib/jobs/types';
 import { createAdminClient } from '../src/lib/supabase/admin';
 import { generatePersonas } from '../src/lib/services/persona-generator';
+import { runSpectatorSession } from '../src/lib/services/spectator-session';
+import { checkTestCompletion } from '../src/lib/services/session-completion';
 
 /**
  * Idempotency: Check if test has already been started or completed.
@@ -155,10 +157,12 @@ export async function startTestRunnerWorker(): Promise<void> {
           );
 
           // 3. Create session records for each persona
+          // Set mode based on validation_mode: 'interactive' or 'spectator'
+          const sessionMode = test.validation_mode === 'interactive' ? 'interactive' : 'spectator';
           const sessionInserts = personas.map((persona) => ({
             validation_test_id: testId,
             persona_id: persona.id,
-            mode: 'spectator' as const, // Default, will be updated based on validationMode
+            mode: sessionMode as 'interactive' | 'spectator',
             status: 'pending' as const,
           }));
 
@@ -205,8 +209,8 @@ export async function startTestRunnerWorker(): Promise<void> {
     { localConcurrency: 5 }, // Max 5 concurrent sessions
     async (jobs) => {
       for (const job of jobs) {
-        const { sessionId } = job.data;
-        console.log(`[${JobTypes.RUN_SESSION}] Running session: ${sessionId}`);
+        const { sessionId, personaId, proposalId, validationMode, pushbackPreset } = job.data;
+        console.log(`[${JobTypes.RUN_SESSION}] Running session: ${sessionId} (mode: ${validationMode})`);
 
         // Idempotency check: Skip if already processed
         if (await isSessionAlreadyProcessed(sessionId)) {
@@ -216,31 +220,47 @@ export async function startTestRunnerWorker(): Promise<void> {
         const supabase = createAdminClient();
 
         try {
-          // Mark session as active to claim it
-          await supabase
+          // Handle based on validation mode
+          if (validationMode === 'spectator') {
+            // Run automated AI-to-AI spectator session
+            console.log(`[${JobTypes.RUN_SESSION}] Starting spectator session: ${sessionId}`);
+
+            const result = await runSpectatorSession({
+              sessionId,
+              personaId,
+              proposalId,
+              pushbackPreset,
+              supabase,
+              onMessage: (role, content) => {
+                console.log(`[${JobTypes.RUN_SESSION}] [${role}] ${content.substring(0, 50)}...`);
+              },
+            });
+
+            if (!result.success) {
+              throw new Error(result.error || 'Spectator session failed');
+            }
+
+            console.log(`[${JobTypes.RUN_SESSION}] Spectator session ${sessionId} completed`);
+          } else {
+            // Interactive mode: Just mark as pending and wait for user
+            // The session will be driven by the user through the stream API
+            console.log(`[${JobTypes.RUN_SESSION}] Interactive session ${sessionId} ready for user`);
+
+            // Session stays pending - user will activate through UI
+            // No-op here, session was created in pending state
+          }
+
+          // Check if all sessions in the test are complete
+          // Get the test ID from the session
+          const { data: session } = await supabase
             .from('sessions')
-            .update({
-              status: 'active',
-              last_activity_at: new Date().toISOString(),
-            })
-            .eq('id', sessionId);
+            .select('validation_test_id')
+            .eq('id', sessionId)
+            .single();
 
-          // TODO (task-1.8.*): Implement actual session execution
-          // - Build persona-specific prompt with anti-sycophancy
-          // - Run conversation loop with LLM
-          // - Extract validation signals
-          // - Update session record
-
-          // Placeholder: Mark session as completed
-          await supabase
-            .from('sessions')
-            .update({
-              status: 'completed',
-              completed_at: new Date().toISOString(),
-            })
-            .eq('id', sessionId);
-
-          console.log(`[${JobTypes.RUN_SESSION}] Session ${sessionId} completed (placeholder)`);
+          if (session?.validation_test_id) {
+            await checkTestCompletion(session.validation_test_id, supabase);
+          }
         } catch (error) {
           console.error(`[${JobTypes.RUN_SESSION}] Error:`, error);
 

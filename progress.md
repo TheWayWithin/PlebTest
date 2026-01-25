@@ -1195,6 +1195,43 @@ data: {"messageId": "uuid", "content": "Full response", "tokens": 123}
 **Build Status**: ✅ TypeScript compiles without errors
 **Verified**: Files exist (2026-01-25 21:30)
 
+### 2026-01-25 22:00 Deliverable: Spectator Mode Worker (task-1.9.1)
+**Files Created**:
+- `src/lib/services/spectator-session.ts` - AI-to-AI conversation service
+
+**Files Modified**:
+- `workers/test-runner.ts` - Updated RUN_SESSION handler for spectator mode
+
+**Spectator Session Flow**:
+1. Worker receives RUN_SESSION job with validationMode='spectator'
+2. Loads persona and proposal data
+3. Builds interviewer prompt (Mom Test style questions)
+4. Builds persona prompt (character with pushback settings)
+5. Runs conversation loop:
+   - Interviewer asks question → saves to messages table
+   - Persona responds → saves to messages table
+   - Loop until 5-12 exchanges (target: 8)
+6. Calls session completion for signal extraction
+7. Marks session complete
+
+**Conversation Parameters**:
+- MIN_EXCHANGES: 5
+- TARGET_EXCHANGES: 8
+- MAX_EXCHANGES: 12
+- Models: Claude 3 Haiku for both interviewer and persona
+
+**Natural Ending Detection**:
+- Detects closing phrases ("thank you for your time", "final question", etc.)
+- Probabilistic ending after target exchanges reached
+
+**Integration**:
+- Uses existing `completeSession()` for signal extraction
+- Uses existing `checkTestCompletion()` to update test status
+- Messages saved to database for real-time UI polling
+
+**Build Status**: ✅ TypeScript compiles without errors
+**Verified**: Files exist (2026-01-25 22:00)
+
 ---
 
 ## Issues & Resolutions

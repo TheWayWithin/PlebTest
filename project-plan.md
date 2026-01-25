@@ -903,7 +903,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - **Completed**: Session completion service and API endpoint, AI signal extraction using Claude 3.5 Haiku, scoring algorithm (0-100), auto-updates test status when all sessions complete
 
 #### 1.9 Spectator Sessions
-- [ ] **task-1.9.1** Implement Spectator Mode worker
+- [x] **task-1.9.1** Implement Spectator Mode worker
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -912,6 +912,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Conversation streamed to UI
     - Session auto-progresses
   - Dependencies: task-1.7.6, task-1.8.1
+  - **Completed**: AI-to-AI conversation loop with natural ending detection, messages saved to DB for polling, integrates with session completion
 
 - [ ] **task-1.9.2** Implement Spectator Session UI (F-021)
   - Agent: developer
