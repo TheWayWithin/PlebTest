@@ -9,8 +9,23 @@
 
 **Phase**: 1 - Core Loop MVP
 **Status**: In Progress
-**Last Completed**: task-1.3.4 - Implement Data Carry-Over (F-030) ✅
-**Next Task**: task-1.2.5 - Implement Profile Management (F-004) OR task-1.4.1 - Implement Create Idea (F-006)
+**Last Completed**: task-1.4.1 - Implement Create Idea (F-006) ✅
+**Next Task**: task-1.4.2 - Implement Ideas List (F-007) OR task-1.2.5 - Implement Profile Management (F-004)
+
+### Create Idea (task-1.4.1) ✅
+**Implementation**: Create Idea with tier limit enforcement
+
+**Files Created**:
+- `src/app/api/ideas/route.ts` - POST/GET endpoints with tier limits
+- `src/components/ideas/create-idea-dialog.tsx` - Dialog component
+- `src/app/dashboard/dashboard-client.tsx` - Client component
+
+**Features**:
+- Modal dialog for creating ideas
+- Tier limit enforcement (solo=1, growth=3, scale=10, pro=20)
+- Usage display ("1 of 3 ideas used")
+- Redirects to idea detail page after creation
+- Upgrade prompt when at limit
 
 ### Data Carry-Over (task-1.3.4) ✅
 **Implementation**: Complete Quick Fire → Signup → Proposal flow

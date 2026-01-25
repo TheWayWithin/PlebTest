@@ -669,7 +669,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - **Completed**: localStorage persistence, QuickFireProcessor component, /api/ideas/from-quick-fire endpoint, AI proposal generation, idea/proposal pages created
 
 #### 1.4 Idea Management
-- [ ] **task-1.4.1** Implement Create Idea (F-006)
+- [x] **task-1.4.1** Implement Create Idea (F-006) - ✅ 2026-01-25
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -678,6 +678,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Saves to database
     - Redirects to idea detail
   - Dependencies: task-1.1.4
+  - **Completed**: POST/GET /api/ideas with tier limits, CreateIdeaDialog component, dashboard refactored to client/server architecture
 
 - [ ] **task-1.4.2** Implement Ideas List (F-007)
   - Agent: developer

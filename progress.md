@@ -812,6 +812,37 @@ Landing Page → Quick Fire → Click "Go Deeper"
 
 ---
 
+### 2026-01-25 12:40 Deliverable: Create Idea Feature (task-1.4.1)
+
+**Files Created**:
+- `src/app/api/ideas/route.ts` (4.1KB) - POST/GET endpoints with tier limit enforcement
+- `src/components/ideas/create-idea-dialog.tsx` (5.5KB) - Dialog with form, validation, error handling
+- `src/app/dashboard/dashboard-client.tsx` (6.1KB) - Client component for dashboard
+- `src/components/ui/dialog.tsx` - shadcn Dialog component
+- `src/components/ui/label.tsx` - shadcn Label component
+
+**Files Modified**:
+- `src/app/dashboard/page.tsx` - Refactored to fetch data server-side, pass to client
+
+**Features**:
+- POST /api/ideas: Creates new idea with tier limit enforcement
+- GET /api/ideas: Lists user's ideas with tier/limit info
+- CreateIdeaDialog: Modal form with name input, usage display, error handling
+- CreateIdeaLimitReached: Upgrade prompt when at limit
+- Dashboard shows ideas grid with Quick Fire scores
+- Redirect to idea detail page after creation
+
+**Tier Limits Enforced**:
+- Solo: 1 product
+- Growth: 3 products
+- Scale: 10 products
+- Pro: 20 products
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: Files exist on filesystem, pushed to staging
+
+---
+
 ## Issues & Resolutions
 
 <!-- Format:
