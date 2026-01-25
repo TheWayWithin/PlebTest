@@ -1054,6 +1054,51 @@ Landing Page → Quick Fire → Click "Go Deeper"
 **Build Status**: ✅ `npm run build` passes
 **Verified**: ls -la confirms all updated files (2026-01-25 19:30)
 
+### 2026-01-25 20:00 Deliverable: Anti-Sycophancy Prompt System (task-1.8.1)
+**File Created**: `src/lib/services/anti-sycophancy.ts` (10KB)
+
+**Prompt System Components**:
+
+1. **Pushback Preset Configs** (Cheerleader/Pragmatist/Critic):
+   - Cheerleader: Supportive but still raises 2 objections, constructive framing
+   - Pragmatist: Balanced, realistic, focuses on execution challenges, 2 objections
+   - Critic: Highly skeptical, actively looks for flaws, requires 3 objections
+
+2. **Skepticism Level Modifiers** (low/medium/high):
+   - Affects trust threshold and behavior
+   - Low: Generally trusting, convinced with good explanations
+   - Medium: Needs clear reasoning and evidence
+   - High: Needs strong evidence, assumes ideas will fail
+
+3. **Mom Test Principles** (embedded in all prompts):
+   - Ask about past behavior, not hypotheticals
+   - Ask for specifics (cost, time, examples)
+   - Talk less, listen more (80/20 rule)
+   - Don't accept compliments - redirect to concerns
+   - Probe for commitment signals
+
+4. **Big Five Personality Influence**:
+   - Openness → curiosity vs preference for proven approaches
+   - Conscientiousness → detail focus vs big picture
+   - Extraversion → communication style
+   - Agreeableness → comfort with disagreement
+   - Neuroticism → risk focus
+
+5. **Signal Extraction Prompt**:
+   - Extracts: needValidated, solutionResonated, keyObjections, positiveSignals
+   - Commitment levels: none → verbal_interest → willing_to_try → willing_to_pay
+   - Anti-sycophancy score (0-100)
+
+**Exported Functions**:
+- `buildSessionPrompt(persona, pushbackPreset, proposalContext)` - Main prompt builder
+- `buildInterviewerPrompt(proposalContext)` - For Spectator mode interviewer AI
+- `buildProposalContext(problem, solution, hypotheses)` - Formats proposal info
+- `buildSignalExtractionPrompt(transcript)` - Post-session analysis
+- `createSessionPrompt(context)` - Convenience wrapper
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: File created at src/lib/services/anti-sycophancy.ts (2026-01-25 20:00)
+
 ---
 
 ## Issues & Resolutions

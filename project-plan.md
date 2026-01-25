@@ -856,7 +856,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - **Completed**: RUN_TEST queued from API, GENERATE_PERSONAS creates sessions via admin client, RUN_SESSION jobs queued for each persona, persona-generator accepts optional client parameter for worker context
 
 #### 1.8 Interactive Sessions
-- [ ] **task-1.8.1** Build Anti-Sycophancy prompt system
+- [x] **task-1.8.1** Build Anti-Sycophancy prompt system - ✅ 2026-01-25 20:00
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -865,6 +865,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Mom Test principles embedded
     - Minimum objections enforcement (≥2)
   - Dependencies: task-1.6.1
+  - **Completed**: Full prompt system with pushback configs (2-3 min objections), skepticism modifiers (low/medium/high), Mom Test principles, Big Five personality influence, signal extraction prompt, interviewer prompt for Spectator mode
 
 - [ ] **task-1.8.2** Implement SSE streaming endpoint
   - Agent: developer
