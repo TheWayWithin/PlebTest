@@ -10,7 +10,16 @@ import {
   AlertTriangle,
   Clock,
   Edit2,
+  DollarSign,
+  Users,
+  FileText,
+  Link as LinkIcon,
+  CheckCircle,
+  XCircle,
 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { EditProposalDialog } from '@/components/proposals/edit-proposal-dialog';
 
 interface Idea {
   id: string;
@@ -26,7 +35,10 @@ interface Proposal {
   solution: string | null;
   hypotheses: string | null;
   current_workarounds: string | null;
+  pricing_assumption: string | null;
   competitors: string | null;
+  external_context: string | null;
+  external_source_url: string | null;
   status: string | null;
   created_at: string | null;
 }
@@ -36,8 +48,9 @@ interface ProposalViewProps {
   proposal: Proposal;
 }
 
-export function ProposalView({ idea, proposal }: ProposalViewProps) {
-  const [isEditing, setIsEditing] = useState(false);
+export function ProposalView({ idea, proposal: initialProposal }: ProposalViewProps) {
+  const [proposal, setProposal] = useState(initialProposal);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   const getScoreColor = (score: number | null) => {
     if (score === null) return 'text-gray-400';
@@ -46,49 +59,99 @@ export function ProposalView({ idea, proposal }: ProposalViewProps) {
     return 'text-green-400';
   };
 
+  const getStatusConfig = (status: string | null) => {
+    switch (status) {
+      case 'draft':
+        return { label: 'Draft', color: 'bg-gray-500/20 text-gray-400 border-gray-500/30', icon: FileText };
+      case 'active':
+        return { label: 'Active', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30', icon: Sparkles };
+      case 'validated':
+        return { label: 'Validated', color: 'bg-green-500/20 text-green-400 border-green-500/30', icon: CheckCircle };
+      case 'invalidated':
+        return { label: 'Invalidated', color: 'bg-red-500/20 text-red-400 border-red-500/30', icon: XCircle };
+      case 'archived':
+        return { label: 'Archived', color: 'bg-gray-600/20 text-gray-500 border-gray-600/30', icon: FileText };
+      default:
+        return { label: 'Draft', color: 'bg-gray-500/20 text-gray-400 border-gray-500/30', icon: FileText };
+    }
+  };
+
+  const statusConfig = getStatusConfig(proposal.status);
+  const StatusIcon = statusConfig.icon;
+
+  const handleEditSuccess = (updatedProposal: Proposal) => {
+    setProposal(updatedProposal);
+  };
+
+  const Section = ({
+    icon: Icon,
+    title,
+    content,
+    emptyText = 'Not defined yet.',
+  }: {
+    icon: React.ElementType;
+    title: string;
+    content: string | null;
+    emptyText?: string;
+  }) => (
+    <section className="bg-gray-900/50 border border-gray-700 rounded-xl p-6">
+      <div className="flex items-center gap-2 text-gray-400 mb-3">
+        <Icon className="w-5 h-5" />
+        <h3 className="text-sm uppercase tracking-wide">{title}</h3>
+      </div>
+      <p className={`leading-relaxed ${content ? 'text-gray-200' : 'text-gray-500 italic'}`}>
+        {content || emptyText}
+      </p>
+    </section>
+  );
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-8">
         <Link
-          href="/dashboard"
+          href={`/ideas/${idea.id}`}
           className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Dashboard
+          Back to {idea.name}
         </Link>
 
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-white mb-2">
-              {proposal.problem ? proposal.problem.slice(0, 80) + '...' : 'Your Proposal'}
-            </h1>
-            <p className="text-gray-400">Created from your Quick Fire analysis</p>
-          </div>
-
-          {idea.quick_fire_score !== null && (
-            <div className="flex flex-col items-center bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-2">
-              <span className="text-xs text-gray-500 uppercase tracking-wide">Risk Score</span>
-              <span className={`text-3xl font-bold ${getScoreColor(idea.quick_fire_score)}`}>
-                {idea.quick_fire_score}
-              </span>
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-2">
+              <h1 className="text-2xl font-bold text-white">
+                {proposal.problem ? (proposal.problem.length > 60 ? proposal.problem.slice(0, 60) + '...' : proposal.problem) : 'Your Proposal'}
+              </h1>
+              <Badge className={`${statusConfig.color} border`}>
+                <StatusIcon className="w-3 h-3 mr-1" />
+                {statusConfig.label}
+              </Badge>
             </div>
-          )}
-        </div>
-      </div>
-
-      {/* Success Banner */}
-      <div className="bg-gradient-to-r from-orange-500/10 to-amber-500/10 border border-orange-500/30 rounded-xl p-6 mb-8">
-        <div className="flex items-start gap-4">
-          <div className="p-2 bg-orange-500/20 rounded-lg">
-            <Sparkles className="w-6 h-6 text-orange-400" />
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold text-white mb-1">Your Proposal is Ready!</h2>
-            <p className="text-gray-300">
-              I have generated a starting proposal based on your idea. Review and refine each
-              section, then start testing your assumptions with real users.
+            <p className="text-gray-400">
+              {proposal.created_at
+                ? `Created ${new Date(proposal.created_at).toLocaleDateString()}`
+                : 'Recently created'}
             </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {idea.quick_fire_score !== null && (
+              <div className="flex flex-col items-center bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-2">
+                <span className="text-xs text-gray-500 uppercase tracking-wide">Risk Score</span>
+                <span className={`text-3xl font-bold ${getScoreColor(idea.quick_fire_score)}`}>
+                  {idea.quick_fire_score}
+                </span>
+              </div>
+            )}
+            <Button
+              onClick={() => setIsEditDialogOpen(true)}
+              variant="outline"
+              className="border-gray-700 text-gray-300 hover:text-white hover:bg-gray-800"
+            >
+              <Edit2 className="w-4 h-4 mr-2" />
+              Edit
+            </Button>
           </div>
         </div>
       </div>
@@ -104,56 +167,85 @@ export function ProposalView({ idea, proposal }: ProposalViewProps) {
           <p className="text-white text-lg">{idea.name}</p>
         </section>
 
-        {/* Problem */}
-        <section className="bg-gray-900/50 border border-gray-700 rounded-xl p-6">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2 text-gray-400">
-              <AlertTriangle className="w-5 h-5" />
-              <h3 className="text-sm uppercase tracking-wide">Problem</h3>
-            </div>
-            <button
-              className="text-gray-500 hover:text-white transition-colors"
-              onClick={() => setIsEditing(!isEditing)}
-            >
-              <Edit2 className="w-4 h-4" />
-            </button>
-          </div>
-          <p className="text-gray-200 leading-relaxed">
-            {proposal.problem || 'No problem defined yet.'}
-          </p>
-        </section>
-
-        {/* Solution */}
-        <section className="bg-gray-900/50 border border-gray-700 rounded-xl p-6">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2 text-gray-400">
-              <Target className="w-5 h-5" />
-              <h3 className="text-sm uppercase tracking-wide">Solution</h3>
-            </div>
-            <button className="text-gray-500 hover:text-white transition-colors">
-              <Edit2 className="w-4 h-4" />
-            </button>
-          </div>
-          <p className="text-gray-200 leading-relaxed">
-            {proposal.solution || 'No solution defined yet.'}
-          </p>
-        </section>
+        {/* Core Proposal - Problem & Solution */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <Section
+            icon={AlertTriangle}
+            title="Problem"
+            content={proposal.problem}
+            emptyText="No problem defined yet."
+          />
+          <Section
+            icon={Target}
+            title="Solution"
+            content={proposal.solution}
+            emptyText="No solution defined yet."
+          />
+        </div>
 
         {/* Hypotheses */}
-        <section className="bg-gray-900/50 border border-gray-700 rounded-xl p-6">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2 text-gray-400">
-              <Sparkles className="w-5 h-5" />
-              <h3 className="text-sm uppercase tracking-wide">Key Hypotheses</h3>
-            </div>
-            <button className="text-gray-500 hover:text-white transition-colors">
-              <Edit2 className="w-4 h-4" />
-            </button>
+        <Section
+          icon={Sparkles}
+          title="Key Hypotheses"
+          content={proposal.hypotheses}
+          emptyText="No hypotheses defined yet."
+        />
+
+        {/* Current Workarounds */}
+        {proposal.current_workarounds && (
+          <Section
+            icon={Users}
+            title="Current Workarounds"
+            content={proposal.current_workarounds}
+          />
+        )}
+
+        {/* Pricing & Competitors */}
+        {(proposal.pricing_assumption || proposal.competitors) && (
+          <div className="grid md:grid-cols-2 gap-6">
+            {proposal.pricing_assumption && (
+              <Section
+                icon={DollarSign}
+                title="Pricing Assumption"
+                content={proposal.pricing_assumption}
+              />
+            )}
+            {proposal.competitors && (
+              <Section
+                icon={Users}
+                title="Competitors"
+                content={proposal.competitors}
+              />
+            )}
           </div>
-          <p className="text-gray-200 leading-relaxed">
-            {proposal.hypotheses || 'No hypotheses defined yet.'}
-          </p>
-        </section>
+        )}
+
+        {/* External Source URL */}
+        {proposal.external_source_url && (
+          <section className="bg-gray-900/50 border border-gray-700 rounded-xl p-6">
+            <div className="flex items-center gap-2 text-gray-400 mb-3">
+              <LinkIcon className="w-5 h-5" />
+              <h3 className="text-sm uppercase tracking-wide">External Source</h3>
+            </div>
+            <a
+              href={proposal.external_source_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-orange-400 hover:text-orange-300 underline break-all"
+            >
+              {proposal.external_source_url}
+            </a>
+          </section>
+        )}
+
+        {/* External Context */}
+        {proposal.external_context && (
+          <Section
+            icon={FileText}
+            title="External Context"
+            content={proposal.external_context}
+          />
+        )}
 
         {/* Key Objection from Quick Fire */}
         {idea.quick_fire_objection && (
@@ -163,7 +255,7 @@ export function ProposalView({ idea, proposal }: ProposalViewProps) {
               <h3 className="text-sm uppercase tracking-wide">Key Challenge to Address</h3>
             </div>
             <div className="flex items-start gap-3 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
-              <Clock className="w-4 h-4 text-yellow-400 mt-0.5" />
+              <Clock className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
               <div className="flex-1">
                 <p className="text-white">{idea.quick_fire_objection}</p>
               </div>
@@ -186,6 +278,15 @@ export function ProposalView({ idea, proposal }: ProposalViewProps) {
         </ol>
         <p className="mt-4 text-sm text-gray-400">Full testing and validation features coming soon!</p>
       </div>
+
+      {/* Edit Dialog */}
+      <EditProposalDialog
+        proposal={proposal}
+        ideaId={idea.id}
+        open={isEditDialogOpen}
+        onOpenChange={setIsEditDialogOpen}
+        onSuccess={handleEditSuccess}
+      />
     </div>
   );
 }
