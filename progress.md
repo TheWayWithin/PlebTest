@@ -1005,6 +1005,34 @@ Landing Page → Quick Fire → Click "Go Deeper"
 **Build Status**: ✅ `npm run build` passes
 **Verified**: ls -la confirms all 7 worker files created (2026-01-25 18:30)
 
+### 2026-01-25 19:00 Deliverable: Job Retry Policy + Idempotency (task-1.7.5)
+**Files Updated**:
+- `src/lib/jobs/boss.ts` - Enhanced with queueUniqueJob (merged defaults), getQueuedJobs for monitoring, retryFailedJob utility, getJobStats placeholder
+- `src/lib/jobs/index.ts` - Added exports for new functions
+- `workers/test-runner.ts` - Added idempotency checks: isTestAlreadyProcessed, isSessionAlreadyProcessed; use queueUniqueJob with `{testId}-{icpId}` keys
+- `workers/report-generator.ts` - Added isReportAlreadyGenerated check before creating reports
+
+**Retry Policy** (from task-1.7.2, now enhanced):
+- ✅ 3 retries with exponential backoff (1s, 2s, 4s)
+- ✅ Jobs expire after 15 minutes if not started
+- ✅ Completed jobs retained 7 days for debugging
+
+**Dead Letter Handling**:
+- ✅ pg-boss automatically archives failed jobs after retryLimit
+- ✅ Query via: `SELECT * FROM pgboss.archive WHERE state = 'failed'`
+- ✅ getQueuedJobs function for monitoring active queue
+- ✅ retryFailedJob utility to re-queue archived jobs
+
+**Idempotency Implementation**:
+- ✅ queueUniqueJob uses singletonKey to prevent duplicate jobs
+- ✅ RUN_TEST: checks test status before processing
+- ✅ GENERATE_PERSONAS: uses `{testId}-{icpId}` as idempotency key
+- ✅ RUN_SESSION: checks session status before processing, marks as 'active' first
+- ✅ GENERATE_REPORT: checks if report already exists before generating
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: All idempotency functions compile and export correctly (2026-01-25 19:00)
+
 ---
 
 ## Issues & Resolutions

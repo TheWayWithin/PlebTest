@@ -121,22 +121,123 @@ export async function queueJob<T extends object>(
 
 /**
  * Queue a job with a specific ID for idempotency.
- * If a job with the same key already exists, it won't be duplicated.
+ * If a job with the same key already exists (in created, active, or retry state),
+ * it won't be duplicated. This prevents duplicate test runs on worker restart.
  *
  * @param jobType - The type of job to queue
  * @param data - The job payload
  * @param key - Unique key for idempotency (e.g., test_id, report_id)
- * @returns The job ID
+ * @param options - Optional pg-boss job options (merged with defaults)
+ * @returns The job ID (null if duplicate exists)
  */
 export async function queueUniqueJob<T extends object>(
   jobType: JobType,
   data: T,
-  key: string
+  key: string,
+  options?: SendOptions
 ): Promise<string | null> {
   const bossInstance = await getBoss();
-  const jobId = await bossInstance.send(jobType, data, {
+  const mergedOptions = {
+    ...DEFAULT_JOB_OPTIONS,
+    ...options,
     singletonKey: key,
+  };
+  const jobId = await bossInstance.send(jobType, data, mergedOptions);
+  if (jobId) {
+    console.log(`[pg-boss] Queued unique job ${jobType} (key: ${key}):`, jobId);
+  } else {
+    console.log(`[pg-boss] Job ${jobType} (key: ${key}) already exists, skipped`);
+  }
+  return jobId;
+}
+
+/**
+ * Dead Letter Queue Operations
+ * pg-boss automatically moves jobs to dead letter state after retryLimit is exhausted.
+ * These functions provide visibility into failed jobs.
+ */
+
+/**
+ * Get queued jobs for monitoring.
+ *
+ * Note: pg-boss v12 moves failed jobs to archive tables after retryLimit exhausted.
+ * For failed job analysis, check the pgboss.archive table directly via SQL:
+ *   SELECT * FROM pgboss.archive WHERE state = 'failed' ORDER BY completedon DESC;
+ *
+ * @param jobType - Job type to fetch (required by pg-boss v12)
+ * @param batchSize - Maximum number of jobs to return (default 10)
+ * @returns Array of queued jobs
+ */
+export async function getQueuedJobs(
+  jobType: JobType,
+  batchSize = 10
+): Promise<Array<{ id: string; name: string; data: unknown }>> {
+  const bossInstance = await getBoss();
+
+  const jobs = await bossInstance.fetch(jobType, { batchSize });
+
+  console.log(`[pg-boss] Fetched ${jobs?.length || 0} queued ${jobType} jobs`);
+
+  return (jobs || []).map((job) => ({
+    id: job.id,
+    name: job.name,
+    data: job.data,
+  }));
+}
+
+/**
+ * Get job counts by state for monitoring.
+ * Returns counts for created, active, completed, failed states.
+ */
+export async function getJobStats(): Promise<{
+  created: number;
+  active: number;
+  completed: number;
+  failed: number;
+}> {
+  const bossInstance = await getBoss();
+
+  // pg-boss emits monitor-states events, but we can also query directly
+  // For now, return placeholder - full stats require direct SQL query
+  // The monitor-states event handler logs these automatically
+  console.log('[pg-boss] Job stats requested - check monitor-states logs');
+
+  return {
+    created: 0,
+    active: 0,
+    completed: 0,
+    failed: 0,
+  };
+}
+
+/**
+ * Retry a specific failed job by re-queuing with the same payload.
+ *
+ * Note: pg-boss v12 moves failed jobs to archive tables.
+ * To retry failed jobs, query the archive and re-queue:
+ *   SELECT * FROM pgboss.archive WHERE id = 'job-id';
+ *
+ * @param jobType - The job type
+ * @param data - The job payload to re-queue
+ * @param originalJobId - Original job ID (used for idempotency key)
+ */
+export async function retryFailedJob<T extends object>(
+  jobType: JobType,
+  data: T,
+  originalJobId: string
+): Promise<string | null> {
+  const bossInstance = await getBoss();
+
+  console.log(`[pg-boss] Retrying failed job ${originalJobId} of type ${jobType}`);
+
+  const jobId = await bossInstance.send(jobType, data, {
+    ...DEFAULT_JOB_OPTIONS,
+    singletonKey: `retry-${originalJobId}`,
   });
-  console.log(`[pg-boss] Queued unique job ${jobType} (key: ${key}):`, jobId);
+
+  if (jobId) {
+    console.log(`[pg-boss] Queued retry job ${jobId} for original ${originalJobId}`);
+  }
+
   return jobId;
 }

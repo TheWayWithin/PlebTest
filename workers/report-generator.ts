@@ -10,6 +10,33 @@ import type { GenerateReportPayload } from '../src/lib/jobs/types';
 import { createAdminClient } from '../src/lib/supabase/admin';
 
 /**
+ * Idempotency: Check if a report has already been generated for this test.
+ * Returns true if the job should be skipped.
+ */
+async function isReportAlreadyGenerated(testId: string): Promise<boolean> {
+  const supabase = createAdminClient();
+  const { data: test } = await supabase
+    .from('validation_tests')
+    .select('report_id, status')
+    .eq('id', testId)
+    .single();
+
+  // Skip if test already has a report or is completed
+  if (test?.report_id) {
+    console.log(`[idempotency] Test ${testId} already has report ${test.report_id}, skipping`);
+    return true;
+  }
+
+  // Also skip if test is not in the right state
+  if (test && test.status && !['in_progress', 'pending'].includes(test.status)) {
+    console.log(`[idempotency] Test ${testId} in state ${test.status}, skipping report generation`);
+    return true;
+  }
+
+  return false;
+}
+
+/**
  * Start the report generator worker handlers.
  */
 export async function startReportGeneratorWorker(): Promise<void> {
@@ -21,9 +48,14 @@ export async function startReportGeneratorWorker(): Promise<void> {
     async (jobs) => {
       // Process each job in the batch
       for (const job of jobs) {
-        console.log(`[${JobTypes.GENERATE_REPORT}] Generating report for test: ${job.data.testId}`);
-
         const { testId, proposalId } = job.data;
+        console.log(`[${JobTypes.GENERATE_REPORT}] Generating report for test: ${testId}`);
+
+        // Idempotency check: Skip if report already generated
+        if (await isReportAlreadyGenerated(testId)) {
+          continue;
+        }
+
         const supabase = createAdminClient();
 
         try {

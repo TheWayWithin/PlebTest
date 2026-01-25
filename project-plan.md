@@ -830,7 +830,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Restart policy configured
   - Dependencies: task-1.7.3
 
-- [ ] **task-1.7.5** Implement job retry policy + dead letter handling + idempotency
+- [x] **task-1.7.5** Implement job retry policy + dead letter handling + idempotency - ✅ 2026-01-25 19:00
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -842,6 +842,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Jobs check if work already completed before starting
     - Prevents duplicate test runs or double report generation on worker restart
   - Dependencies: task-1.7.2
+  - **Completed**: Retry policy via DEFAULT_JOB_OPTIONS, queueUniqueJob for idempotency, isTestAlreadyProcessed/isSessionAlreadyProcessed/isReportAlreadyGenerated checks in handlers, getQueuedJobs for monitoring
 
 - [ ] **task-1.7.6** Implement test runner job
   - Agent: developer

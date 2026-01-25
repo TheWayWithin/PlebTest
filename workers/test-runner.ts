@@ -7,7 +7,7 @@
  * - RUN_SESSION: Runs individual validation sessions
  */
 
-import { getBoss, JobTypes, queueJob } from '../src/lib/jobs';
+import { getBoss, JobTypes, queueUniqueJob } from '../src/lib/jobs';
 import type {
   RunTestPayload,
   GeneratePersonasPayload,
@@ -15,6 +15,46 @@ import type {
 } from '../src/lib/jobs/types';
 import { createAdminClient } from '../src/lib/supabase/admin';
 import { generatePersonas } from '../src/lib/services/persona-generator';
+
+/**
+ * Idempotency: Check if test has already been started or completed.
+ * Returns true if the job should be skipped.
+ */
+async function isTestAlreadyProcessed(testId: string): Promise<boolean> {
+  const supabase = createAdminClient();
+  const { data: test } = await supabase
+    .from('validation_tests')
+    .select('status')
+    .eq('id', testId)
+    .single();
+
+  // Skip if test is already in progress, completed, or failed
+  if (test && test.status && ['in_progress', 'completed', 'failed'].includes(test.status)) {
+    console.log(`[idempotency] Test ${testId} already in state: ${test.status}, skipping`);
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Idempotency: Check if session has already been started or completed.
+ * Returns true if the job should be skipped.
+ */
+async function isSessionAlreadyProcessed(sessionId: string): Promise<boolean> {
+  const supabase = createAdminClient();
+  const { data: session } = await supabase
+    .from('sessions')
+    .select('status')
+    .eq('id', sessionId)
+    .single();
+
+  // Skip if session is already active, completed, or abandoned
+  if (session && session.status && ['active', 'completed', 'expired', 'abandoned'].includes(session.status)) {
+    console.log(`[idempotency] Session ${sessionId} already in state: ${session.status}, skipping`);
+    return true;
+  }
+  return false;
+}
 
 /**
  * Start the test runner worker handlers.
@@ -28,10 +68,15 @@ export async function startTestRunnerWorker(): Promise<void> {
     { localConcurrency: 2 }, // Max 2 tests running at once
     async (jobs) => {
       for (const job of jobs) {
-        console.log(`[${JobTypes.RUN_TEST}] Starting test: ${job.data.testId}`);
+        const { testId, icpIds, personaCount } = job.data;
+        console.log(`[${JobTypes.RUN_TEST}] Starting test: ${testId}`);
+
+        // Idempotency check: Skip if already processed
+        if (await isTestAlreadyProcessed(testId)) {
+          continue;
+        }
 
         const supabase = createAdminClient();
-        const { testId, icpIds, personaCount } = job.data;
 
         try {
           // 1. Update test status to in_progress
@@ -43,15 +88,21 @@ export async function startTestRunnerWorker(): Promise<void> {
             })
             .eq('id', testId);
 
-          // 2. Queue persona generation for each ICP
+          // 2. Queue persona generation for each ICP (with idempotency key)
           const personasPerIcp = Math.ceil(personaCount / icpIds.length);
 
           for (const icpId of icpIds) {
-            await queueJob<GeneratePersonasPayload>(JobTypes.GENERATE_PERSONAS, {
-              testId,
-              icpId,
-              count: personasPerIcp,
-            });
+            // Use unique job key to prevent duplicate persona generation
+            const idempotencyKey = `${testId}-${icpId}`;
+            await queueUniqueJob<GeneratePersonasPayload>(
+              JobTypes.GENERATE_PERSONAS,
+              {
+                testId,
+                icpId,
+                count: personasPerIcp,
+              },
+              idempotencyKey
+            );
           }
 
           console.log(`[${JobTypes.RUN_TEST}] Queued persona generation for ${icpIds.length} ICPs`);
@@ -107,12 +158,26 @@ export async function startTestRunnerWorker(): Promise<void> {
     { localConcurrency: 5 }, // Max 5 concurrent sessions
     async (jobs) => {
       for (const job of jobs) {
-        console.log(`[${JobTypes.RUN_SESSION}] Running session: ${job.data.sessionId}`);
-
         const { sessionId } = job.data;
+        console.log(`[${JobTypes.RUN_SESSION}] Running session: ${sessionId}`);
+
+        // Idempotency check: Skip if already processed
+        if (await isSessionAlreadyProcessed(sessionId)) {
+          continue;
+        }
+
         const supabase = createAdminClient();
 
         try {
+          // Mark session as active to claim it
+          await supabase
+            .from('sessions')
+            .update({
+              status: 'active',
+              last_activity_at: new Date().toISOString(),
+            })
+            .eq('id', sessionId);
+
           // TODO (task-1.8.*): Implement actual session execution
           // - Build persona-specific prompt with anti-sycophancy
           // - Run conversation loop with LLM
