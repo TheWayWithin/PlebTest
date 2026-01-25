@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   ArrowLeft,
   Sparkles,
@@ -16,9 +17,24 @@ import {
   Link as LinkIcon,
   CheckCircle,
   XCircle,
+  Archive,
+  ArchiveRestore,
+  Trash2,
+  Loader2,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { EditProposalDialog } from '@/components/proposals/edit-proposal-dialog';
 
 interface Idea {
@@ -49,8 +65,11 @@ interface ProposalViewProps {
 }
 
 export function ProposalView({ idea, proposal: initialProposal }: ProposalViewProps) {
+  const router = useRouter();
   const [proposal, setProposal] = useState(initialProposal);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isArchiving, setIsArchiving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const getScoreColor = (score: number | null) => {
     if (score === null) return 'text-gray-400';
@@ -70,7 +89,7 @@ export function ProposalView({ idea, proposal: initialProposal }: ProposalViewPr
       case 'invalidated':
         return { label: 'Invalidated', color: 'bg-red-500/20 text-red-400 border-red-500/30', icon: XCircle };
       case 'archived':
-        return { label: 'Archived', color: 'bg-gray-600/20 text-gray-500 border-gray-600/30', icon: FileText };
+        return { label: 'Archived', color: 'bg-gray-600/20 text-gray-500 border-gray-600/30', icon: Archive };
       default:
         return { label: 'Draft', color: 'bg-gray-500/20 text-gray-400 border-gray-500/30', icon: FileText };
     }
@@ -78,9 +97,46 @@ export function ProposalView({ idea, proposal: initialProposal }: ProposalViewPr
 
   const statusConfig = getStatusConfig(proposal.status);
   const StatusIcon = statusConfig.icon;
+  const isArchived = proposal.status === 'archived';
 
   const handleEditSuccess = (updatedProposal: Proposal) => {
     setProposal(updatedProposal);
+  };
+
+  const handleArchiveToggle = async () => {
+    setIsArchiving(true);
+    try {
+      const response = await fetch(`/api/ideas/${idea.id}/proposals/${proposal.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: isArchived ? 'unarchive' : 'archive' }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setProposal(data.proposal);
+      }
+    } catch (error) {
+      console.error('Error toggling archive:', error);
+    } finally {
+      setIsArchiving(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      const response = await fetch(`/api/ideas/${idea.id}/proposals/${proposal.id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        router.push(`/ideas/${idea.id}`);
+      }
+    } catch (error) {
+      console.error('Error deleting proposal:', error);
+      setIsDeleting(false);
+    }
   };
 
   const Section = ({
@@ -135,26 +191,119 @@ export function ProposalView({ idea, proposal: initialProposal }: ProposalViewPr
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {idea.quick_fire_score !== null && (
-              <div className="flex flex-col items-center bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-2">
+              <div className="flex flex-col items-center bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-2 mr-2">
                 <span className="text-xs text-gray-500 uppercase tracking-wide">Risk Score</span>
                 <span className={`text-3xl font-bold ${getScoreColor(idea.quick_fire_score)}`}>
                   {idea.quick_fire_score}
                 </span>
               </div>
             )}
+
+            {!isArchived && (
+              <Button
+                onClick={() => setIsEditDialogOpen(true)}
+                variant="outline"
+                size="sm"
+                className="border-gray-700 text-gray-300 hover:text-white hover:bg-gray-800"
+              >
+                <Edit2 className="w-4 h-4 mr-1" />
+                Edit
+              </Button>
+            )}
+
             <Button
-              onClick={() => setIsEditDialogOpen(true)}
+              onClick={handleArchiveToggle}
               variant="outline"
+              size="sm"
+              disabled={isArchiving}
               className="border-gray-700 text-gray-300 hover:text-white hover:bg-gray-800"
             >
-              <Edit2 className="w-4 h-4 mr-2" />
-              Edit
+              {isArchiving ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : isArchived ? (
+                <>
+                  <ArchiveRestore className="w-4 h-4 mr-1" />
+                  Restore
+                </>
+              ) : (
+                <>
+                  <Archive className="w-4 h-4 mr-1" />
+                  Archive
+                </>
+              )}
             </Button>
+
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-red-500/30 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                >
+                  <Trash2 className="w-4 h-4 mr-1" />
+                  Delete
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="bg-gray-900 border-gray-700">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-white">Delete Proposal?</AlertDialogTitle>
+                  <AlertDialogDescription className="text-gray-400">
+                    This action cannot be undone. This will permanently delete this proposal
+                    and all associated data.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700 hover:text-white">
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleDelete}
+                    disabled={isDeleting}
+                    className="bg-red-500 hover:bg-red-600 text-white"
+                  >
+                    {isDeleting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Deleting...
+                      </>
+                    ) : (
+                      'Delete Proposal'
+                    )}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
       </div>
+
+      {/* Archived Banner */}
+      {isArchived && (
+        <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-4 mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Archive className="w-5 h-5 text-gray-500" />
+            <p className="text-gray-400">This proposal is archived and read-only.</p>
+          </div>
+          <Button
+            onClick={handleArchiveToggle}
+            variant="outline"
+            size="sm"
+            disabled={isArchiving}
+            className="border-gray-600 text-gray-300 hover:text-white hover:bg-gray-700"
+          >
+            {isArchiving ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <>
+                <ArchiveRestore className="w-4 h-4 mr-1" />
+                Restore
+              </>
+            )}
+          </Button>
+        </div>
+      )}
 
       {/* Proposal Sections */}
       <div className="space-y-6">
@@ -268,16 +417,18 @@ export function ProposalView({ idea, proposal: initialProposal }: ProposalViewPr
       </div>
 
       {/* Next Steps */}
-      <div className="mt-8 p-6 bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl border border-gray-700">
-        <h3 className="text-lg font-semibold text-white mb-3">Next Steps</h3>
-        <ol className="list-decimal list-inside space-y-2 text-gray-300">
-          <li>Review and refine each section of your proposal</li>
-          <li>Identify your riskiest assumption to test first</li>
-          <li>Design a simple test to validate or invalidate it</li>
-          <li>Talk to 5 potential customers this week</li>
-        </ol>
-        <p className="mt-4 text-sm text-gray-400">Full testing and validation features coming soon!</p>
-      </div>
+      {!isArchived && (
+        <div className="mt-8 p-6 bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl border border-gray-700">
+          <h3 className="text-lg font-semibold text-white mb-3">Next Steps</h3>
+          <ol className="list-decimal list-inside space-y-2 text-gray-300">
+            <li>Review and refine each section of your proposal</li>
+            <li>Identify your riskiest assumption to test first</li>
+            <li>Design a simple test to validate or invalidate it</li>
+            <li>Talk to 5 potential customers this week</li>
+          </ol>
+          <p className="mt-4 text-sm text-gray-400">Full testing and validation features coming soon!</p>
+        </div>
+      )}
 
       {/* Edit Dialog */}
       <EditProposalDialog
