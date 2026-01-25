@@ -800,7 +800,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.5.4, task-1.6.1
   - **Completed**: Full test configuration UI with ICP selection, persona count slider, test/validation/pushback mode selectors, tier-based limits, API route for test creation, test view page placeholder
 
-- [ ] **task-1.7.2** Set up pg-boss for background jobs
+- [x] **task-1.7.2** Set up pg-boss for background jobs - ✅ 2026-01-25 18:30
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -808,6 +808,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Worker process configured
     - Job types defined
   - Dependencies: task-1.1.3
+  - **Completed**: pg-boss singleton with job queue utilities, 8 job types defined, worker entrypoint with test-runner/report-generator/cron handlers, `npm run worker` script added
 
 - [ ] **task-1.7.3** Provision Railway worker service
   - Agent: operator

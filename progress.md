@@ -970,6 +970,41 @@ Landing Page → Quick Fire → Click "Go Deeper"
 **Build Status**: ✅ `npm run build` passes
 **Verified**: ls -la confirmed all 6 files created on filesystem (2026-01-25 17:26)
 
+### 2026-01-25 18:30 Deliverable: pg-boss Background Job System (task-1.7.2)
+**Files Created**:
+- `src/lib/jobs/boss.ts` - pg-boss singleton, job queue utilities, default retry options
+- `src/lib/jobs/types.ts` - TypeScript interfaces for job payloads (RunTest, GeneratePersonas, RunSession, GenerateReport, SendEmail)
+- `src/lib/jobs/index.ts` - Barrel exports
+- `workers/index.ts` - Worker entrypoint with graceful shutdown handling (SIGTERM/SIGINT)
+- `workers/test-runner.ts` - Handlers for RUN_TEST, GENERATE_PERSONAS, RUN_SESSION jobs
+- `workers/report-generator.ts` - Handler for GENERATE_REPORT job
+- `workers/cron.ts` - Scheduled jobs (CHECK_SESSION_TIMEOUT every 5 min)
+
+**Packages Added**:
+- `pg-boss` (^12.6.0) - PostgreSQL-based job queue
+- `tsx` (^4.21.0 devDep) - TypeScript execution for workers
+
+**Job Types Defined**:
+- `run-test` - Orchestrates entire test flow
+- `generate-personas` - Creates personas for ICPs
+- `run-session` - Runs individual validation sessions
+- `generate-report` - Aggregates results into reports
+- `send-email` - Transactional emails
+- `check-session-timeout` - Cron: expire inactive sessions
+- `trial-reminder` - Cron: trial expiry reminders (disabled for MVP)
+- `generate-data-export` - Data export processing
+
+**Configuration**:
+- Default retry: 3 attempts with exponential backoff (1s, 2s, 4s)
+- Job expiry: 15 minutes if not started
+- Retention: 7 days for completed jobs
+- Concurrency limits: 2 tests, 3 persona generations, 5 sessions, 2 reports
+
+**Worker Command**: `npm run worker` (runs `tsx workers/index.ts`)
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: ls -la confirms all 7 worker files created (2026-01-25 18:30)
+
 ---
 
 ## Issues & Resolutions
