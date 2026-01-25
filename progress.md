@@ -1263,6 +1263,32 @@ data: {"messageId": "uuid", "content": "Full response", "tokens": 123}
 **Build Status**: ✅ `npm run build` passes
 **Verified**: Route /sessions/[sessionId] works for both modes (2026-01-25 22:30)
 
+### 2026-01-25 23:00 Deliverable: Active Test View (task-1.10.1)
+**Files Modified**:
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/page.tsx` - Enhanced with sessions list
+
+**Files Added**:
+- `src/components/ui/progress.tsx` - Progress bar component (shadcn)
+
+**UI Features**:
+- **Sessions List**: Shows all sessions with persona name, status, and skepticism level
+- **Session Status Icons**: Pending (clock), Active (play), Complete (checkmark), Abandoned/Expired (x/alert)
+- **Progress Bar**: Visual indicator of completion progress (X/Y complete)
+- **Session Actions**:
+  - Interactive pending/active → "Join" button (orange)
+  - Spectator pending/active → "Watch" button (outline)
+  - Completed → "View" button to see transcript
+- **Completion Badges**: Shows "Need ✓" and "Solution ✓" for validated sessions
+- **Score Display**: Shows session score when available
+- **Generate Report Button**: Appears when all sessions complete but no report exists
+
+**Sessions Query**:
+- Fetches sessions with persona info (name, skepticism_level)
+- Includes status, mode, message_count, score, need_validated, solution_resonated
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: Route /ideas/[ideaId]/proposals/[proposalId]/tests/[testId] in build output (2026-01-25 23:00)
+
 ---
 
 ## Issues & Resolutions

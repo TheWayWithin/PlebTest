@@ -926,7 +926,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - **Completed**: SpectatorSession component with polling, pause/resume, skip to end, progress bar, automatic mode detection on session page
 
 #### 1.10 Active Test View
-- [ ] **task-1.10.1** Implement View Active Test (F-019)
+- [x] **task-1.10.1** Implement View Active Test (F-019)
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -936,6 +936,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Progress indicator
     - "Generate Report" button when all sessions complete
   - Dependencies: task-1.8.3, task-1.9.2
+  - **Completed**: Sessions list with persona names, status icons, progress bar, Join/Watch/View buttons, completion badges, Generate Report button
 
 #### 1.11 Reports
 - [ ] **task-1.11.1** Define Risk Score + Confidence rubric v1
