@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
-import { ArrowLeft, Construction } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+import { CreateProposalForm } from '@/components/proposals/create-proposal-form';
 
 interface PageProps {
   params: Promise<{
@@ -26,7 +27,7 @@ export default async function NewProposalPage({ params }: PageProps) {
   // Verify the idea exists and belongs to user
   const { data: idea, error: ideaError } = await supabase
     .from('ideas')
-    .select('id, name')
+    .select('id, name, quick_fire_score, quick_fire_objection')
     .eq('id', ideaId)
     .eq('user_id', user.id)
     .single();
@@ -37,7 +38,7 @@ export default async function NewProposalPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-gray-950">
-      <div className="max-w-2xl mx-auto px-4 py-8">
+      <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
           <Link
@@ -48,27 +49,40 @@ export default async function NewProposalPage({ params }: PageProps) {
             Back to {idea.name}
           </Link>
 
-          <h1 className="text-2xl font-bold text-white">New Proposal</h1>
+          <h1 className="text-2xl font-bold text-white mb-2">Create New Proposal</h1>
+          <p className="text-gray-400">
+            Define your problem, solution, and key hypotheses to validate.
+          </p>
         </div>
 
-        {/* Coming Soon Placeholder */}
-        <div className="text-center py-16 bg-gray-900/50 border border-gray-700 rounded-xl">
-          <Construction className="w-16 h-16 text-orange-500 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-white mb-2">
-            Create Proposal Form Coming Soon
-          </h2>
-          <p className="text-gray-400 max-w-md mx-auto mb-6">
-            The full proposal creation form is being built. For now, proposals
-            are automatically created when you use Quick Fire and click "Go Deeper".
-          </p>
-          <Link
-            href={`/ideas/${ideaId}`}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Return to Idea
-          </Link>
-        </div>
+        {/* Quick Fire Context (if available) */}
+        {idea.quick_fire_score !== null && idea.quick_fire_objection && (
+          <div className="bg-gray-900/50 border border-gray-700 rounded-xl p-4 mb-6">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm text-gray-400 mb-1">From your Quick Fire analysis:</p>
+                <p className="text-gray-200">{idea.quick_fire_objection}</p>
+              </div>
+              <div className="text-center">
+                <span className="text-xs text-gray-500 uppercase">Risk Score</span>
+                <p
+                  className={`text-2xl font-bold ${
+                    idea.quick_fire_score >= 70
+                      ? 'text-red-400'
+                      : idea.quick_fire_score >= 40
+                        ? 'text-yellow-400'
+                        : 'text-green-400'
+                  }`}
+                >
+                  {idea.quick_fire_score}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Form */}
+        <CreateProposalForm ideaId={ideaId} ideaName={idea.name} />
       </div>
     </div>
   );
