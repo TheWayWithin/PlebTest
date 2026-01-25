@@ -680,7 +680,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.1.4
   - **Completed**: POST/GET /api/ideas with tier limits, CreateIdeaDialog component, dashboard refactored to client/server architecture
 
-- [ ] **task-1.4.2** Implement Ideas List (F-007)
+- [x] **task-1.4.2** Implement Ideas List (F-007) - ✅ 2026-01-25
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -689,6 +689,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Links to idea detail
     - Empty state
   - Dependencies: task-1.4.1
+  - **Completed**: Implemented as part of dashboard refactor in task-1.4.1
 
 - [ ] **task-1.4.3** Implement Idea Detail (F-008)
   - Agent: developer
