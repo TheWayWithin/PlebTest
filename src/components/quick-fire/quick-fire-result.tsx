@@ -1,11 +1,12 @@
 'use client';
 
-import Link from 'next/link';
+import { useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { RiskScoreGauge } from './risk-score-gauge';
 import { RiskLevelBadge } from './risk-level-badge';
 import { ArrowRight, RefreshCw, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { storeQuickFireData } from '@/lib/quick-fire-storage';
 
 type RiskLevel = 'LOW' | 'MEDIUM' | 'HIGH';
 
@@ -14,6 +15,7 @@ interface QuickFireResultProps {
   riskLevel: RiskLevel;
   keyObjection: string;
   onTestAnother: () => void;
+  ideaText: string;
   className?: string;
 }
 
@@ -22,8 +24,20 @@ export function QuickFireResult({
   riskLevel,
   keyObjection,
   onTestAnother,
+  ideaText,
   className,
 }: QuickFireResultProps) {
+  // Store Quick Fire data and redirect to signup
+  const handleGoDeeper = useCallback(() => {
+    storeQuickFireData({
+      oneLiner: ideaText,
+      score: riskScore,
+      keyObjection: keyObjection,
+    });
+    // Navigate to signup page
+    window.location.href = '/signup';
+  }, [ideaText, riskScore, keyObjection]);
+
   return (
     <div className={cn('flex flex-col items-center', className)}>
       {/* Risk Score Gauge */}
@@ -56,13 +70,11 @@ export function QuickFireResult({
           Test Another
         </Button>
         <Button
-          asChild
+          onClick={handleGoDeeper}
           className="flex-1 bg-indigo-600 hover:bg-indigo-700"
         >
-          <Link href="/signup">
-            Go Deeper
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Link>
+          Go Deeper
+          <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
       </div>
 

@@ -1,7 +1,7 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-24 16:30 (Quick Fire API fix deployed)
+> **Last Updated**: 2026-01-24 18:55 (Data Carry-Over implemented)
 
 ---
 
@@ -9,8 +9,33 @@
 
 **Phase**: 1 - Core Loop MVP
 **Status**: In Progress
-**Last Completed**: task-1.3.3 - Implement Quick Fire UI (F-029) ✅
-**Next Task**: task-1.3.4 - Implement Data Carry-Over (F-030)
+**Last Completed**: task-1.3.4 - Implement Data Carry-Over (F-030) ✅
+**Next Task**: task-1.2.5 - Implement Profile Management (F-004) OR task-1.4.1 - Implement Create Idea (F-006)
+
+### Data Carry-Over (task-1.3.4) ✅
+**Implementation**: Complete Quick Fire → Signup → Proposal flow
+
+**New Files**:
+- `src/lib/quick-fire-storage.ts` - localStorage persistence (30min expiry)
+- `src/components/quick-fire-processor.tsx` - Post-auth processing component
+- `src/app/api/ideas/from-quick-fire/route.ts` - API for creating Idea + Proposal
+- `src/app/(protected)/ideas/[ideaId]/page.tsx` - Idea detail page
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/` - Proposal pages
+
+**Modified Files**:
+- `quick-fire.tsx` - Passes idea text to result
+- `quick-fire-result.tsx` - Stores data before redirect
+- `openrouter.ts` - Added `generateProposalFromIdea()`
+- `dashboard/page.tsx` - Added QuickFireProcessor, shows ideas
+
+**Flow**:
+1. User enters idea in Quick Fire
+2. Gets score + objection
+3. Clicks "Go Deeper" → stores in localStorage → redirect to /signup
+4. Completes OAuth
+5. QuickFireProcessor on dashboard detects data
+6. Creates Idea (with score, objection) and Proposal (AI-generated)
+7. Redirects to proposal view page
 
 ### Quick Fire UI (task-1.3.3) ✅
 **Location**: `src/components/quick-fire/`
@@ -22,7 +47,8 @@
 - Animated SVG gauge with score counter
 - Color-coded risk levels (emerald/amber/rose)
 - Error handling (rate_limit, validation, server_error)
-- "Go Deeper" → /signup, "Test Another" → reset
+- "Go Deeper" → stores data, redirects to /signup
+- "Test Another" → reset
 
 ### Quick Fire API (task-1.3.2) ✅
 **Endpoint**: POST /api/quick-fire

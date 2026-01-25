@@ -766,12 +766,49 @@ Errors:   { error: 'rate_limit'|'validation'|'server_error', message?, retryAfte
 
 ---
 
-<!-- Format:
-### [YYYY-MM-DD HH:MM] Deliverable: [Name]
-**File(s)**: [paths]
-**Description**: [what was created/changed]
-**Verified**: [verification command and result]
--->
+### 2026-01-24 18:55 Deliverable: Data Carry-Over Implementation (task-1.3.4)
+
+**Files Created**:
+- `src/lib/quick-fire-storage.ts` - localStorage utility for persisting Quick Fire data through OAuth
+- `src/components/quick-fire-processor.tsx` - Client component to process Quick Fire data after signup
+- `src/app/api/ideas/from-quick-fire/route.ts` - API endpoint to create Idea + Proposal
+- `src/app/(protected)/ideas/[ideaId]/page.tsx` - Idea detail page
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/page.tsx` - Proposal page (server)
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/proposal-view.tsx` - Proposal view (client)
+
+**Files Modified**:
+- `src/components/quick-fire/quick-fire.tsx` - Added submittedIdea state, passes to QuickFireResult
+- `src/components/quick-fire/quick-fire-result.tsx` - Changed "Go Deeper" to store data and redirect
+- `src/lib/openrouter.ts` - Added `generateProposalFromIdea()` function
+- `src/app/dashboard/page.tsx` - Added QuickFireProcessor, shows user's ideas
+
+**Description**: Implemented complete data carry-over flow from Quick Fire to post-signup.
+
+**Architecture**:
+```
+Landing Page → Quick Fire → Click "Go Deeper"
+                    ↓
+        Store in localStorage (30min expiry)
+                    ↓
+              /signup → OAuth
+                    ↓
+              /dashboard
+                    ↓
+    QuickFireProcessor detects localStorage data
+                    ↓
+    POST /api/ideas/from-quick-fire
+                    ↓
+    Creates Idea (with quick_fire_score, quick_fire_objection)
+    Creates Proposal (AI-generated problem, solution, hypotheses)
+                    ↓
+    Redirect to /ideas/[id]/proposals/[pid]
+```
+
+**Schema Adaptation**: Developer's original implementation assumed different schema fields (description, value_proposition, etc.). Adapted to match actual database schema:
+- ideas: name, quick_fire_score, quick_fire_objection
+- proposals: problem, solution, hypotheses
+
+**Verified**: `npm run build` passes, all routes generated correctly
 
 ---
 

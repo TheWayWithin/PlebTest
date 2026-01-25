@@ -31,10 +31,12 @@ export function QuickFire({ className }: QuickFireProps) {
   const [viewState, setViewState] = useState<ViewState>('input');
   const [result, setResult] = useState<QuickFireResponse | null>(null);
   const [error, setError] = useState<QuickFireErrorResponse | null>(null);
+  const [submittedIdea, setSubmittedIdea] = useState<string>('');
 
   const handleSubmit = useCallback(async (idea: string) => {
     setViewState('loading');
     setError(null);
+    setSubmittedIdea(idea); // Store the idea for later use
 
     try {
       const response = await fetch('/api/quick-fire', {
@@ -99,6 +101,7 @@ export function QuickFire({ className }: QuickFireProps) {
             riskLevel={result.riskLevel}
             keyObjection={result.keyObjection}
             onTestAnother={handleReset}
+            ideaText={submittedIdea}
           />
         )}
 

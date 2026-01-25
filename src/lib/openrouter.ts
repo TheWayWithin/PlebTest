@@ -122,3 +122,110 @@ Be concise. One key objection only.`
     keyObjection: parsed.keyObjection || "Unable to determine key objection",
   }
 }
+
+/**
+ * Proposal Generation Interface
+ * Matches actual database schema: problem, solution, hypotheses
+ */
+export interface GeneratedProposal {
+  problem: string;
+  solution: string;
+  hypotheses: string;
+}
+
+/**
+ * Generates a structured proposal from a business idea one-liner.
+ *
+ * @param oneLiner - The original idea from Quick Fire
+ * @param keyObjection - The identified objection to address
+ * @returns Structured proposal content for database insertion
+ */
+export async function generateProposalFromIdea(
+  oneLiner: string,
+  keyObjection: string
+): Promise<GeneratedProposal> {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("OPENROUTER_API_KEY environment variable is required");
+  }
+
+  const systemPrompt = `You are a startup strategist helping founders develop their business ideas into structured proposals.
+
+You will receive a business idea one-liner and a key objection that was identified. Generate a structured proposal to help the founder think through their idea.
+
+Respond with ONLY valid JSON in this exact format:
+{
+  "problem": "<2-3 sentences describing the problem being solved and who experiences it>",
+  "solution": "<2-3 sentences describing the proposed solution and how it works>",
+  "hypotheses": "<2-3 key assumptions that need to be validated, including the objection raised>"
+}
+
+Be specific and actionable. Avoid generic startup jargon. Focus on clarity.`;
+
+  const userPrompt = `Business Idea: ${oneLiner}
+
+Key Objection to Address: ${keyObjection}`;
+
+  const response = await fetch(OPENROUTER_API_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      "HTTP-Referer": "https://plebtest.com",
+      "X-Title": "PlebTest Proposal Generator",
+    },
+    body: JSON.stringify({
+      model: MODEL,
+      max_tokens: 500, // More tokens for proposal generation
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt },
+      ],
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("OpenRouter API error:", response.status, errorText);
+    throw new Error(`OpenRouter API error: ${response.status}`);
+  }
+
+  const data: OpenRouterResponse = await response.json();
+
+  if (!data.choices || data.choices.length === 0) {
+    throw new Error("No response from AI model");
+  }
+
+  const content = data.choices[0].message.content.trim();
+
+  // Parse the JSON response
+  let parsed: {
+    problem: string;
+    solution: string;
+    hypotheses: string;
+  };
+
+  try {
+    // Handle potential markdown code blocks in response
+    const jsonContent = content.replace(/```json\n?|```\n?/g, "").trim();
+    parsed = JSON.parse(jsonContent);
+  } catch (parseError) {
+    console.error("Failed to parse proposal AI response:", content);
+    throw new Error("Invalid response format from AI");
+  }
+
+  // Validate required fields
+  const requiredFields = ["problem", "solution", "hypotheses"];
+  for (const field of requiredFields) {
+    if (typeof parsed[field as keyof typeof parsed] !== "string") {
+      throw new Error(`Missing or invalid field: ${field}`);
+    }
+  }
+
+  return {
+    problem: parsed.problem,
+    solution: parsed.solution,
+    hypotheses: parsed.hypotheses,
+  };
+}
