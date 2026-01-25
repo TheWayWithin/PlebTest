@@ -1099,6 +1099,45 @@ Landing Page → Quick Fire → Click "Go Deeper"
 **Build Status**: ✅ `npm run build` passes
 **Verified**: File created at src/lib/services/anti-sycophancy.ts (2026-01-25 20:00)
 
+### 2026-01-25 20:30 Deliverable: SSE Streaming Endpoint (task-1.8.2)
+**Files Created**:
+- `src/app/api/sessions/[sessionId]/stream/route.ts` - SSE streaming endpoint
+- `supabase/migrations/20260125000001_create_messages_table.sql` - Messages table migration
+
+**Files Updated**:
+- `src/types/database.types.ts` - Added messages table types
+
+**API Endpoints**:
+- `POST /api/sessions/[sessionId]/stream` - Streams AI response with SSE
+  - Body: `{ message: string }`
+  - Events: `start`, `token`, `checkpoint`, `done`, `error`
+  - Checkpoint saves every 50 tokens
+  - Handles disconnect gracefully with partial save
+- `GET /api/sessions/[sessionId]/stream` - Returns session info and message history
+
+**SSE Event Format**:
+```
+event: start
+data: {"messageId": "uuid"}
+
+event: token
+data: {"content": "Hello"}
+
+event: checkpoint
+data: {"tokens": 50}
+
+event: done
+data: {"messageId": "uuid", "content": "Full response", "tokens": 123}
+```
+
+**Database Migration**:
+- `messages` table with: id, session_id, role, content, token_count, created_at, updated_at
+- RLS policies for ownership verification through session → test → proposal → idea chain
+- Indexes on session_id and (session_id, created_at)
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: Route /api/sessions/[sessionId]/stream appears in build output (2026-01-25 20:30)
+
 ---
 
 ## Issues & Resolutions

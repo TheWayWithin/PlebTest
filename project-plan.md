@@ -867,7 +867,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.6.1
   - **Completed**: Full prompt system with pushback configs (2-3 min objections), skepticism modifiers (low/medium/high), Mom Test principles, Big Five personality influence, signal extraction prompt, interviewer prompt for Spectator mode
 
-- [ ] **task-1.8.2** Implement SSE streaming endpoint
+- [x] **task-1.8.2** Implement SSE streaming endpoint - ✅ 2026-01-25 20:30
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -877,6 +877,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Handles disconnect gracefully (partial save)
     - Checkpoint saves every 50 tokens
   - Dependencies: task-1.7.6, task-1.8.1
+  - **Completed**: POST streams tokens via SSE, GET returns session info + history, checkpoints every 50 tokens, handles disconnect with partial save, messages table migration added
 
 - [ ] **task-1.8.3** Implement Interactive Session UI (F-020)
   - Agent: developer
