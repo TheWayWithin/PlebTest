@@ -939,7 +939,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - **Completed**: Sessions list with persona names, status icons, progress bar, Join/Watch/View buttons, completion badges, Generate Report button
 
 #### 1.11 Reports
-- [ ] **task-1.11.1** Define Risk Score + Confidence rubric v1
+- [x] **task-1.11.1** Define Risk Score + Confidence rubric v1
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -950,6 +950,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Rubric stored as versioned config (not hardcoded)
     - "Why this score" explanations available
   - Dependencies: task-1.8.1
+  - **Completed**: rubric-v1.ts with weighted scoring (35/30/25/10), verdict thresholds (Kill/Pivot/Build), confidence levels (Low/Medium/High), driver explanations, calculateScores() function
 
 - [ ] **task-1.11.2** Implement report generation job
   - Agent: developer

@@ -1289,6 +1289,37 @@ data: {"messageId": "uuid", "content": "Full response", "tokens": 123}
 **Build Status**: ✅ `npm run build` passes
 **Verified**: Route /ideas/[ideaId]/proposals/[proposalId]/tests/[testId] in build output (2026-01-25 23:00)
 
+### 2026-01-25 23:30 Deliverable: Risk Score + Confidence Rubric (task-1.11.1)
+**Files Created**:
+- `src/lib/scoring/rubric-v1.ts` - Scoring rubric configuration v1.0.0
+- `src/lib/scoring/index.ts` - Module exports
+
+**Verdict Scoring (Kill/Pivot/Build)**:
+- Weights: Need validation (35%), Solution resonance (30%), Commitment (25%), Anti-sycophancy (10%)
+- Thresholds: Kill (0-40), Pivot (41-60), Build (61-100)
+- Commitment scores: none=0, verbal_interest=25, willing_to_try=60, willing_to_pay=100
+
+**Confidence Scoring (Low/Medium/High)**:
+- Weights: Sample size (35%), Agreement rate (35%), Conversation quality (30%)
+- Thresholds: Low (0-40), Medium (41-70), High (71-100)
+- Sample size bonuses: 1-2 personas=20, 3-4=50, 5+=100
+
+**Driver System**:
+- Verdict drivers: high/low need validation, solution resonance, commitment, quality feedback
+- Confidence drivers: sample size, agreement, conversation depth
+- All drivers have id, label, description, impact (positive/negative/neutral)
+
+**Quick Fire Integration**:
+- `getTopQuickFireDrivers()` returns top 2 drivers for quick rejection decisions
+- Supports market need and key challenge drivers
+
+**Scoring Function**:
+- `calculateScores(sessions)` returns complete scoring result
+- Returns: verdictScore, verdict, verdictDrivers, confidenceScore, confidenceLevel, confidenceDrivers
+
+**Build Status**: ✅ TypeScript compiles without errors
+**Verified**: Files exist (2026-01-25 23:30)
+
 ---
 
 ## Issues & Resolutions
