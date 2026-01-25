@@ -1161,6 +1161,40 @@ data: {"messageId": "uuid", "content": "Full response", "tokens": 123}
 **Build Status**: ✅ `npm run build` passes
 **Verified**: Route /sessions/[sessionId] appears in build output (2026-01-25 21:00)
 
+### 2026-01-25 21:30 Deliverable: Session Completion Logic (task-1.8.4)
+**Files Created**:
+- `src/lib/services/session-completion.ts` - Session completion service
+- `src/app/api/sessions/[sessionId]/complete/route.ts` - Completion API endpoint
+
+**Files Modified**:
+- `src/components/sessions/interactive-session.tsx` - Updated endSession to call completion API
+
+**Completion Flow**:
+1. User clicks "End Session" button
+2. Frontend calls POST `/api/sessions/[sessionId]/complete`
+3. Service fetches all messages from session
+4. Builds transcript with persona name as speaker
+5. Sends transcript to Claude 3.5 Haiku for signal extraction
+6. AI extracts: needValidated, solutionResonated, keyObjections, positiveSignals, commitmentLevel, antiSycophancyScore
+7. Score calculated (0-100) from signals
+8. Session updated with: status=completed, completed_at, signals data
+9. Checks if all sessions in test are complete → updates test status
+
+**Scoring Algorithm**:
+- Need validated: +30 points
+- Solution resonated: +25 points
+- Commitment level: +0/10/18/25 (none/verbal/try/pay)
+- Positive signals: +2 per (max 10)
+- Anti-sycophancy bonus: +score/10 (max 10)
+
+**Signal Extraction Prompt**:
+- Uses `buildSignalExtractionPrompt()` from anti-sycophancy.ts
+- Returns JSON with Mom Test-based analysis
+- Handles markdown code blocks in response
+
+**Build Status**: ✅ TypeScript compiles without errors
+**Verified**: Files exist (2026-01-25 21:30)
+
 ---
 
 ## Issues & Resolutions

@@ -891,7 +891,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.8.2
   - **Completed**: Full chat UI with message bubbles, real-time SSE streaming, persona panel with skepticism/pushback badges, session tips, end session button
 
-- [ ] **task-1.8.4** Implement session completion logic
+- [x] **task-1.8.4** Implement session completion logic
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -900,6 +900,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Calculates need_validated, solution_resonated
     - Tracks anti_sycophancy_triggers
   - Dependencies: task-1.8.3
+  - **Completed**: Session completion service and API endpoint, AI signal extraction using Claude 3.5 Haiku, scoring algorithm (0-100), auto-updates test status when all sessions complete
 
 #### 1.9 Spectator Sessions
 - [ ] **task-1.9.1** Implement Spectator Mode worker

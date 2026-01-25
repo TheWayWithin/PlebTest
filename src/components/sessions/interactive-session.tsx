@@ -170,11 +170,32 @@ export function InteractiveSession({ sessionId, initialData }: InteractiveSessio
   const endSession = async () => {
     if (!confirm('Are you sure you want to end this session?')) return;
 
+    setIsLoading(true);
+    setError(null);
+
     try {
-      // TODO: Implement session completion endpoint
+      const response = await fetch(`/api/sessions/${sessionId}/complete`, {
+        method: 'POST',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to complete session');
+      }
+
+      const data = await response.json();
+
+      // Show completion message briefly before redirect
+      if (data.testComplete) {
+        alert('All sessions complete! Report generation will begin shortly.');
+      }
+
       router.push(`/ideas`);
     } catch (err) {
       console.error('Error ending session:', err);
+      setError(err instanceof Error ? err.message : 'Failed to end session');
+    } finally {
+      setIsLoading(false);
     }
   };
 
