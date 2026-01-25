@@ -914,7 +914,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.7.6, task-1.8.1
   - **Completed**: AI-to-AI conversation loop with natural ending detection, messages saved to DB for polling, integrates with session completion
 
-- [ ] **task-1.9.2** Implement Spectator Session UI (F-021)
+- [x] **task-1.9.2** Implement Spectator Session UI (F-021)
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -923,6 +923,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Pause/Resume controls
     - Session progress indicator
   - Dependencies: task-1.9.1
+  - **Completed**: SpectatorSession component with polling, pause/resume, skip to end, progress bar, automatic mode detection on session page
 
 #### 1.10 Active Test View
 - [ ] **task-1.10.1** Implement View Active Test (F-019)

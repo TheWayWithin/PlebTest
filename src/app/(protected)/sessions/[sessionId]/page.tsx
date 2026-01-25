@@ -1,6 +1,6 @@
 import { redirect, notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { InteractiveSession } from '@/components/sessions/interactive-session';
+import { InteractiveSession, SpectatorSession } from '@/components/sessions';
 
 interface PageProps {
   params: Promise<{ sessionId: string }>;
@@ -100,18 +100,24 @@ export default async function SessionPage({ params }: PageProps) {
       })),
     };
 
+    // Render based on session mode
+    const SessionComponent = sessionData.session.mode === 'spectator' ? SpectatorSession : InteractiveSession;
+
     return (
       <div className="container mx-auto py-6">
-        <InteractiveSession sessionId={sessionId} initialData={sessionData} />
+        <SessionComponent sessionId={sessionId} initialData={sessionData} />
       </div>
     );
   }
 
   const data = await response.json();
 
+  // Render based on session mode
+  const SessionComponent = data.session?.mode === 'spectator' ? SpectatorSession : InteractiveSession;
+
   return (
     <div className="container mx-auto py-6">
-      <InteractiveSession sessionId={sessionId} initialData={data} />
+      <SessionComponent sessionId={sessionId} initialData={data} />
     </div>
   );
 }

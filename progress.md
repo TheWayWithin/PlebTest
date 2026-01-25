@@ -1232,6 +1232,37 @@ data: {"messageId": "uuid", "content": "Full response", "tokens": 123}
 **Build Status**: ✅ TypeScript compiles without errors
 **Verified**: Files exist (2026-01-25 22:00)
 
+### 2026-01-25 22:30 Deliverable: Spectator Session UI (task-1.9.2)
+**Files Created**:
+- `src/components/sessions/spectator-session.tsx` - Read-only spectator UI component
+
+**Files Modified**:
+- `src/components/sessions/index.ts` - Added SpectatorSession export
+- `src/app/(protected)/sessions/[sessionId]/page.tsx` - Conditional rendering based on mode
+
+**UI Features**:
+- **Read-only Chat**: No input field, messages displayed as they arrive
+- **Real-time Polling**: Fetches new messages every 2 seconds
+- **Pause/Resume**: User can pause auto-scroll and polling
+- **Skip to End**: Jump to current state of conversation
+- **Progress Indicator**: Visual progress bar showing message count (out of ~16)
+- **Status Badges**: "In Progress", "Paused", "Complete" states
+- **Session Info Panel**: Persona details and mode explanation
+- **Interviewer Attribution**: Messages show "Interviewer" or persona name
+
+**Polling Logic**:
+- Polls GET /api/sessions/[sessionId]/stream every 2 seconds
+- Auto-stops when session status is 'completed' or 'abandoned'
+- Respects pause state
+
+**Mode Detection**:
+- Session page checks `session.mode` to determine component
+- mode='spectator' → SpectatorSession
+- mode='interactive' → InteractiveSession
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: Route /sessions/[sessionId] works for both modes (2026-01-25 22:30)
+
 ---
 
 ## Issues & Resolutions
