@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
 import { ArrowLeft, FileText, Plus } from 'lucide-react';
+import { EditIdeaDialog } from '@/components/ideas/edit-idea-dialog';
 
 interface PageProps {
   params: Promise<{
@@ -63,11 +64,9 @@ export default async function IdeaPage({ params }: PageProps) {
           </Link>
 
           <div className="flex items-start justify-between gap-4">
-            <div>
-              <h1 className="text-2xl font-bold text-white mb-2">{idea.name}</h1>
-              {idea.quick_fire_objection && (
-                <p className="text-gray-400">Key challenge: {idea.quick_fire_objection}</p>
-              )}
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold text-white">{idea.name}</h1>
+              <EditIdeaDialog ideaId={ideaId} currentName={idea.name} />
             </div>
 
             {idea.quick_fire_score !== null && (
@@ -79,16 +78,23 @@ export default async function IdeaPage({ params }: PageProps) {
               </div>
             )}
           </div>
+
+          {idea.quick_fire_objection && (
+            <p className="text-gray-400 mt-2">Key challenge: {idea.quick_fire_objection}</p>
+          )}
         </div>
 
         {/* Proposals Section */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-white">Proposals</h2>
-            <button className="flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors text-sm">
+            <Link
+              href={`/ideas/${ideaId}/proposals/new`}
+              className="flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors text-sm"
+            >
               <Plus className="w-4 h-4" />
               New Proposal
-            </button>
+            </Link>
           </div>
 
           {proposals && proposals.length > 0 ? (
