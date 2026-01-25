@@ -1355,6 +1355,33 @@ data: {"messageId": "uuid", "content": "Full response", "tokens": 123}
 **Build Status**: ✅ `npm run build` passes
 **Verified**: Route /api/.../generate-report in build output (2026-01-25 23:45)
 
+### 2026-01-26 00:00 Deliverable: View Report UI (task-1.11.3)
+**Files Created**:
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/report/page.tsx` - Report view page
+
+**UI Features**:
+- **Verdict Display**: Prominent card with icon (AlertTriangle/RefreshCw/Rocket), color-coded (red/yellow/green)
+- **Confidence Level**: Shows Low/Medium/High with description
+- **Problem Validation**: Summary section with Target icon
+- **Solution Validation**: Summary section with Lightbulb icon
+- **Two-Column Layout**: Strongest signals (green +) and Key objections (red -)
+- **Next Steps**: Numbered action items with Shield icon
+- **Disclaimer**: Yellow warning box about AI simulation limitations
+- **Actions**: Download JSON (link), Share Report (disabled/coming soon), Back to Proposal
+
+**Verdict Config**:
+- kill: Red, AlertTriangle, "High risk - Proceed with caution"
+- pivot: Yellow, RefreshCw, "Needs refinement"
+- build: Green, Rocket, "Strong signals - Worth pursuing"
+
+**Confidence Config**:
+- low: Red, "Results are preliminary"
+- medium: Yellow, "Results are indicative"
+- high: Green, "Results are reliable"
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: Route /ideas/.../tests/[testId]/report in build output (2026-01-26 00:00)
+
 ---
 
 ## Issues & Resolutions

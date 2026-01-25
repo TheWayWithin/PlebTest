@@ -965,7 +965,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.10.1, task-1.11.1
   - **Completed**: Report generator service, API endpoint for manual trigger, worker handler updated, generates need/solution summaries, extracts objections, creates next steps per verdict
 
-- [ ] **task-1.11.3** Implement View Report UI (F-022)
+- [x] **task-1.11.3** Implement View Report UI (F-022)
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -977,6 +977,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Next steps
     - Disclaimer: "Results are patterns from AI simulations, not market guarantees"
   - Dependencies: task-1.11.2
+  - **Completed**: Full report page with prominent verdict card, confidence level, problem/solution summaries, signals/objections columns, numbered next steps, disclaimer box
 
 - [ ] **task-1.11.4** Implement Download Report (F-024)
   - Agent: developer
