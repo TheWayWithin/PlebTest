@@ -711,51 +711,56 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.4.3
 
 #### 1.5 Proposal & ICP Management
-- [ ] **task-1.5.1** Implement Create Proposal (F-010)
+- [x] **task-1.5.1** Implement Create Proposal (F-010) - ✅ 2026-01-25
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
-    - Form with all proposal fields (problem, solution, hypotheses, etc.)
-    - Zod validation
-    - Saves to database
-    - Links to idea
+    - Form with all proposal fields (problem, solution, hypotheses, etc.) ✅
+    - Zod validation ✅
+    - Saves to database ✅
+    - Links to idea ✅
   - Dependencies: task-1.4.3
+  - **Completed**: Full form with 8 fields, Zod validation schema, POST/GET API endpoints
 
-- [ ] **task-1.5.2** Implement View/Edit Proposal (F-011, F-012)
+- [x] **task-1.5.2** Implement View/Edit Proposal (F-011, F-012) - ✅ 2026-01-25
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
-    - View proposal details
-    - Edit all fields
-    - Status display
-    - Save changes
+    - View proposal details ✅
+    - Edit all fields ✅
+    - Status display ✅
+    - Save changes ✅
   - Dependencies: task-1.5.1
+  - **Completed**: Full view with all fields, edit dialog, status badges, PUT API endpoint
 
-- [ ] **task-1.5.3** Implement Archive/Delete Proposal (F-013)
+- [x] **task-1.5.3** Implement Archive/Delete Proposal (F-013) - ✅ 2026-01-25
   - Agent: developer
   - Priority: p1
   - Acceptance Criteria:
-    - Archive button (soft delete)
-    - Delete button with confirmation
+    - Archive button (soft delete) ✅
+    - Delete button with confirmation ✅
   - Dependencies: task-1.5.2
+  - **Completed**: PATCH/DELETE endpoints, archive/restore buttons, delete with AlertDialog confirmation
 
-- [ ] **task-1.5.4** Implement Create ICP (F-014)
+- [x] **task-1.5.4** Implement Create ICP (F-014) - ✅ 2026-01-25
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
-    - ICP creation form
-    - All fields from schema (demographics, psychographics, etc.)
-    - Links to proposal
+    - ICP creation form ✅
+    - All fields from schema (demographics, psychographics, etc.) ✅
+    - Links to proposal ✅
   - Dependencies: task-1.5.1
+  - **Completed**: Full form with all ICP fields, typed enums, POST/GET API endpoints
 
-- [ ] **task-1.5.5** Implement View/Edit ICP (F-015, F-016)
+- [x] **task-1.5.5** Implement View/Edit ICP (F-015, F-016) - ✅ 2026-01-25
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
-    - View ICP details
-    - Edit all fields
-    - Save changes
+    - View ICP details ✅
+    - Edit all fields ✅
+    - Save changes ✅
   - Dependencies: task-1.5.4
+  - **Completed**: ICP detail view page, edit dialog, GET/PUT/DELETE API endpoints, ICPs list on proposal view
 
 - [ ] **task-1.5.6** Implement Delete ICP (F-017)
   - Agent: developer

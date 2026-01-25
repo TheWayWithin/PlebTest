@@ -1,7 +1,7 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-25 (Data Carry-Over tested on staging)
+> **Last Updated**: 2026-01-25 (View/Edit ICP implemented)
 
 ---
 
@@ -9,8 +9,107 @@
 
 **Phase**: 1 - Core Loop MVP
 **Status**: In Progress
-**Last Completed**: task-1.4.3 - Implement Idea Detail (F-008) ✅
-**Next Task**: task-1.5.1 - Implement Create Proposal (F-010) OR task-1.2.5 - Implement Profile Management (F-004)
+**Last Completed**: task-1.5.5 - Implement View/Edit ICP (F-015, F-016) ✅
+**Next Task**: task-1.5.6 - Implement Delete ICP (F-017)
+
+### View/Edit ICP (task-1.5.5) ✅
+**Implementation**: Full ICP view page with edit dialog and delete functionality
+
+**Files Created**:
+- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/icps/[icpId]/route.ts` - GET/PUT/DELETE API endpoints
+- `src/components/icps/edit-icp-dialog.tsx` - Edit dialog with all ICP fields
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/icps/[icpId]/page.tsx` - ICP view page
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/icps/[icpId]/icp-view.tsx` - ICP view component
+
+**Files Updated**:
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/page.tsx` - Fetches ICPs and passes to ProposalView
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/proposal-view.tsx` - Added ICPs section with list and badges
+
+**Features**:
+- Full ICP detail view with all fields displayed
+- Behavior Profile section with Pain Intensity, Decision Role, Adoption Tendency
+- Edit button opens dialog with all fields
+- Delete button with confirmation dialog
+- ICPs list on proposal view page with clickable cards
+- Add ICP button on proposal page
+- Color-coded pain intensity badges
+
+**Note**: Delete ICP already implemented in this task's API route, but task-1.5.6 covers UX refinements if any
+
+### Create ICP (task-1.5.4) ✅
+**Implementation**: Full ICP creation form with all schema fields
+
+**Files Created**:
+- `src/lib/validations/icp.ts` - Zod validation with typed enums
+- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/icps/route.ts` - GET/POST API endpoints
+- `src/components/icps/create-icp-form.tsx` - Full form component
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/icps/new/page.tsx` - New ICP page
+
+**Features**:
+- Name field (required)
+- Demographics and Psychographics (text, stored as JSONB)
+- Context and Current Solutions (text)
+- Pain Intensity: annoying, costly, blocking
+- Decision Role: decision_maker, influencer, end_user, blocker
+- Adoption Tendency: early_adopter, early_majority, late_majority, laggard
+- Linked to proposal via proposal_id
+
+**Note**: ICP list display on proposal view page not yet implemented (task-1.5.5)
+
+### Archive/Delete Proposal (task-1.5.3) ✅
+**Implementation**: Archive and delete functionality with confirmation
+
+**Files Updated**:
+- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/route.ts` - Added PATCH (archive/unarchive) and DELETE endpoints
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/proposal-view.tsx` - Added archive/delete buttons
+
+**Files Added**:
+- `src/components/ui/alert-dialog.tsx` - shadcn AlertDialog component
+
+**Features**:
+- Archive button sets status to 'archived'
+- Restore button sets status back to 'draft'
+- Archived banner shown when proposal is archived
+- Edit button hidden for archived proposals
+- Delete button with confirmation dialog
+- Redirects to idea page after deletion
+
+### View/Edit Proposal (task-1.5.2) ✅
+**Implementation**: Full proposal view with edit dialog
+
+**Files Created**:
+- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/route.ts` - GET/PUT API endpoints
+- `src/components/proposals/edit-proposal-dialog.tsx` - Edit dialog with all fields
+
+**Files Updated**:
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/proposal-view.tsx` - Enhanced view with all fields
+
+**Features**:
+- View all proposal fields with proper sections
+- Edit button opens full edit dialog
+- Status badges: Draft, Active, Validated, Invalidated, Archived
+- Optimistic UI updates after edit
+- Back link to idea detail page
+- External URL displayed as clickable link
+
+### Create Proposal (task-1.5.1) ✅
+**Implementation**: Full proposal creation form with Zod validation
+
+**Files Created**:
+- `src/lib/validations/proposal.ts` - Zod validation schema for proposals
+- `src/app/api/ideas/[ideaId]/proposals/route.ts` - GET/POST API endpoints
+- `src/components/proposals/create-proposal-form.tsx` - Full form component
+
+**Files Updated**:
+- `src/app/(protected)/ideas/[ideaId]/proposals/new/page.tsx` - Replaced placeholder with real form
+
+**Features**:
+- 8 form fields: problem, solution, hypotheses, workarounds, pricing, competitors, external URL, external context
+- Required fields: problem, solution (min 10 chars, max 2000)
+- Help tooltips on each field
+- Quick Fire context display if available
+- Redirects to proposal view on success
+- Field-level error display from Zod validation
 
 ### Idea Detail (task-1.4.3) ✅
 **Implementation**: Complete idea detail page with edit and new proposal
