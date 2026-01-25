@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createTestSchema, getTierFeatures } from '@/lib/validations/test';
+import { queueUniqueJob, JobTypes } from '@/lib/jobs';
+import type { RunTestPayload } from '@/lib/jobs/types';
 import type { Database } from '@/types/database.types';
 
 type ValidationTestInsert = Database['public']['Tables']['validation_tests']['Insert'];
@@ -182,6 +184,27 @@ export async function POST(request: NextRequest, context: RouteContext) {
       .from('proposals')
       .update({ status: 'testing' })
       .eq('id', proposalId);
+
+    // Queue the RUN_TEST job to start the validation process
+    try {
+      await queueUniqueJob<RunTestPayload>(
+        JobTypes.RUN_TEST,
+        {
+          testId: test.id,
+          proposalId,
+          icpIds: icp_ids,
+          personaCount: persona_count,
+          testMode: test_mode,
+          validationMode: validation_mode,
+          pushbackPreset: pushback_preset,
+        },
+        `test-${test.id}` // Idempotency key to prevent duplicate test runs
+      );
+      console.log(`[POST /tests] Queued RUN_TEST job for test ${test.id}`);
+    } catch (queueError) {
+      // Log but don't fail the request - test is created, job can be retried
+      console.error(`[POST /tests] Failed to queue test job:`, queueError);
+    }
 
     return NextResponse.json({ test }, { status: 201 });
   } catch (error) {

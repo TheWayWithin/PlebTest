@@ -844,7 +844,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.7.2
   - **Completed**: Retry policy via DEFAULT_JOB_OPTIONS, queueUniqueJob for idempotency, isTestAlreadyProcessed/isSessionAlreadyProcessed/isReportAlreadyGenerated checks in handlers, getQueuedJobs for monitoring
 
-- [ ] **task-1.7.6** Implement test runner job
+- [x] **task-1.7.6** Implement test runner job - ✅ 2026-01-25 19:30
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -853,6 +853,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Creates session records
     - Updates test status
   - Dependencies: task-1.7.1, task-1.7.2
+  - **Completed**: RUN_TEST queued from API, GENERATE_PERSONAS creates sessions via admin client, RUN_SESSION jobs queued for each persona, persona-generator accepts optional client parameter for worker context
 
 #### 1.8 Interactive Sessions
 - [ ] **task-1.8.1** Build Anti-Sycophancy prompt system

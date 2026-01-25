@@ -1033,6 +1033,27 @@ Landing Page → Quick Fire → Click "Go Deeper"
 **Build Status**: ✅ `npm run build` passes
 **Verified**: All idempotency functions compile and export correctly (2026-01-25 19:00)
 
+### 2026-01-25 19:30 Deliverable: Test Runner Job Implementation (task-1.7.6)
+**Files Updated**:
+- `src/lib/services/persona-generator.ts` - Added optional `supabaseClient` parameter for worker context (uses admin client)
+- `workers/test-runner.ts` - Full GENERATE_PERSONAS implementation: fetch test record, generate personas with admin client, create session records, queue RUN_SESSION jobs
+- `src/app/api/.../tests/route.ts` - Queue RUN_TEST job after test creation with idempotency key
+
+**Test Flow Implementation**:
+1. **POST /tests** → Creates test record → Queues `RUN_TEST` job
+2. **RUN_TEST** handler → Updates status to `in_progress` → Queues `GENERATE_PERSONAS` for each ICP
+3. **GENERATE_PERSONAS** handler → Fetches test record → Generates personas via AI → Creates session records → Queues `RUN_SESSION` for each session
+4. **RUN_SESSION** handler → Marks session `active` → (placeholder execution) → Marks session `completed`
+
+**Key Changes**:
+- persona-generator now accepts optional SupabaseClient parameter for worker context
+- GENERATE_PERSONAS fetches proposalId, validationMode, pushbackPreset from test record
+- Session records created with pending status
+- RUN_SESSION jobs queued with full context (testId, sessionId, personaId, proposalId, modes)
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: ls -la confirms all updated files (2026-01-25 19:30)
+
 ---
 
 ## Issues & Resolutions

@@ -130,20 +130,67 @@ export async function startTestRunnerWorker(): Promise<void> {
     { localConcurrency: 3 }, // Max 3 concurrent persona generations
     async (jobs) => {
       for (const job of jobs) {
-        console.log(`[${JobTypes.GENERATE_PERSONAS}] Generating personas for ICP: ${job.data.icpId}`);
+        const { testId, icpId, count } = job.data;
+        console.log(`[${JobTypes.GENERATE_PERSONAS}] Generating personas for ICP: ${icpId} (test: ${testId})`);
 
-        const { icpId, count } = job.data;
+        const supabase = createAdminClient();
 
         try {
-          // Generate personas using the persona generator service
-          const personas = await generatePersonas(icpId, count);
+          // 1. Fetch test record to get proposalId, validationMode, pushbackPreset
+          const { data: test, error: testError } = await supabase
+            .from('validation_tests')
+            .select('proposal_id, validation_mode, pushback_preset')
+            .eq('id', testId)
+            .single();
+
+          if (testError || !test) {
+            throw new Error(`Test not found: ${testId}`);
+          }
+
+          // 2. Generate personas using the persona generator service (pass admin client)
+          const personas = await generatePersonas(icpId, count, supabase);
 
           console.log(
             `[${JobTypes.GENERATE_PERSONAS}] Generated ${personas.length} personas for ICP ${icpId}`
           );
 
-          // TODO (task-1.7.6): Create session records for each persona
-          // and queue RUN_SESSION jobs
+          // 3. Create session records for each persona
+          const sessionInserts = personas.map((persona) => ({
+            validation_test_id: testId,
+            persona_id: persona.id,
+            mode: 'spectator' as const, // Default, will be updated based on validationMode
+            status: 'pending' as const,
+          }));
+
+          const { data: sessions, error: sessionsError } = await supabase
+            .from('sessions')
+            .insert(sessionInserts)
+            .select('id, persona_id');
+
+          if (sessionsError || !sessions) {
+            throw new Error(`Failed to create sessions: ${sessionsError?.message}`);
+          }
+
+          console.log(`[${JobTypes.GENERATE_PERSONAS}] Created ${sessions.length} session records`);
+
+          // 4. Queue RUN_SESSION jobs for each session
+          for (const session of sessions) {
+            const idempotencyKey = `session-${session.id}`;
+            await queueUniqueJob<RunSessionPayload>(
+              JobTypes.RUN_SESSION,
+              {
+                testId,
+                sessionId: session.id,
+                personaId: session.persona_id,
+                proposalId: test.proposal_id,
+                validationMode: test.validation_mode as 'interactive' | 'spectator',
+                pushbackPreset: test.pushback_preset as 'cheerleader' | 'pragmatist' | 'critic',
+              },
+              idempotencyKey
+            );
+          }
+
+          console.log(`[${JobTypes.GENERATE_PERSONAS}] Queued ${sessions.length} session jobs`);
         } catch (error) {
           console.error(`[${JobTypes.GENERATE_PERSONAS}] Error:`, error);
           throw error; // Re-throw to trigger retry

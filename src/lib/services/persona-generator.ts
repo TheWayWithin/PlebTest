@@ -9,6 +9,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { callOpenRouter } from '@/lib/openrouter';
 import type { Database } from '@/types/database.types';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import type {
   Persona,
   PersonaDemographics,
@@ -18,6 +19,9 @@ import type {
   GeneratedPersonaData,
   SKEPTICISM_DISTRIBUTION,
 } from '@/types/persona';
+
+// Type alias for the Supabase client with our schema
+type TypedSupabaseClient = SupabaseClient<Database>;
 
 // Re-export types for convenience
 export type { Persona, SkepticismLevel };
@@ -257,20 +261,25 @@ function toPersona(row: PersonaRow): Persona {
  *
  * @param icpId - The ID of the ICP to generate personas for
  * @param count - Number of personas to generate (default: 5)
+ * @param supabaseClient - Optional: Pre-configured Supabase client (for worker context)
  * @returns Promise<Persona[]> - Array of created personas
  *
  * Distribution:
  * - 40% high skepticism
  * - 40% medium skepticism
  * - 20% low skepticism
+ *
+ * Note: When called from workers, pass the admin client to bypass RLS.
+ * When called from Next.js routes, omit the client to use the default server client.
  */
 export async function generatePersonas(
   icpId: string,
-  count: number = 5
+  count: number = 5,
+  supabaseClient?: TypedSupabaseClient
 ): Promise<Persona[]> {
   console.log(`Generating ${count} personas for ICP: ${icpId}`);
 
-  const supabase = await createClient();
+  const supabase = supabaseClient || await createClient();
 
   // 1. Fetch the ICP
   const { data: icp, error: icpError } = await supabase
