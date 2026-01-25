@@ -21,6 +21,9 @@ import {
   ArchiveRestore,
   Trash2,
   Loader2,
+  Plus,
+  UserCircle,
+  ChevronRight,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -59,12 +62,29 @@ interface Proposal {
   created_at: string | null;
 }
 
+interface Icp {
+  id: string;
+  proposal_id: string;
+  name: string;
+  pain_intensity: string | null;
+  decision_role: string | null;
+  adoption_tendency: string | null;
+  created_at: string | null;
+}
+
 interface ProposalViewProps {
   idea: Idea;
   proposal: Proposal;
+  icps: Icp[];
 }
 
-export function ProposalView({ idea, proposal: initialProposal }: ProposalViewProps) {
+const PAIN_INTENSITY_LABELS: Record<string, { label: string; color: string }> = {
+  annoying: { label: 'Annoying', color: 'bg-yellow-500/20 text-yellow-400' },
+  costly: { label: 'Costly', color: 'bg-orange-500/20 text-orange-400' },
+  blocking: { label: 'Blocking', color: 'bg-red-500/20 text-red-400' },
+};
+
+export function ProposalView({ idea, proposal: initialProposal, icps }: ProposalViewProps) {
   const router = useRouter();
   const [proposal, setProposal] = useState(initialProposal);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -414,6 +434,75 @@ export function ProposalView({ idea, proposal: initialProposal }: ProposalViewPr
             </div>
           </section>
         )}
+
+        {/* ICPs Section */}
+        <section className="bg-gray-900/50 border border-gray-700 rounded-xl p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2 text-gray-400">
+              <UserCircle className="w-5 h-5" />
+              <h3 className="text-sm uppercase tracking-wide">Ideal Customer Profiles</h3>
+            </div>
+            {!isArchived && (
+              <Link href={`/ideas/${idea.id}/proposals/${proposal.id}/icps/new`}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-gray-700 text-gray-300 hover:text-white hover:bg-gray-800"
+                >
+                  <Plus className="w-4 h-4 mr-1" />
+                  Add ICP
+                </Button>
+              </Link>
+            )}
+          </div>
+
+          {icps.length === 0 ? (
+            <div className="text-center py-8">
+              <UserCircle className="w-12 h-12 text-gray-600 mx-auto mb-3" />
+              <p className="text-gray-400 mb-2">No ICPs defined yet</p>
+              <p className="text-gray-500 text-sm">
+                Define your Ideal Customer Profiles to better understand who you&apos;re building for.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {icps.map((icp) => {
+                const painConfig = icp.pain_intensity ? PAIN_INTENSITY_LABELS[icp.pain_intensity] : null;
+                return (
+                  <Link
+                    key={icp.id}
+                    href={`/ideas/${idea.id}/proposals/${proposal.id}/icps/${icp.id}`}
+                    className="flex items-center justify-between p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+                        <UserCircle className="w-6 h-6 text-gray-400" />
+                      </div>
+                      <div>
+                        <p className="text-white font-medium group-hover:text-orange-400 transition-colors">
+                          {icp.name}
+                        </p>
+                        <p className="text-gray-500 text-sm">
+                          {icp.created_at
+                            ? `Created ${new Date(icp.created_at).toLocaleDateString()}`
+                            : 'Recently created'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      {painConfig && (
+                        <span className={`text-xs px-2 py-1 rounded-full ${painConfig.color}`}>
+                          {painConfig.label}
+                        </span>
+                      )}
+                      <ChevronRight className="w-5 h-5 text-gray-500 group-hover:text-gray-300" />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </section>
       </div>
 
       {/* Next Steps */}

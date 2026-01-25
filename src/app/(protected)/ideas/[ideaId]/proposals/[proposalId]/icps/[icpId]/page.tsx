@@ -1,17 +1,17 @@
-import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { ProposalView } from './proposal-view';
+import { IcpView } from './icp-view';
 
 interface PageProps {
   params: Promise<{
     ideaId: string;
     proposalId: string;
+    icpId: string;
   }>;
 }
 
-export default async function ProposalPage({ params }: PageProps) {
-  const { ideaId, proposalId } = await params;
+export default async function IcpPage({ params }: PageProps) {
+  const { ideaId, proposalId, icpId } = await params;
   const supabase = await createClient();
 
   // Verify user is authenticated
@@ -27,7 +27,7 @@ export default async function ProposalPage({ params }: PageProps) {
   // Fetch the idea to verify ownership
   const { data: idea, error: ideaError } = await supabase
     .from('ideas')
-    .select('*')
+    .select('id, name')
     .eq('id', ideaId)
     .eq('user_id', user.id)
     .single();
@@ -39,7 +39,7 @@ export default async function ProposalPage({ params }: PageProps) {
   // Fetch the proposal
   const { data: proposal, error: proposalError } = await supabase
     .from('proposals')
-    .select('*')
+    .select('id, problem')
     .eq('id', proposalId)
     .eq('idea_id', ideaId)
     .single();
@@ -48,24 +48,32 @@ export default async function ProposalPage({ params }: PageProps) {
     redirect(`/ideas/${ideaId}`);
   }
 
-  // Fetch ICPs for this proposal
-  const { data: icps } = await supabase
+  // Fetch the ICP
+  const { data: icp, error: icpError } = await supabase
     .from('icps')
-    .select('id, proposal_id, name, pain_intensity, decision_role, adoption_tendency, created_at')
+    .select('*')
+    .eq('id', icpId)
     .eq('proposal_id', proposalId)
-    .order('created_at', { ascending: false });
+    .single();
+
+  if (icpError || !icp) {
+    redirect(`/ideas/${ideaId}/proposals/${proposalId}`);
+  }
+
+  // Transform the ICP data to match the expected interface
+  const transformedIcp = {
+    ...icp,
+    demographics: icp.demographics as { description?: string } | null,
+    psychographics: icp.psychographics as { description?: string } | null,
+  };
 
   return (
     <div className="min-h-screen bg-gray-950">
-      <Suspense
-        fallback={
-          <div className="flex items-center justify-center min-h-screen">
-            <div className="w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
-          </div>
-        }
-      >
-        <ProposalView idea={idea} proposal={proposal} icps={icps || []} />
-      </Suspense>
+      <IcpView
+        idea={idea}
+        proposal={proposal}
+        icp={transformedIcp}
+      />
     </div>
   );
 }
