@@ -691,7 +691,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.4.1
   - **Completed**: Implemented as part of dashboard refactor in task-1.4.1
 
-- [ ] **task-1.4.3** Implement Idea Detail (F-008)
+- [x] **task-1.4.3** Implement Idea Detail (F-008) - ✅ 2026-01-25
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -700,6 +700,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Create proposal button
     - Edit idea button
   - Dependencies: task-1.4.2
+  - **Completed**: EditIdeaDialog added, PUT /api/ideas/[id] endpoint, New Proposal button wired to /ideas/[id]/proposals/new
 
 - [ ] **task-1.4.4** Implement Edit Idea (F-009)
   - Agent: developer

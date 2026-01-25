@@ -9,8 +9,21 @@
 
 **Phase**: 1 - Core Loop MVP
 **Status**: In Progress
-**Last Completed**: task-1.4.1 - Implement Create Idea (F-006) ✅
-**Next Task**: task-1.4.2 - Implement Ideas List (F-007) OR task-1.2.5 - Implement Profile Management (F-004)
+**Last Completed**: task-1.4.3 - Implement Idea Detail (F-008) ✅
+**Next Task**: task-1.5.1 - Implement Create Proposal (F-010) OR task-1.2.5 - Implement Profile Management (F-004)
+
+### Idea Detail (task-1.4.3) ✅
+**Implementation**: Complete idea detail page with edit and new proposal
+
+**Files Created**:
+- `src/app/api/ideas/[ideaId]/route.ts` - GET/PUT for single idea
+- `src/components/ideas/edit-idea-dialog.tsx` - Edit modal
+- `src/app/(protected)/ideas/[ideaId]/proposals/new/page.tsx` - Placeholder
+
+**Features**:
+- Edit idea name via modal dialog
+- "New Proposal" button wired to /ideas/[id]/proposals/new
+- Placeholder for full Create Proposal form (task-1.5.1)
 
 ### Create Idea (task-1.4.1) ✅
 **Implementation**: Create Idea with tier limit enforcement

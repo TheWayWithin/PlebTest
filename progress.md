@@ -843,6 +843,28 @@ Landing Page → Quick Fire → Click "Go Deeper"
 
 ---
 
+### 2026-01-25 13:00 Deliverable: Idea Detail Completion (task-1.4.3)
+
+**Files Created**:
+- `src/app/api/ideas/[ideaId]/route.ts` (2.0KB) - GET/PUT endpoints for single idea
+- `src/components/ideas/edit-idea-dialog.tsx` (3.8KB) - Edit dialog with modal form
+- `src/app/(protected)/ideas/[ideaId]/proposals/new/page.tsx` (1.9KB) - Placeholder for create proposal
+
+**Files Modified**:
+- `src/app/(protected)/ideas/[ideaId]/page.tsx` - Added EditIdeaDialog, wired New Proposal button
+
+**Features**:
+- Edit idea name via modal dialog (pencil icon button)
+- GET /api/ideas/[ideaId]: Fetch single idea (with auth)
+- PUT /api/ideas/[ideaId]: Update idea name (with auth)
+- "New Proposal" button links to /ideas/[id]/proposals/new
+- Placeholder page for new proposal (full form in task-1.5.1)
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: Files exist, pushed to staging
+
+---
+
 ## Issues & Resolutions
 
 <!-- Format:
