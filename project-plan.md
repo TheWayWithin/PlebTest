@@ -879,7 +879,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.7.6, task-1.8.1
   - **Completed**: POST streams tokens via SSE, GET returns session info + history, checkpoints every 50 tokens, handles disconnect with partial save, messages table migration added
 
-- [ ] **task-1.8.3** Implement Interactive Session UI (F-020)
+- [x] **task-1.8.3** Implement Interactive Session UI (F-020) - ✅ 2026-01-25 21:00
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -889,6 +889,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Message history
     - End session button
   - Dependencies: task-1.8.2
+  - **Completed**: Full chat UI with message bubbles, real-time SSE streaming, persona panel with skepticism/pushback badges, session tips, end session button
 
 - [ ] **task-1.8.4** Implement session completion logic
   - Agent: developer
