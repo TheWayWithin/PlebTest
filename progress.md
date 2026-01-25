@@ -1320,6 +1320,41 @@ data: {"messageId": "uuid", "content": "Full response", "tokens": 123}
 **Build Status**: ✅ TypeScript compiles without errors
 **Verified**: Files exist (2026-01-25 23:30)
 
+### 2026-01-25 23:45 Deliverable: Report Generation Job (task-1.11.2)
+**Files Created**:
+- `src/lib/services/report-generator.ts` - Report generation service
+- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/generate-report/route.ts` - API endpoint
+
+**Files Modified**:
+- `workers/report-generator.ts` - Updated to use actual report generator
+
+**Report Generation Flow**:
+1. Fetches all completed sessions for a test
+2. Converts sessions to scoring format (SessionSignals)
+3. Calls calculateScores() from rubric to get verdict and confidence
+4. Generates summaries:
+   - Need validation summary (based on validation rate)
+   - Solution validation summary (based on resonance rate)
+   - Key objections (top 5 most common)
+   - Strongest signals (top 4 positive indicators)
+   - Next steps (based on verdict)
+5. Generates unique share_token
+6. Creates report record in database
+7. Links report to test and updates test status
+
+**Summary Generation Logic**:
+- Generates contextual summaries based on rates (>=80%, 50-80%, <50%)
+- Extracts and deduplicates objections across sessions
+- Creates actionable next steps per verdict (kill/pivot/build)
+
+**API Endpoint**:
+- POST triggers report generation
+- Verifies ownership, test existence, session completion
+- Redirects to report page on success
+
+**Build Status**: ✅ `npm run build` passes
+**Verified**: Route /api/.../generate-report in build output (2026-01-25 23:45)
+
 ---
 
 ## Issues & Resolutions

@@ -952,7 +952,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.8.1
   - **Completed**: rubric-v1.ts with weighted scoring (35/30/25/10), verdict thresholds (Kill/Pivot/Build), confidence levels (Low/Medium/High), driver explanations, calculateScores() function
 
-- [ ] **task-1.11.2** Implement report generation job
+- [x] **task-1.11.2** Implement report generation job
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -963,6 +963,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Saves to reports table
     - Generates share_token
   - Dependencies: task-1.10.1, task-1.11.1
+  - **Completed**: Report generator service, API endpoint for manual trigger, worker handler updated, generates need/solution summaries, extracts objections, creates next steps per verdict
 
 - [ ] **task-1.11.3** Implement View Report UI (F-022)
   - Agent: developer
