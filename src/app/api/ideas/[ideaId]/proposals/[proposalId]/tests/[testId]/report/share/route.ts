@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { randomBytes } from 'crypto';
+import { shareReportSchema, validateBody, isValidationError } from '@/lib/validations';
 
 interface RouteParams {
   params: Promise<{
@@ -53,16 +54,12 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: 'Report not found' }, { status: 404 });
     }
 
-    // Parse request body
+    // Parse and validate request body
     const body = await request.json();
-    const { is_public, hide_proposal_details } = body;
+    const validated = validateBody(shareReportSchema, body);
+    if (isValidationError(validated)) return validated;
 
-    if (typeof is_public !== 'boolean') {
-      return NextResponse.json(
-        { error: 'is_public must be a boolean' },
-        { status: 400 }
-      );
-    }
+    const { is_public, hide_proposal_details } = validated;
 
     // Get current report to check if we need to generate a token
     const { data: currentReport, error: reportFetchError } = await supabase
