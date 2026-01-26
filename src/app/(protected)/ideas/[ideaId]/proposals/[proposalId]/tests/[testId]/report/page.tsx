@@ -12,12 +12,12 @@ import {
   Target,
   Lightbulb,
   Download,
-  Share2,
   Info,
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { ShareReportSection } from '@/components/report/ShareReportSection';
 
 interface PageProps {
   params: Promise<{
@@ -281,19 +281,25 @@ export default async function ReportPage({ params }: PageProps) {
         </div>
       </div>
 
+      {/* Share Report Section */}
+      <ShareReportSection
+        reportId={report.id}
+        testId={testId}
+        proposalId={proposalId}
+        ideaId={ideaId}
+        initialIsPublic={report.is_public ?? false}
+        initialHideProposalDetails={report.hide_proposal_details ?? false}
+        initialShareToken={report.share_token}
+      />
+
       {/* Actions */}
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4 mt-6">
         <Link href={`/api/ideas/${ideaId}/proposals/${proposalId}/tests/${testId}/report/download`}>
           <Button variant="outline" className="border-gray-700 text-gray-300 hover:text-white hover:bg-gray-800">
             <Download className="w-4 h-4 mr-2" />
             Download JSON
           </Button>
         </Link>
-
-        <Button variant="outline" className="border-gray-700 text-gray-300 hover:text-white hover:bg-gray-800" disabled>
-          <Share2 className="w-4 h-4 mr-2" />
-          Share Report (Coming Soon)
-        </Button>
 
         <Link href={`/ideas/${ideaId}/proposals/${proposalId}`}>
           <Button className="bg-orange-500 hover:bg-orange-600 text-white">
