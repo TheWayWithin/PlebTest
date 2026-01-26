@@ -16,12 +16,7 @@ export async function setupCronJobs(): Promise<void> {
   // =========================================
   // Session Timeout Check - Every 5 minutes
   // =========================================
-  await boss.schedule(
-    JobTypes.CHECK_SESSION_TIMEOUT,
-    '*/5 * * * *', // Every 5 minutes
-    {}
-  );
-
+  // Register worker first (creates queue), then schedule
   await boss.work(JobTypes.CHECK_SESSION_TIMEOUT, async () => {
     console.log(`[${JobTypes.CHECK_SESSION_TIMEOUT}] Checking for expired sessions...`);
 
@@ -49,6 +44,13 @@ export async function setupCronJobs(): Promise<void> {
 
     return { expiredCount: count };
   });
+
+  // Now schedule after queue is created by work()
+  await boss.schedule(
+    JobTypes.CHECK_SESSION_TIMEOUT,
+    '*/5 * * * *', // Every 5 minutes
+    {}
+  );
 
   // =========================================
   // Trial Reminder - Daily at 9am UTC
