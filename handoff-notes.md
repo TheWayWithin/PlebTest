@@ -1,7 +1,7 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-26 18:35 UTC
+> **Last Updated**: 2026-01-26 18:40 UTC
 >
 ---
 
@@ -9,8 +9,8 @@
 
 **Phase**: 1 - Core Loop MVP
 **Status**: In Progress
-**Last Completed**: task-1.16.1 - Create golden test set for anti-sycophancy QA ✅
-**Next Task**: task-1.16.2 - Build anti-sycophancy scorecard (depends on 1.16.1 ✅)
+**Last Completed**: task-1.16.2 - Build anti-sycophancy scorecard ✅
+**Next Task**: task-1.16.3 - Add prompt regression tests (P1, depends on 1.16.2 ✅)
 
 ### ✅ STAGING WORKER: RUNNING WITH HEALTH CHECKS
 The staging worker is fully operational on Railway (develop branch) with:
@@ -84,6 +84,33 @@ const validated = validateBody(shareReportSchema, body);
 if (isValidationError(validated)) return validated;
 // validated is now typed as ShareReportInput
 ```
+
+### ✅ Anti-Sycophancy Scorecard (task-1.16.2)
+**Implementation Complete**:
+- `src/lib/services/anti-sycophancy-scorecard.ts` - 16KB service
+
+**Metrics Analyzed**:
+1. Objection Count - Pushback patterns detection
+2. Compliment Ratio - Flags sycophantic praise (>30%)
+3. Evidence Requests - Data/proof requests
+4. Pricing Probes - Cost/value discussions
+
+**Key Functions**:
+```typescript
+import { generateScorecard, checkAntiSycophancy } from '@/lib/services/anti-sycophancy-scorecard';
+
+// Full scorecard
+const scorecard = generateScorecard(messages, 'pragmatist');
+// { metrics, results, overallPassed, antiSycophancyScore, recommendations }
+
+// Quick check
+const { passed, score } = checkAntiSycophancy(messages, 'critic');
+```
+
+**Preset Thresholds**: Different strictness levels per pushback preset
+- Cheerleader: 2 objections, 35% max compliments, 3/4 pass required
+- Pragmatist: 2 objections, 30% max compliments, 3/4 pass required
+- Critic: 3 objections, 20% max compliments, 4/4 pass required
 
 ### ✅ Anti-Sycophancy Golden Test Set (task-1.16.1)
 **Implementation Complete**:

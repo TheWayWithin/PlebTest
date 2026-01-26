@@ -1227,7 +1227,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.8.1
   - **Completed**: 12 golden test cases covering strong/weak/terrible ideas, all 3 pushback presets, 4 personas, with expected objection types and anti-sycophancy score ranges
 
-- [ ] **task-1.16.2** Build anti-sycophancy scorecard
+- [x] **task-1.16.2** Build anti-sycophancy scorecard - ✅ 2026-01-26 11:40
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -1238,6 +1238,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
       - Pricing/budget probes count
     - Pass/fail thresholds defined
   - Dependencies: task-1.16.1
+  - **Completed**: Full scorecard service with regex pattern matching, preset-specific thresholds, 0-100 score calculation, recommendations generator
 
 - [ ] **task-1.16.3** Add prompt regression tests
   - Agent: developer

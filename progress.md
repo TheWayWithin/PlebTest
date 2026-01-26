@@ -1672,6 +1672,55 @@ healthcheckTimeout = 30
 **Build Status**: ✅ `npx tsc --noEmit` passes
 **Verified**: File exists on filesystem (2026-01-26 18:35)
 
+### 2026-01-26 18:40 Deliverable: Anti-Sycophancy Scorecard (task-1.16.2)
+
+**Feature**: Automated Scoring of AI Persona Responses
+**Description**: Service that analyzes conversation transcripts for genuine pushback vs sycophancy
+
+**Files Created**:
+- `src/lib/services/anti-sycophancy-scorecard.ts` - 16KB scorecard service
+
+**Scoring Metrics**:
+1. **Objection Count** - Detects pushback patterns (but, however, concerns, skepticism)
+2. **Compliment Ratio** - Flags excessive praise/agreement (>30% is concerning)
+3. **Evidence Requests** - Counts requests for data, proof, examples
+4. **Pricing Probes** - Detects cost/value/ROI discussions
+
+**Pattern Detection**:
+- 15+ objection patterns (competition, skepticism, adoption barriers)
+- 12+ compliment patterns (enthusiastic agreement, uncritical praise)
+- 9+ evidence request patterns (show me data, how many, statistics)
+- 10+ pricing probe patterns (cost, budget, ROI, worth it)
+
+**Preset-Specific Thresholds**:
+| Preset | Min Objections | Max Compliment | Min Evidence | Min Pricing | Pass Required |
+|--------|----------------|----------------|--------------|-------------|---------------|
+| cheerleader | 2 | 35% | 1 | 0 | 3/4 |
+| pragmatist | 2 | 30% | 1 | 1 | 3/4 |
+| critic | 3 | 20% | 2 | 1 | 4/4 |
+
+**Functions**:
+- `generateScorecard(messages, preset)` - Full scorecard with metrics, results, recommendations
+- `checkAntiSycophancy(messages, preset)` - Quick pass/fail check
+- `extractMetrics(messages)` - Raw metric extraction
+- `validateAgainstExpectations()` - Validate against golden test expectations
+
+**Anti-Sycophancy Score Calculation** (0-100):
+- Objection score: 40 points max
+- Low compliment ratio: 25 points max
+- Evidence requests: 20 points max
+- Pricing probes: 15 points max
+
+**Acceptance Criteria**:
+- ✅ Objection count detection (target: ≥2 per session)
+- ✅ Compliment phrase detection (flag if >30%)
+- ✅ Evidence request count
+- ✅ Pricing/budget probes count
+- ✅ Pass/fail thresholds defined per preset
+
+**Build Status**: ✅ `npx tsc --noEmit` passes
+**Verified**: File exists on filesystem (2026-01-26 18:40)
+
 ---
 
 ## Issues & Resolutions
