@@ -137,11 +137,71 @@ Go to each product and expand the prices to get the Price IDs (start with `price
 
 ---
 
-## Part 3: Configure Webhooks
+## Part 3: Create Promotional Coupons
+
+The signup flow offers promotional discounts to encourage immediate payment.
+
+### Coupon Strategy
+
+| Offer | Discount | Duration | Use Case |
+|-------|----------|----------|----------|
+| FIRST_YEAR_20 | 20% off | First year | Annual plans - Pay Now |
+| FIRST_MONTH_20 | 20% off | First month | Monthly plans - Pay Now |
+
+### Step 3.1: Create Annual Discount Coupon
+
+1. Go to **Products** → **Coupons** (or https://dashboard.stripe.com/test/coupons)
+2. Click **"+ Create coupon"**
+3. Fill in:
+   - **Name**: `First Year 20% Off`
+   - **ID** (optional): `FIRST_YEAR_20` (makes it easy to reference in code)
+   - **Type**: `Percentage discount`
+   - **Percent off**: `20`
+   - **Duration**: `Once` (applies to first invoice only)
+   - **Redemption limits**: Leave empty (unlimited uses)
+4. Click **"Create coupon"**
+5. **Record the Coupon ID**: `________________` (use the ID you set, or the auto-generated one)
+
+### Step 3.2: Create Monthly Discount Coupon
+
+1. Click **"+ Create coupon"** again
+2. Fill in:
+   - **Name**: `First Month 20% Off`
+   - **ID** (optional): `FIRST_MONTH_20`
+   - **Type**: `Percentage discount`
+   - **Percent off**: `20`
+   - **Duration**: `Once`
+3. Click **"Create coupon"**
+4. **Record the Coupon ID**: `________________`
+
+### Step 3.3: Optional - Create Promotion Codes (Public Codes)
+
+If you want shareable promo codes (e.g., for marketing campaigns):
+
+1. Go to the coupon you created
+2. Click **"Add promotion code"**
+3. Fill in:
+   - **Code**: `LAUNCH20` (or whatever you want users to type)
+   - **Max redemptions**: Set a limit if desired
+   - **Expiration**: Set if this is a time-limited offer
+4. Click **"Create"**
+
+> **Note**: Coupons are internal IDs; Promotion Codes are what customers can type at checkout.
+
+### Recorded Coupon IDs
+
+```
+STRIPE_COUPON_FIRST_YEAR=FIRST_YEAR_20
+STRIPE_COUPON_FIRST_MONTH=FIRST_MONTH_20
+```
+
+---
+
+## Part 4: Configure Webhooks
 
 Webhooks allow Stripe to notify PlebTest when payments happen.
 
-### Step 3.1: Create Staging Webhook
+### Step 4.1: Create Staging Webhook
 
 1. Go to **Developers** → **Webhooks** (or https://dashboard.stripe.com/test/webhooks)
 2. Click **"+ Add endpoint"**
@@ -160,7 +220,7 @@ Webhooks allow Stripe to notify PlebTest when payments happen.
 7. **Record the Webhook Signing Secret** (starts with `whsec_`): `________________`
    - Click on the endpoint, then "Reveal" under Signing secret
 
-### Step 3.2: Create Production Webhook
+### Step 4.2: Create Production Webhook
 
 1. Click **"+ Add endpoint"** again
 2. Fill in:
@@ -172,9 +232,9 @@ Webhooks allow Stripe to notify PlebTest when payments happen.
 
 ---
 
-## Part 4: Get API Keys
+## Part 5: Get API Keys
 
-### Step 4.1: Test Mode Keys
+### Step 5.1: Test Mode Keys
 
 1. Go to **Developers** → **API keys** (or https://dashboard.stripe.com/test/apikeys)
 2. Record:
@@ -182,7 +242,7 @@ Webhooks allow Stripe to notify PlebTest when payments happen.
    - **Secret key** (starts with `sk_test_`): `________________`
      - Click "Reveal test key" to see it
 
-### Step 4.2: Live Mode Keys (For Production)
+### Step 5.2: Live Mode Keys (For Production)
 
 > **Note**: Only do this when ready for production launch
 
@@ -194,9 +254,9 @@ Webhooks allow Stripe to notify PlebTest when payments happen.
 
 ---
 
-## Part 5: Configure Environment Variables
+## Part 6: Configure Environment Variables
 
-### Step 5.1: Staging Environment (Railway)
+### Step 6.1: Staging Environment (Railway)
 
 Add these to the **staging** environment in Railway:
 
@@ -213,9 +273,12 @@ STRIPE_PRICE_SCALE_MONTHLY=price_...
 STRIPE_PRICE_SCALE_ANNUAL=price_...
 STRIPE_PRICE_PRO_MONTHLY=price_...
 STRIPE_PRICE_PRO_ANNUAL=price_...
+
+STRIPE_COUPON_FIRST_YEAR=FIRST_YEAR_20
+STRIPE_COUPON_FIRST_MONTH=FIRST_MONTH_20
 ```
 
-### Step 5.2: Production Environment (Railway)
+### Step 6.2: Production Environment (Railway)
 
 Add these to the **production** environment in Railway:
 
@@ -232,19 +295,26 @@ STRIPE_PRICE_SCALE_MONTHLY=price_...
 STRIPE_PRICE_SCALE_ANNUAL=price_...
 STRIPE_PRICE_PRO_MONTHLY=price_...
 STRIPE_PRICE_PRO_ANNUAL=price_...
+
+STRIPE_COUPON_FIRST_YEAR=FIRST_YEAR_20
+STRIPE_COUPON_FIRST_MONTH=FIRST_MONTH_20
 ```
 
 > **Note**: Price IDs are the same for test and live mode - they're tied to the product, not the mode.
 
 ---
 
-## Part 6: Verification Checklist
+## Part 7: Verification Checklist
 
 ### Products Created
 - [ ] Solo product with monthly ($9.95) and annual ($99.50) prices
 - [ ] Growth product with monthly ($19.95) and annual ($199.50) prices
 - [ ] Scale product with monthly ($29.95) and annual ($299.50) prices
 - [ ] Pro product with monthly ($49.95) and annual ($499.50) prices
+
+### Coupons Created
+- [ ] FIRST_YEAR_20 coupon (20% off, once, for annual plans)
+- [ ] FIRST_MONTH_20 coupon (20% off, once, for monthly plans)
 
 ### Webhooks Configured
 - [ ] Staging webhook pointing to `plebteststaging-staging.up.railway.app/api/webhooks/stripe`
@@ -256,11 +326,13 @@ STRIPE_PRICE_PRO_ANNUAL=price_...
 - [ ] STRIPE_SECRET_KEY in staging
 - [ ] STRIPE_WEBHOOK_SECRET in staging
 - [ ] All 8 STRIPE_PRICE_* variables in staging
+- [ ] STRIPE_COUPON_FIRST_YEAR in staging
+- [ ] STRIPE_COUPON_FIRST_MONTH in staging
 - [ ] Same variables in production (can use test keys until launch)
 
 ---
 
-## Part 7: Testing (After Developer Implements Webhooks)
+## Part 8: Testing (After Developer Implements Webhooks)
 
 ### Test Card Numbers
 
@@ -304,6 +376,10 @@ STRIPE_PRICE_SOLO_ANNUAL=price_
 STRIPE_PRICE_GROWTH_ANNUAL=price_
 STRIPE_PRICE_SCALE_ANNUAL=price_
 STRIPE_PRICE_PRO_ANNUAL=price_
+
+# Coupon IDs
+STRIPE_COUPON_FIRST_YEAR=FIRST_YEAR_20
+STRIPE_COUPON_FIRST_MONTH=FIRST_MONTH_20
 
 # API Keys (Test Mode)
 STRIPE_PUBLISHABLE_KEY=pk_test_
