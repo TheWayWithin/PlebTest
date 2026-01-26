@@ -1,5 +1,49 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import {
+  checkRateLimit,
+  getClientIP,
+  type RateLimitCategory,
+} from '@/lib/ratelimit'
+
+/**
+ * Determine the rate limit category for an API route
+ */
+function getApiRateLimitCategory(
+  pathname: string,
+  isAuthenticated: boolean
+): RateLimitCategory | null {
+  // Quick Fire has its own built-in rate limiting
+  if (pathname === '/api/quick-fire') {
+    return null // Handled in route itself
+  }
+
+  // Waitlist signups
+  if (pathname === '/api/waitlist') {
+    return 'waitlist'
+  }
+
+  // AI-heavy operations (sessions, report generation, persona generation)
+  const aiOperations = [
+    '/api/sessions',
+    '/generate-report',
+    '/generate-personas',
+  ]
+  const isAiOperation = aiOperations.some(
+    (op) => pathname.includes(op)
+  )
+
+  if (isAiOperation) {
+    return isAuthenticated ? 'ai_auth' : 'ai_anon'
+  }
+
+  // General API operations
+  if (pathname.startsWith('/api/')) {
+    return isAuthenticated ? 'api_auth' : 'api_anon'
+  }
+
+  return null
+}
 
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -37,8 +81,51 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  // Rate limiting for API routes
+  const pathname = request.nextUrl.pathname
+  const rateLimitCategory = getApiRateLimitCategory(pathname, !!user)
+
+  if (rateLimitCategory) {
+    try {
+      // Use user ID for authenticated users, IP for anonymous
+      const identifier = user?.id || getClientIP(request)
+      const result = await checkRateLimit(rateLimitCategory, identifier)
+
+      if (!result.success) {
+        const retryAfter = Math.ceil((result.reset - Date.now()) / 1000)
+        return NextResponse.json(
+          {
+            error: 'rate_limit',
+            message: 'Too many requests. Please try again later.',
+            retryAfter,
+          },
+          {
+            status: 429,
+            headers: {
+              'Retry-After': retryAfter.toString(),
+              'X-RateLimit-Limit': result.limit.toString(),
+              'X-RateLimit-Remaining': '0',
+              'X-RateLimit-Reset': result.reset.toString(),
+            },
+          }
+        )
+      }
+
+      // Add rate limit headers to successful responses
+      supabaseResponse.headers.set('X-RateLimit-Limit', result.limit.toString())
+      supabaseResponse.headers.set(
+        'X-RateLimit-Remaining',
+        result.remaining.toString()
+      )
+      supabaseResponse.headers.set('X-RateLimit-Reset', result.reset.toString())
+    } catch (rateLimitError) {
+      // Log but don't block requests if rate limiting fails
+      console.error('Rate limiting error:', rateLimitError)
+    }
+  }
+
   // Protected routes - require authentication
-  const protectedPaths = ['/dashboard', '/account', '/settings']
+  const protectedPaths = ['/dashboard', '/account', '/settings', '/ideas', '/sessions']
   const isProtectedPath = protectedPaths.some(path =>
     request.nextUrl.pathname.startsWith(path)
   )
