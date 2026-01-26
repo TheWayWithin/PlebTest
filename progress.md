@@ -1384,6 +1384,74 @@ data: {"messageId": "uuid", "content": "Full response", "tokens": 123}
 
 ---
 
+### 2026-01-25 Coordinator Session: Worker Service Configuration
+
+**Task**: task-1.7.3 - Provision Railway worker service
+
+**Status**: ⏳ AWAITING USER ACTION
+
+**What was done**:
+- Analyzed Railway project structure via CLI (`railway status`)
+- Reviewed worker code (workers/index.ts, src/lib/jobs/boss.ts)
+- Confirmed DATABASE_URL is required for pg-boss
+- Railway CLI cannot create services programmatically (requires interactive prompts)
+- Prepared detailed step-by-step instructions for user
+
+**What user needs to do**:
+1. Create "Empty Service" named `worker` in Railway dashboard
+2. Connect to same GitHub repo, develop branch
+3. Set Start Command: `npm run worker`
+4. Add env vars: DATABASE_URL, SUPABASE keys, OPENROUTER_API_KEY, UPSTASH keys
+5. Add NIXPACKS_NODE_VERSION=20 as build variable
+6. Deploy and verify logs
+
+**Blocking**: All validation tests (Interactive/Spectator sessions) cannot execute without worker service running.
+
+---
+
+### 2026-01-26 15:00 Deliverable: Staging Worker Service (task-1.7.3) ✅
+
+**Railway Service**: `worker` (develop branch)
+**Status**: Running and waiting for jobs
+
+**Code Changes Made**:
+1. `package.json` - Added `start:auto` script that checks `SERVICE_TYPE` env var
+2. `railway.toml` - Updated to use `npm run start:auto` with explicit buildCommand
+3. `workers/cron.ts` - Added `createQueue()` before `schedule()` for pg-boss v10+
+4. `workers/test-runner.ts` - Added `createQueue()` for run-test, generate-personas, run-session
+5. `workers/report-generator.ts` - Added `createQueue()` for generate-report
+
+**Environment Variables Set (Staging Worker)**:
+- `SERVICE_TYPE=worker` (triggers worker mode in start:auto)
+- `DATABASE_URL=postgresql://postgres.erkvlsaegregxdwfjxgv:kab%40jyr0atf4dgv3BJD@aws-1-us-east-2.pooler.supabase.com:5432/postgres`
+- `NODE_ENV=production`
+- `NIXPACKS_NODE_VERSION=20`
+- Plus: SUPABASE keys, OPENROUTER_API_KEY, UPSTASH keys (copied from web service)
+
+**Key Discoveries**:
+- Railway's `railway.toml` locks settings in UI - must modify file for overrides
+- pg-boss v10+ requires explicit `createQueue()` before `work()` or `schedule()`
+- Supabase Session Pooler (port 5432) required for pg-boss, NOT Transaction Pooler (port 6543)
+- Supabase region varies by project: staging=`aws-1-us-east-2`, production=`aws-1-us-east-1`
+
+**Verified**: Deploy logs show:
+```
+✅ pg-boss connected
+✅ All workers started successfully
+👀 Waiting for jobs...
+📋 Active job handlers: run-test, generate-personas, run-session, generate-report, check-session-timeout
+```
+
+**Production Worker**: DEFERRED until main branch merge. Full setup guide documented in handoff-notes.md.
+
+**Commits**:
+- `b7f8fb0` - fix: Remove hardcoded startCommand from railway.toml
+- `2073405` - fix: Add smart start script for worker service
+- `75d3b60` - fix: Register worker before scheduling cron job
+- `455e661` - fix: Explicitly create queues before registering workers
+
+---
+
 ## Issues & Resolutions
 
 <!-- Format:

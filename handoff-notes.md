@@ -1,48 +1,189 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-25 17:30 (Test configuration UI implemented)
-
+> **Last Updated**: 2026-01-26 15:00 UTC
+>
 ---
 
 ## Current State
 
 **Phase**: 1 - Core Loop MVP
 **Status**: In Progress
-**Last Completed**: task-1.7.1 - Implement test configuration UI (F-018) ✅
-**Next Task**: task-1.7.2 - Set up pg-boss for background jobs
+**Last Completed**: task-1.7.3 - Staging worker service ✅
+**Next Task**: task-1.7.4 - Configure worker health checks + monitoring
 
-### Test Configuration UI (task-1.7.1) ✅
-**Implementation**: Complete test configuration interface for starting validation tests
+### ✅ STAGING WORKER: RUNNING
+The staging worker is fully operational on Railway (develop branch).
 
-**Files Created**:
-- `src/lib/validations/test.ts` - Zod schema + tier limits + mode options
-- `src/components/tests/test-config-form.tsx` - Full configuration form
-- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/test/new/page.tsx` - Config page
-- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/tests/route.ts` - POST/GET API
-- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/page.tsx` - Test view placeholder
+### ⏳ PRODUCTION WORKER: PENDING (Pre-Launch Task)
+Production worker cannot be set up until `develop` is merged to `main`.
+See **PRODUCTION WORKER SETUP GUIDE** section below for complete instructions.
 
-**Files Modified**:
-- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/proposal-view.tsx` - Added "Start Test" CTA
+### COMPLETED SINCE LAST HANDOFF UPDATE
 
-**shadcn Components Added**: slider, radio-group, checkbox, alert
-**npm Package Added**: @hookform/resolvers
+**Phase 1 Progress Summary (as of 2026-01-25):**
 
-**Test Mode Options**:
-- Quick: 5 personas, ~5 min
-- Standard: 10 personas, ~15 min
-- Deep: 20 personas, ~30 min
+✅ **Database & Infrastructure (1.1.x)** - COMPLETE
+✅ **Authentication (1.2.x)** - Core complete (profile mgmt p1, rate limiting pending)
+✅ **Quick Fire Mode (1.3.x)** - COMPLETE (landing page integration working)
+✅ **Idea Management (1.4.x)** - COMPLETE (tier limits enforced)
+✅ **Proposal & ICP Management (1.5.x)** - COMPLETE (all CRUD operations)
+✅ **Persona Generation (1.6.x)** - COMPLETE (AI generation with Big Five traits)
+⏳ **Validation Tests & Workers (1.7.x)** - 1.7.1, 1.7.2, 1.7.5, 1.7.6 complete. **1.7.3, 1.7.4 BLOCKING**
+✅ **Interactive Sessions (1.8.x)** - COMPLETE (SSE streaming, completion logic)
+✅ **Spectator Sessions (1.9.x)** - COMPLETE (AI-to-AI conversation, UI)
+✅ **Active Test View (1.10.x)** - COMPLETE (sessions list, progress)
+⏳ **Reports (1.11.x)** - 1.11.1, 1.11.2, 1.11.3 complete. Download/Share pending.
 
-**Tier Limits (tests/month)**:
-- Solo: 10 tests, max 10 personas
-- Growth: 30 tests, max 20 personas
-- Scale: 100 tests, max 50 personas
-- Pro: 200 tests, max 100 personas
+---
 
-**Pushback Presets**: cheerleader, pragmatist, critic
+## 🚀 PRODUCTION WORKER SETUP GUIDE (Pre-Launch Task)
 
-**Navigation**:
-- Proposal view → "Start Test" button → /test/new → configure → submit → /tests/[testId]
+**When to do this**: After merging `develop` → `main` for production launch.
+
+**Prerequisite**: The `main` branch must have the worker code (workers/, src/lib/jobs/, package.json with start:auto script).
+
+### Step 1: Railway Dashboard Setup
+1. Go to https://railway.app → PlebTest project
+2. Create new "Empty Service"
+3. Name it: `worker-prod`
+4. Connect to GitHub: `TheWayWithin/PlebTest`
+5. **Branch**: `main`
+
+### Step 2: Environment Variables
+Add these variables to the production worker:
+
+| Variable | Value |
+|----------|-------|
+| `SERVICE_TYPE` | `worker` |
+| `DATABASE_URL` | `postgresql://postgres.wemszisfzevffudenqzi:kab%40jyr0atf4dgv3BJD@aws-1-us-east-1.pooler.supabase.com:5432/postgres` |
+| `NEXT_PUBLIC_SUPABASE_URL` | Copy from PlebTest production web service |
+| `SUPABASE_SERVICE_ROLE_KEY` | Copy from PlebTest production web service |
+| `OPENROUTER_API_KEY` | Copy from PlebTest production web service |
+| `UPSTASH_REDIS_REST_URL` | Copy from PlebTest production web service |
+| `UPSTASH_REDIS_REST_TOKEN` | Copy from PlebTest production web service |
+| `NODE_ENV` | `production` |
+| `NIXPACKS_NODE_VERSION` | `20` |
+
+**⚠️ IMPORTANT**: The DATABASE_URL uses:
+- **Session Pooler** (port 5432, NOT 6543)
+- **Region**: `aws-1-us-east-1` (production Supabase region)
+- **Password**: URL-encoded (`@` → `%40`)
+
+### Step 3: Verify Deployment
+Check deploy logs for:
+```
+✅ pg-boss connected
+✅ All workers started successfully
+👀 Waiting for jobs...
+
+📋 Active job handlers:
+   - run-test
+   - generate-personas
+   - run-session
+   - generate-report
+   - check-session-timeout (cron)
+```
+
+### Troubleshooting
+- **"Tenant or user not found"**: Wrong region in DATABASE_URL
+- **"Connection timeout"**: Wrong port (use 5432, not 6543)
+- **"Queue not found"**: Old code without createQueue() calls - ensure main has latest worker code
+
+---
+
+### ✅ STAGING WORKER COMPLETE (task-1.7.3)
+
+**Railway Service**: `worker` (on develop branch)
+**Status**: Running ✅
+
+**DATABASE_URL**:
+```
+postgresql://postgres.erkvlsaegregxdwfjxgv:kab%40jyr0atf4dgv3BJD@aws-1-us-east-2.pooler.supabase.com:5432/postgres
+```
+
+**Key fixes applied (2026-01-26)**:
+1. Added `start:auto` script to package.json (checks SERVICE_TYPE env var)
+2. Updated railway.toml to use `npm run start:auto`
+3. Added explicit `createQueue()` calls for pg-boss v10+
+4. Used Session Pooler (port 5432) instead of Transaction Pooler (port 6543)
+
+**Then task-1.7.4** needs:
+- Health check endpoint for worker
+- Worker logs visible in Railway
+- Restart policy configured
+
+### Recent Deliverables (task-1.7.1 through task-1.11.3)
+
+**Test Configuration UI (task-1.7.1)** ✅
+- Full test config form at `/test/new`
+- ICP selection, persona count, modes, pushback presets
+- Tier limit enforcement
+
+**pg-boss Background Jobs (task-1.7.2)** ✅
+- `src/lib/jobs/boss.ts` - Job queue singleton
+- `workers/index.ts` - Worker entrypoint
+- Job types: RUN_TEST, GENERATE_PERSONAS, RUN_SESSION, GENERATE_REPORT
+
+**Job Retry + Idempotency (task-1.7.5)** ✅
+- Exponential backoff (1s, 2s, 4s)
+- queueUniqueJob for idempotency
+- Dead letter handling
+
+**Test Runner Job (task-1.7.6)** ✅
+- RUN_TEST → GENERATE_PERSONAS → RUN_SESSION flow
+- Persona generation with admin client
+- Session records created automatically
+
+**Anti-Sycophancy Prompts (task-1.8.1)** ✅
+- Pushback presets (Cheerleader/Pragmatist/Critic)
+- Skepticism modifiers
+- Mom Test principles embedded
+
+**SSE Streaming (task-1.8.2)** ✅
+- POST `/api/sessions/[sessionId]/stream`
+- Checkpoint saves every 50 tokens
+- Messages table with RLS
+
+**Interactive Session UI (task-1.8.3)** ✅
+- Chat interface with real-time streaming
+- Persona panel with badges
+- Session tips sidebar
+
+**Session Completion (task-1.8.4)** ✅
+- Signal extraction via Claude 3.5 Haiku
+- Scoring algorithm (0-100)
+- Auto-updates test status
+
+**Spectator Mode Worker (task-1.9.1)** ✅
+- AI-to-AI conversation loop
+- Natural ending detection
+- Messages saved for polling
+
+**Spectator Session UI (task-1.9.2)** ✅
+- Read-only view with polling
+- Pause/Resume controls
+- Progress indicator
+
+**Active Test View (task-1.10.1)** ✅
+- Sessions list with status icons
+- Progress bar
+- Generate Report button
+
+**Risk Score Rubric (task-1.11.1)** ✅
+- Weighted scoring (Need 35%, Solution 30%, Commitment 25%, Anti-sycophancy 10%)
+- Verdict thresholds (Kill/Pivot/Build)
+- Confidence drivers
+
+**Report Generation (task-1.11.2)** ✅
+- Aggregates session data
+- Generates summaries and next steps
+- Creates share_token
+
+**View Report UI (task-1.11.3)** ✅
+- Prominent verdict card
+- Signals/objections columns
+- Disclaimer box
 
 ### Persona Generation Service (task-1.6.1) ✅
 **Implementation**: Complete persona generation with AI and Big Five traits

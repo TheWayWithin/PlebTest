@@ -810,7 +810,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.1.3
   - **Completed**: pg-boss singleton with job queue utilities, 8 job types defined, worker entrypoint with test-runner/report-generator/cron handlers, `npm run worker` script added
 
-- [ ] **task-1.7.3** Provision Railway worker service
+- [x] **task-1.7.3** Provision Railway worker service - ✅ 2026-01-26 15:00 (STAGING)
   - Agent: operator
   - Priority: p0
   - Acceptance Criteria:
@@ -819,6 +819,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Worker connects to same database
     - Worker has access to all required env vars
   - Dependencies: task-0.1.3, task-1.1.6
+  - **Completed (Staging)**: Worker service running on develop branch. Added start:auto script, explicit createQueue() calls for pg-boss v10+, Session Pooler connection. Production worker deferred until main branch merge - full setup guide in handoff-notes.md.
 
 - [ ] **task-1.7.4** Configure worker health checks + monitoring
   - Agent: developer
