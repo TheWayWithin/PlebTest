@@ -15,8 +15,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createAdminClient } from '@/lib/supabase/admin';
 
-// Initialize Stripe
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+// Lazy-initialize Stripe to avoid build-time errors
+let stripeClient: Stripe | null = null;
+
+function getStripe(): Stripe {
+  if (!stripeClient) {
+    stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  }
+  return stripeClient;
+}
 
 // Map Stripe price IDs to subscription tiers
 const PRICE_TO_TIER: Record<string, 'solo' | 'growth' | 'scale' | 'pro'> = {
@@ -55,7 +62,7 @@ export async function POST(request: NextRequest) {
 
   // Verify webhook signature
   try {
-    event = stripe.webhooks.constructEvent(
+    event = getStripe().webhooks.constructEvent(
       body,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
@@ -159,7 +166,7 @@ async function handleCheckoutCompleted(
   }
 
   // Get subscription details to determine tier
-  const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+  const subscription = await getStripe().subscriptions.retrieve(subscriptionId);
   const priceId = subscription.items.data[0]?.price.id;
   const tier = priceId ? PRICE_TO_TIER[priceId] : 'solo';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
