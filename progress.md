@@ -1452,6 +1452,228 @@ data: {"messageId": "uuid", "content": "Full response", "tokens": 123}
 
 ---
 
+### 2026-01-26 16:45 Deliverable: Worker Health Checks (task-1.7.4) ✅
+
+**Files Created**:
+- `workers/health.ts` (3.0KB) - HTTP health check server module
+- `docs/worker-operations.md` (5.7KB) - Comprehensive worker operations documentation
+
+**Files Modified**:
+- `workers/index.ts` - Integrated health server startup and graceful shutdown
+- `railway.toml` - Added restart policy and health check configuration
+
+**Implementation**:
+- **Health Check Endpoint**: GET /health on port 8080 (HEALTH_PORT env var)
+  - Returns 200 `{"status":"healthy","boss":"connected"}` when pg-boss connected
+  - Returns 503 `{"status":"unhealthy"}` when not connected
+  - Returns 503 `{"status":"shutting_down"}` during graceful shutdown
+- **Restart Policy**: ON_FAILURE with max 3 retries (Railway built-in)
+- **Health Check Timeout**: 30 seconds (Railway restarts if unhealthy)
+- **Graceful Shutdown**: Signals health check, stops pg-boss, stops health server
+
+**Railway Configuration Added**:
+```toml
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+```
+
+**Acceptance Criteria**:
+- ✅ Health check endpoint for worker (GET /health on port 8080)
+- ✅ Worker logs visible in Railway (already working)
+- ✅ Alerts if worker process crashes (Railway built-in restart policy)
+- ✅ Restart policy configured (ON_FAILURE, max 3 retries)
+
+**Build Status**: ✅ `npm run build` passes
+**Commit**: cf59718 pushed to develop
+**Verified**: Files exist on filesystem (2026-01-26 16:45)
+
+### 2026-01-26 16:00 Deliverable: Share Report Feature (task-1.11.5)
+
+**Feature**: F-023 Share Report
+**Description**: Allow users to make validation reports public with a shareable link
+
+**Files Created**:
+- `src/components/report/ShareReportSection.tsx` - Client component with toggle switches and copy button
+- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/report/share/route.ts` - PATCH API endpoint
+- `src/app/r/[token]/page.tsx` - Public report page (uses admin client for token validation)
+- `src/app/r/[token]/not-found.tsx` - 404 page for invalid/expired tokens
+- `src/components/ui/switch.tsx` - Switch UI component using @radix-ui/react-switch
+
+**Files Modified**:
+- `src/app/(protected)/ideas/.../report/page.tsx` - Added ShareReportSection, removed disabled share button
+- `package.json` - Added @radix-ui/react-switch dependency
+
+**Implementation Details**:
+- Share token: 22-character URL-safe base64 (via crypto.randomBytes)
+- Toggle: is_public (enables sharing), hide_proposal_details (hides problem/solution)
+- Public page uses admin client (bypasses RLS, validates via token)
+- Dark theme matches existing report page styling
+- Copy to clipboard with visual feedback
+
+**Acceptance Criteria**:
+- ✅ Toggle report public (updates reports.is_public)
+- ✅ Copy share link button
+- ✅ Public report page at /r/[token]
+- ✅ Server-validated token (no permissive RLS - uses admin client)
+- ✅ Option to hide proposal details
+
+**Build Status**: ✅ `npm run build` passes
+**Commit**: 6dc4b45 pushed to develop
+**Verified**: Files exist on filesystem (2026-01-26 16:00)
+
+### 2026-01-26 16:30 Deliverable: Comprehensive Rate Limiting (task-1.15.2)
+
+**Feature**: API Rate Limiting
+**Description**: Protect all API routes with per-IP and per-user rate limits
+
+**Files Modified**:
+- `src/lib/ratelimit.ts` - Expanded with 6 rate limit categories
+- `src/middleware.ts` - Added rate limiting enforcement for all API routes
+
+**Rate Limit Categories**:
+| Category | Limit | Window | Use Case |
+|----------|-------|--------|----------|
+| quickfire | 10 | 1 hour | Pre-signup Quick Fire |
+| api_auth | 100 | 1 min | Authenticated API calls |
+| api_anon | 20 | 1 min | Anonymous API calls |
+| ai_auth | 30 | 1 min | AI operations (auth) |
+| ai_anon | 5 | 1 min | AI operations (anon) |
+| waitlist | 3 | 1 hour | Waitlist signup abuse |
+
+**Implementation Details**:
+- Middleware-level enforcement (before route handlers)
+- User ID used for authenticated, IP address for anonymous
+- Standard rate limit headers added (X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset)
+- Graceful fallback if Redis unavailable (logs but doesn't block)
+- Added /ideas and /sessions to protected routes
+
+**Acceptance Criteria**:
+- ✅ Rate limiter utility
+- ✅ Applied to all API routes
+- ✅ Per-IP and per-user limits
+
+**Build Status**: ✅ `npm run build` passes
+**Commit**: 6ef80de pushed to develop
+**Verified**: Files exist on filesystem (2026-01-26 16:30)
+
+### 2026-01-26 17:00 Deliverable: Zod Validation Schemas (task-1.15.5)
+
+**Feature**: API Request Validation
+**Description**: Comprehensive Zod schemas for all API endpoints with validation utilities
+
+**Files Created**:
+- `src/lib/validations/index.ts` - Central export point
+- `src/lib/validations/idea.ts` - createIdea, updateIdea, createIdeaFromQuickFire
+- `src/lib/validations/session.ts` - sessionMessage, completeSession
+- `src/lib/validations/waitlist.ts` - waitlistSignup
+- `src/lib/validations/report.ts` - shareReport
+- `src/lib/validations/utils.ts` - validateBody, formatZodErrors, isValidationError
+
+**Files Modified**:
+- `src/app/api/.../report/share/route.ts` - Applied validation as example
+
+**Implementation Details**:
+- Zod v4 compatible (uses `issues` instead of `errors`)
+- validateBody() returns validated data or NextResponse with errors
+- isValidationError() type guard for clean conditionals
+- Consistent error format: `{ error: 'validation_error', message, details }`
+- Common validators for uuid, email, url, etc.
+- Type inference via `z.infer<typeof schema>`
+
+**Acceptance Criteria**:
+- ✅ Schemas for all API endpoints
+- ✅ Request validation middleware (validateBody utility)
+- ✅ Type inference for TypeScript
+
+**Build Status**: ✅ `npm run build` passes
+**Commit**: a501e38 pushed to develop
+**Verified**: Files exist on filesystem (2026-01-26 17:00)
+
+### 2026-01-26 17:30 Deliverable: Per-Session Token Budget (task-1.14.3)
+
+**Feature**: Session Token Budget Enforcement
+**Description**: Limit each session to ~8,000 tokens to control costs
+
+**Files Modified**:
+- `src/app/api/sessions/[sessionId]/stream/route.ts` - Interactive session token budget
+- `src/lib/services/spectator-session.ts` - Spectator session token budget
+
+**Implementation Details**:
+- SESSION_TOKEN_BUDGET = 8,000 tokens (~$0.02 at Haiku rates)
+- Interactive sessions:
+  - Checks accumulated tokens before streaming
+  - Returns TOKEN_BUDGET_EXCEEDED error if over limit
+  - Tracks usage via OpenRouter's `stream_options: { include_usage: true }`
+  - Updates session.prompt_tokens and session.completion_tokens
+  - Gracefully marks session completed when budget hit
+- Spectator sessions:
+  - Tracks tokens after each AI call (interviewer + persona)
+  - Updates session with cumulative token counts
+  - Ends conversation loop when budget exceeded
+  - Logs budget exceeded events
+
+**Acceptance Criteria**:
+- ✅ Max ~8,000 tokens per session enforced
+- ✅ Token usage tracked (prompt_tokens, completion_tokens columns)
+- ✅ Session terminated gracefully if budget exceeded
+
+**Build Status**: ✅ `npm run build` passes
+**Commit**: d080227 pushed to develop
+**Verified**: Files exist on filesystem (2026-01-26 17:30)
+
+### 2026-01-26 18:35 Deliverable: Anti-Sycophancy Golden Test Set (task-1.16.1)
+
+**Feature**: Golden Test Set for Anti-Sycophancy QA
+**Description**: Comprehensive test fixtures for validating AI persona pushback behavior
+
+**Files Created**:
+- `src/__tests__/fixtures/anti-sycophancy.fixtures.ts` - 25KB golden test set
+
+**Test Coverage**:
+- **12 test cases** covering all quality levels and presets:
+  - 3 strong idea cases (validated pain points, clear solutions)
+  - 3 weak idea cases (vague problems, questionable markets)
+  - 4 terrible idea cases (blockchain food tracking, uber for dogs, crypto tipping, AI therapy replacement)
+  - 2 cross-preset variations
+
+**Ideas Included**:
+- Strong: Meeting scheduler, customer feedback aggregator
+- Weak: Social fitness app, AI resume generator, grocery planning
+- Terrible: Blockchain food tracking, Uber for dogs, crypto tipping, AI therapist replacement
+
+**Personas**:
+- Sarah Chen (SMB owner, high skepticism)
+- Marcus Johnson (SaaS PM, medium skepticism)
+- Jordan Taylor (E-commerce founder, low skepticism)
+- Robert Williams (Enterprise IT Director, high skepticism)
+
+**Expected Pushback Patterns**:
+- Per-preset objection counts (cheerleader: 2, pragmatist: 2, critic: 3)
+- Objection type expectations by idea quality
+- Anti-sycophancy score ranges by quality/preset:
+  - Strong ideas: 25-80 depending on preset
+  - Weak ideas: 35-85 depending on preset
+  - Terrible ideas: 45-100 depending on preset
+- shouldRejectIdea flag for terrible ideas with critic preset
+
+**Helper Functions**:
+- getTestCasesByQuality() - Filter by idea quality
+- getExpectedObjectionsForPreset() - Get expected objections
+- validateSignals() - Validate extracted signals against expectations
+
+**Acceptance Criteria**:
+- ✅ 10+ test cases with (idea + ICP + expected pushback patterns)
+- ✅ Covers range of idea quality (strong, weak, terrible)
+- ✅ Covers different pushback presets (cheerleader, pragmatist, critic)
+- ✅ Stored as test fixtures
+
+**Build Status**: ✅ `npx tsc --noEmit` passes
+**Verified**: File exists on filesystem (2026-01-26 18:35)
+
+---
+
 ## Issues & Resolutions
 
 <!-- Format:

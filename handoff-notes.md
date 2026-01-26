@@ -1,7 +1,7 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-26 15:00 UTC
+> **Last Updated**: 2026-01-26 18:35 UTC
 >
 ---
 
@@ -9,15 +9,108 @@
 
 **Phase**: 1 - Core Loop MVP
 **Status**: In Progress
-**Last Completed**: task-1.7.3 - Staging worker service ✅
-**Next Task**: task-1.7.4 - Configure worker health checks + monitoring
+**Last Completed**: task-1.16.1 - Create golden test set for anti-sycophancy QA ✅
+**Next Task**: task-1.16.2 - Build anti-sycophancy scorecard (depends on 1.16.1 ✅)
 
-### ✅ STAGING WORKER: RUNNING
-The staging worker is fully operational on Railway (develop branch).
+### ✅ STAGING WORKER: RUNNING WITH HEALTH CHECKS
+The staging worker is fully operational on Railway (develop branch) with:
+- Health check endpoint: GET /health on port 8080
+- Restart policy: ON_FAILURE (max 3 retries)
+- Health check timeout: 30 seconds
 
 ### ⏳ PRODUCTION WORKER: PENDING (Pre-Launch Task)
 Production worker cannot be set up until `develop` is merged to `main`.
 See **PRODUCTION WORKER SETUP GUIDE** section below for complete instructions.
+
+### ✅ Worker Health Checks (task-1.7.4)
+**Implementation Complete**:
+- `workers/health.ts` - HTTP server with GET /health endpoint
+- `workers/index.ts` - Starts health server before pg-boss, graceful shutdown
+- `railway.toml` - Restart policy (ON_FAILURE, 3 retries), health check config
+- `docs/worker-operations.md` - Comprehensive operations guide
+
+**Health Check Response**:
+```json
+// Healthy
+{"status":"healthy","boss":"connected","timestamp":"..."}
+
+// Unhealthy
+{"status":"unhealthy","boss":"not_connected","timestamp":"..."}
+
+// Shutting down
+{"status":"shutting_down","boss":"disconnecting","timestamp":"..."}
+```
+
+### ✅ Share Report Feature (task-1.11.5)
+**Implementation Complete**:
+- `src/components/report/ShareReportSection.tsx` - Client component with toggle and copy link
+- `src/app/api/.../report/share/route.ts` - PATCH API for is_public, hide_proposal_details
+- `src/app/r/[token]/page.tsx` - Public report page (token-validated, uses admin client)
+- `src/app/r/[token]/not-found.tsx` - 404 for invalid tokens
+- `src/components/ui/switch.tsx` - New Switch UI component
+
+**Features**:
+- 22-character URL-safe share tokens (crypto.randomBytes)
+- Option to hide proposal details in shared view
+- Dark theme matching existing report page
+- Copy to clipboard with visual feedback
+
+### ✅ Rate Limiting (task-1.15.2)
+**Implementation Complete**:
+- `src/lib/ratelimit.ts` - 6 rate limit categories with configurable limits
+- `src/middleware.ts` - Middleware-level enforcement for all API routes
+
+**Rate Limits**:
+| Category | Limit | Window | Identifier |
+|----------|-------|--------|------------|
+| quickfire | 10 | 1 hr | IP |
+| api_auth | 100 | 1 min | User ID |
+| api_anon | 20 | 1 min | IP |
+| ai_auth | 30 | 1 min | User ID |
+| ai_anon | 5 | 1 min | IP |
+| waitlist | 3 | 1 hr | IP |
+
+### ✅ Zod Validation Schemas (task-1.15.5)
+**Implementation Complete**:
+- `src/lib/validations/index.ts` - Central exports
+- Schema files: idea.ts, session.ts, waitlist.ts, report.ts (+ existing proposal.ts, icp.ts, test.ts)
+- `src/lib/validations/utils.ts` - Validation utilities
+
+**Usage Pattern**:
+```typescript
+import { shareReportSchema, validateBody, isValidationError } from '@/lib/validations';
+
+const validated = validateBody(shareReportSchema, body);
+if (isValidationError(validated)) return validated;
+// validated is now typed as ShareReportInput
+```
+
+### ✅ Anti-Sycophancy Golden Test Set (task-1.16.1)
+**Implementation Complete**:
+- `src/__tests__/fixtures/anti-sycophancy.fixtures.ts` - 25KB comprehensive test set
+
+**Test Cases**: 12 golden test cases covering:
+- 3 strong idea cases (meeting scheduler, customer feedback)
+- 3 weak idea cases (social fitness, AI resume, grocery planning)
+- 4 terrible idea cases (blockchain food, uber for dogs, crypto tipping, AI therapist)
+- 2 cross-preset variations
+
+**Personas**: 4 fully-specified personas:
+- Sarah Chen (SMB owner, high skepticism)
+- Marcus Johnson (SaaS PM, medium skepticism)
+- Jordan Taylor (E-com founder, low skepticism)
+- Robert Williams (Enterprise IT, high skepticism)
+
+**Expected Pushback Patterns**:
+- Per-preset objection counts and types
+- Anti-sycophancy score ranges by idea quality
+- shouldRejectIdea flags for terrible ideas
+- ObjectionTypes: feasibility, competition, adoption, cost_value, trust, timing, market_size, execution, differentiation, unit_economics, regulatory, technical
+
+**Helper Functions**:
+- `getTestCasesByQuality()` - Filter by strong/weak/terrible
+- `getExpectedObjectionsForPreset()` - Get expected pushback
+- `validateSignals()` - Validate extracted signals
 
 ### COMPLETED SINCE LAST HANDOFF UPDATE
 
@@ -33,7 +126,7 @@ See **PRODUCTION WORKER SETUP GUIDE** section below for complete instructions.
 ✅ **Interactive Sessions (1.8.x)** - COMPLETE (SSE streaming, completion logic)
 ✅ **Spectator Sessions (1.9.x)** - COMPLETE (AI-to-AI conversation, UI)
 ✅ **Active Test View (1.10.x)** - COMPLETE (sessions list, progress)
-⏳ **Reports (1.11.x)** - 1.11.1, 1.11.2, 1.11.3 complete. Download/Share pending.
+✅ **Reports (1.11.x)** - 1.11.1, 1.11.2, 1.11.3, 1.11.5 complete. Download (1.11.4 - P1) pending.
 
 ---
 

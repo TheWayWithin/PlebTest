@@ -821,15 +821,16 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-0.1.3, task-1.1.6
   - **Completed (Staging)**: Worker service running on develop branch. Added start:auto script, explicit createQueue() calls for pg-boss v10+, Session Pooler connection. Production worker deferred until main branch merge - full setup guide in handoff-notes.md.
 
-- [ ] **task-1.7.4** Configure worker health checks + monitoring
+- [x] **task-1.7.4** Configure worker health checks + monitoring - ✅ 2026-01-26 16:45
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
-    - Health check endpoint for worker
-    - Worker logs visible in Railway
-    - Alerts if worker process crashes
-    - Restart policy configured
+    - Health check endpoint for worker ✅
+    - Worker logs visible in Railway ✅
+    - Alerts if worker process crashes ✅ (Railway built-in)
+    - Restart policy configured ✅
   - Dependencies: task-1.7.3
+  - **Completed**: workers/health.ts with GET /health endpoint, railway.toml with restart policy (ON_FAILURE, 3 retries), health check config (30s timeout), docs/worker-operations.md documentation
 
 - [x] **task-1.7.5** Implement job retry policy + dead letter handling + idempotency - ✅ 2026-01-25 19:00
   - Agent: developer
@@ -988,7 +989,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - (PDF export can be Phase 2)
   - Dependencies: task-1.11.3
 
-- [ ] **task-1.11.5** Implement Share Report (F-023)
+- [x] **task-1.11.5** Implement Share Report (F-023) - ✅ 2026-01-26 16:00
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -998,6 +999,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Server-validated token (no permissive RLS)
     - Option to hide proposal details
   - Dependencies: task-1.11.3
+  - **Completed**: ShareReportSection component, PATCH API route, public page at /r/[token], not-found page, Switch component
 
 #### 1.12 Onboarding
 - [ ] **task-1.12.1** Implement Onboarding Flow (F-005)
@@ -1102,7 +1104,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Middleware enforcement
   - Dependencies: task-1.13.2
 
-- [ ] **task-1.14.3** Implement per-session token budget
+- [x] **task-1.14.3** Implement per-session token budget - ✅ 2026-01-26 17:30
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -1110,6 +1112,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Token usage tracked (prompt_tokens, completion_tokens columns)
     - Session terminated gracefully if budget exceeded
   - Dependencies: task-1.8.2
+  - **Completed**: Budget enforced in both interactive and spectator sessions, token usage tracked per API call
 
 - [ ] **task-1.14.4** Implement cost alerting
   - Agent: developer
@@ -1131,7 +1134,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: none
   - **Completed**: plebtest-redis database created (fitting-grouper-34390.upstash.io), credentials added to Railway staging + production
 
-- [ ] **task-1.15.2** Implement rate limiting
+- [x] **task-1.15.2** Implement rate limiting - ✅ 2026-01-26 16:30
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -1139,6 +1142,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Applied to all API routes
     - Per-IP and per-user limits
   - Dependencies: task-1.15.1
+  - **Completed**: 6 rate limit categories, middleware enforcement, per-user (auth) and per-IP (anon) limits
 
 - [ ] **task-1.15.3** Set up Sentry
   - Agent: developer
@@ -1165,7 +1169,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
       - Payment receipt
   - Dependencies: none
 
-- [ ] **task-1.15.5** Implement Zod validation schemas
+- [x] **task-1.15.5** Implement Zod validation schemas - ✅ 2026-01-26 17:00
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -1173,6 +1177,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Request validation middleware
     - Type inference for TypeScript
   - Dependencies: task-0.1.2
+  - **Completed**: 6 schema files, validation utils with validateBody/isValidationError, type inference via z.infer
 
 - [ ] **task-1.15.6** Set up Jest and write integration tests
   - Agent: developer
@@ -1211,7 +1216,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-0.2.5
 
 #### 1.16 Anti-Sycophancy QA Harness
-- [ ] **task-1.16.1** Create golden test set
+- [x] **task-1.16.1** Create golden test set - ✅ 2026-01-26 11:35
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -1220,6 +1225,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Covers different pushback presets
     - Stored as test fixtures
   - Dependencies: task-1.8.1
+  - **Completed**: 12 golden test cases covering strong/weak/terrible ideas, all 3 pushback presets, 4 personas, with expected objection types and anti-sycophancy score ranges
 
 - [ ] **task-1.16.2** Build anti-sycophancy scorecard
   - Agent: developer
