@@ -1,0 +1,95 @@
+2026-01-26T20:59:58.000000000Z [inf]  Starting Container
+2026-01-26T20:59:59.788418742Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T20:59:59.788424368Z [inf]  
+2026-01-26T20:59:59.788429916Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T20:59:59.788435788Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T20:59:59.788441795Z [inf]  
+2026-01-26T20:59:59.788447534Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T20:59:59.788453103Z [inf]  
+2026-01-26T20:59:59.788459085Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T20:59:59.788468370Z [inf]  > tsx workers/index.ts
+2026-01-26T20:59:59.788473934Z [inf]  
+2026-01-26T21:00:01.204661098Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T21:00:01.204665741Z [inf]     Environment: production
+2026-01-26T21:00:01.204671150Z [inf]  ✅ Health check server listening on port 8080
+2026-01-26T21:00:01.204676412Z [inf]     Endpoint: http://localhost:8080/health
+2026-01-26T21:00:01.204681799Z [inf]  [pg-boss] Started successfully
+2026-01-26T21:00:01.204686363Z [inf]  ✅ pg-boss connected
+2026-01-26T21:00:01.204690951Z [err]  ❌ Worker startup failed: error: Max client connections reached
+2026-01-26T21:00:01.204695416Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T21:00:01.204699813Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T21:00:01.204704384Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T21:00:01.204709446Z [err]      at async Manager.createQueue (/app/node_modules/pg-boss/dist/manager.js:601:9)
+2026-01-26T21:00:01.204715314Z [err]      at async setupCronJobs (/app/workers/cron.ts:20:3)
+2026-01-26T21:00:01.204721762Z [err]      at async Promise.all (index 2)
+2026-01-26T21:00:01.204728141Z [err]      at async main (/app/workers/index.ts:43:5) {
+2026-01-26T21:00:01.204734062Z [err]    length: 58,
+2026-01-26T21:00:01.204740231Z [err]    severity: 'FATAL',
+2026-01-26T21:00:01.204747977Z [err]    code: 'XX000',
+2026-01-26T21:00:01.204754685Z [err]    detail: undefined,
+2026-01-26T21:00:01.204761236Z [err]    hint: undefined,
+2026-01-26T21:00:01.204768332Z [err]    position: undefined,
+2026-01-26T21:00:01.204774511Z [err]    internalPosition: undefined,
+2026-01-26T21:00:01.204780831Z [err]    internalQuery: undefined,
+2026-01-26T21:00:01.204786945Z [err]    where: undefined,
+2026-01-26T21:00:01.204792767Z [err]    schema: undefined,
+2026-01-26T21:00:01.204799171Z [err]    table: undefined,
+2026-01-26T21:00:01.204805452Z [err]    column: undefined,
+2026-01-26T21:00:02.073590514Z [err]    dataType: undefined,
+2026-01-26T21:00:02.073595978Z [err]    constraint: undefined,
+2026-01-26T21:00:02.073603386Z [err]    file: undefined,
+2026-01-26T21:00:02.073609617Z [err]    line: undefined,
+2026-01-26T21:00:02.073616482Z [err]    routine: undefined
+2026-01-26T21:00:02.073623652Z [err]  }
+2026-01-26T21:00:03.154872860Z [inf]  
+2026-01-26T21:00:03.155625028Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T21:00:03.155630045Z [inf]  
+2026-01-26T21:00:03.155638687Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T21:00:03.155645125Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T21:00:03.155651299Z [inf]  
+2026-01-26T21:00:03.155657948Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T21:00:03.155664350Z [inf]  
+2026-01-26T21:00:03.155671551Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T21:00:03.155677486Z [inf]  > tsx workers/index.ts
+2026-01-26T21:00:03.936254542Z [err]    dataType: undefined,
+2026-01-26T21:00:03.936261978Z [err]    constraint: undefined,
+2026-01-26T21:00:03.936268288Z [err]    file: undefined,
+2026-01-26T21:00:03.936274943Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T21:00:03.936274954Z [err]    line: undefined,
+2026-01-26T21:00:03.936282012Z [inf]     Environment: production
+2026-01-26T21:00:03.936288807Z [inf]  ✅ Health check server listening on port 8080
+2026-01-26T21:00:03.936295953Z [inf]     Endpoint: http://localhost:8080/health
+2026-01-26T21:00:03.936303190Z [inf]  [pg-boss] Started successfully
+2026-01-26T21:00:03.936310715Z [inf]  ✅ pg-boss connected
+2026-01-26T21:00:03.936316919Z [err]  [pg-boss] Error: error: Max client connections reached
+2026-01-26T21:00:03.936338104Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T21:00:03.936342998Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T21:00:03.936347499Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T21:00:03.936352454Z [err]      at async Timekeeper.onCron (/app/node_modules/pg-boss/dist/timekeeper.js:95:34) {
+2026-01-26T21:00:03.936358118Z [err]    length: 58,
+2026-01-26T21:00:03.936363629Z [err]    severity: 'FATAL',
+2026-01-26T21:00:03.936368298Z [err]    code: 'XX000',
+2026-01-26T21:00:03.936372851Z [err]    detail: undefined,
+2026-01-26T21:00:03.936378126Z [err]    hint: undefined,
+2026-01-26T21:00:03.936382396Z [err]    position: undefined,
+2026-01-26T21:00:03.936387405Z [err]    internalPosition: undefined,
+2026-01-26T21:00:03.936392026Z [err]    internalQuery: undefined,
+2026-01-26T21:00:03.936396677Z [err]    where: undefined,
+2026-01-26T21:00:03.936400880Z [err]    schema: undefined,
+2026-01-26T21:00:03.936405204Z [err]    table: undefined,
+2026-01-26T21:00:03.936410191Z [err]    column: undefined,
+2026-01-26T21:00:03.939019000Z [err]    routine: undefined
+2026-01-26T21:00:03.939024215Z [err]  }
+2026-01-26T21:00:03.939033692Z [inf]     [report-generator] Registered handler: generate-report
+2026-01-26T21:00:04.007973175Z [inf]     [cron] Registered job: check-session-timeout (every 5 min)
+2026-01-26T21:00:04.014320675Z [inf]     [test-runner] Registered handlers: run-test, generate-personas, run-session
+2026-01-26T21:00:04.014327941Z [inf]  ✅ All workers started successfully
+2026-01-26T21:00:04.014334731Z [inf]  
+2026-01-26T21:00:04.014342025Z [inf]  📋 Active job handlers:
+2026-01-26T21:00:04.014349766Z [inf]     - run-test
+2026-01-26T21:00:04.014356051Z [inf]     - generate-personas
+2026-01-26T21:00:04.014361743Z [inf]     - run-session
+2026-01-26T21:00:04.014366909Z [inf]     - generate-report
+2026-01-26T21:00:04.014372152Z [inf]     - check-session-timeout (cron)
+2026-01-26T21:00:04.014378567Z [inf]  
+2026-01-26T21:00:04.014384523Z [inf]  👀 Waiting for jobs...

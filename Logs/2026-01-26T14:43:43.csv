@@ -1,0 +1,1001 @@
+2026-01-26T14:43:43.627702734Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:43.627705614Z [err]    queue: 'run-test',
+2026-01-26T14:43:43.627708024Z [err]    worker: '529c1b7a-94aa-4e25-9b3b-53f4eb71f45f'
+2026-01-26T14:43:43.628499639Z [err]      at async setupCronJobs (/app/workers/cron.ts:19:3)
+2026-01-26T14:43:43.628502799Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 5fdcf3f6-09d0-49ec-a97a-fcd0597375dc)\n' +
+2026-01-26T14:43:43.628506339Z [err]      at async Promise.all (index 2)
+2026-01-26T14:43:43.628512418Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:43.628513428Z [err]      at async main (/app/workers/index.ts:25:5) {
+2026-01-26T14:43:43.628519838Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:43.628520548Z [err]    length: 265,
+2026-01-26T14:43:43.628527148Z [err]    severity: 'ERROR',
+2026-01-26T14:43:43.628528098Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:43.628535618Z [err]    code: '23503',
+2026-01-26T14:43:43.628535828Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:43.628543288Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:43.628546408Z [err]    detail: 'Key (name)=(check-session-timeout) is not present in table "queue".',
+2026-01-26T14:43:43.628549508Z [err]    worker: '5fdcf3f6-09d0-49ec-a97a-fcd0597375dc'
+2026-01-26T14:43:43.628552308Z [err]  }
+2026-01-26T14:43:43.628554978Z [err]  ❌ Worker startup failed: error: Queue check-session-timeout not found
+2026-01-26T14:43:43.628557628Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:43:43.628560137Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:43:43.628562897Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:43:43.628565847Z [err]      at async Timekeeper.schedule (/app/node_modules/pg-boss/dist/timekeeper.js:144:13)
+2026-01-26T14:43:43.629237145Z [err]  }
+2026-01-26T14:43:43.629245114Z [err]    hint: undefined,
+2026-01-26T14:43:43.629252024Z [err]    position: undefined,
+2026-01-26T14:43:43.629255794Z [err]    internalPosition: undefined,
+2026-01-26T14:43:43.629259574Z [err]    internalQuery: undefined,
+2026-01-26T14:43:43.629264124Z [err]    where: undefined,
+2026-01-26T14:43:43.629267954Z [err]    schema: 'pgboss',
+2026-01-26T14:43:43.629272154Z [err]    table: 'schedule',
+2026-01-26T14:43:43.629276184Z [err]    column: undefined,
+2026-01-26T14:43:43.629279614Z [err]    dataType: undefined,
+2026-01-26T14:43:43.629283314Z [err]    constraint: 'schedule_name_fkey',
+2026-01-26T14:43:43.629287164Z [err]    file: 'ri_triggers.c',
+2026-01-26T14:43:43.629291113Z [err]    line: '2599',
+2026-01-26T14:43:43.629294993Z [err]    routine: 'ri_ReportViolation'
+2026-01-26T14:43:44.022239683Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:44.042060533Z [inf]  
+2026-01-26T14:43:44.042067002Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:43:44.042070892Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:43:44.042074002Z [inf]  
+2026-01-26T14:43:44.095208631Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:44.117707439Z [inf]  
+2026-01-26T14:43:44.117712189Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:43:44.117714899Z [inf]  > tsx workers/index.ts
+2026-01-26T14:43:44.117717549Z [inf]  
+2026-01-26T14:43:44.364757342Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:43:44.364762512Z [inf]     Environment: production
+2026-01-26T14:43:44.509873323Z [inf]  [pg-boss] Started successfully
+2026-01-26T14:43:44.509875933Z [inf]  ✅ pg-boss connected
+2026-01-26T14:43:44.514705691Z [inf]     [report-generator] Registered handler: generate-report
+2026-01-26T14:43:44.514709121Z [inf]     [test-runner] Registered handlers: run-test, generate-personas, run-session
+2026-01-26T14:43:44.618512346Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:44.618515416Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 807154b3-09a5-42f4-b9b4-5677137e255c)',
+2026-01-26T14:43:44.618517796Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 807154b3-09a5-42f4-b9b4-5677137e255c)\n' +
+2026-01-26T14:43:44.618520166Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:44.618522626Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:44.618524856Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:44.618527246Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:44.618531286Z [err]    queue: 'run-session',
+2026-01-26T14:43:44.618534226Z [err]    worker: '807154b3-09a5-42f4-b9b4-5677137e255c'
+2026-01-26T14:43:44.618536726Z [err]  }
+2026-01-26T14:43:44.618539086Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:44.618542205Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 8ccf3863-65bc-4fa2-87ad-2313d7fd6e00)',
+2026-01-26T14:43:44.618544785Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 8ccf3863-65bc-4fa2-87ad-2313d7fd6e00)\n' +
+2026-01-26T14:43:44.618547185Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:44.618549285Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:44.618551375Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:44.618553715Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:44.618556165Z [err]    queue: 'run-session',
+2026-01-26T14:43:44.619839880Z [err]    worker: '8ccf3863-65bc-4fa2-87ad-2313d7fd6e00'
+2026-01-26T14:43:44.619840750Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: bdac0fca-0add-432b-b48c-0a3580bbc897)',
+2026-01-26T14:43:44.619852100Z [err]  }
+2026-01-26T14:43:44.619853970Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: bdac0fca-0add-432b-b48c-0a3580bbc897)\n' +
+2026-01-26T14:43:44.619861560Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:44.619862460Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:44.619871570Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 6d6f2d26-5db0-44c8-a942-a3d79590210e)',
+2026-01-26T14:43:44.619871690Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:44.619877830Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:44.619880800Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 6d6f2d26-5db0-44c8-a942-a3d79590210e)\n' +
+2026-01-26T14:43:44.619884020Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:44.619887940Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:44.619892559Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:44.619896869Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:44.619901749Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:44.619905699Z [err]    queue: 'run-session',
+2026-01-26T14:43:44.619909689Z [err]    worker: '6d6f2d26-5db0-44c8-a942-a3d79590210e'
+2026-01-26T14:43:44.619913309Z [err]  }
+2026-01-26T14:43:44.619917499Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:44.620376240Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:44.620384420Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:44.620387390Z [err]    queue: 'run-session',
+2026-01-26T14:43:44.620393160Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:44.620399470Z [err]    worker: 'bdac0fca-0add-432b-b48c-0a3580bbc897'
+2026-01-26T14:43:44.620404630Z [err]  }
+2026-01-26T14:43:44.620409469Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:44.620412959Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 3a34184c-fe53-486a-a67a-0b4c20045b0c)',
+2026-01-26T14:43:44.620417299Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 3a34184c-fe53-486a-a67a-0b4c20045b0c)\n' +
+2026-01-26T14:43:44.620421289Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:44.620425099Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:44.620429079Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:44.620433639Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:44.620439379Z [err]    queue: 'run-session',
+2026-01-26T14:43:44.620443089Z [err]    worker: '3a34184c-fe53-486a-a67a-0b4c20045b0c'
+2026-01-26T14:43:44.620447529Z [err]  }
+2026-01-26T14:43:44.620451059Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:44.620454579Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 769f2344-8c54-40d0-abd4-e55f276ebc05)',
+2026-01-26T14:43:44.620458278Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 769f2344-8c54-40d0-abd4-e55f276ebc05)\n' +
+2026-01-26T14:43:44.621252213Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:44.621256123Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:44.621259973Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:44.621265843Z [err]  }
+2026-01-26T14:43:44.621266073Z [err]    worker: '769f2344-8c54-40d0-abd4-e55f276ebc05'
+2026-01-26T14:43:44.621270633Z [err]  }
+2026-01-26T14:43:44.621276323Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:44.621279143Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:44.621282423Z [err]    message: 'Queue generate-report does not exist (Queue: generate-report, Worker: 85078c76-e7a4-433f-96d0-74fc65491a1d)',
+2026-01-26T14:43:44.621287383Z [err]    message: 'Queue run-test does not exist (Queue: run-test, Worker: ac075ef4-a848-4f7a-bc05-9cf42ea1d492)',
+2026-01-26T14:43:44.621290702Z [err]    stack: 'Error: Queue generate-report does not exist (Queue: generate-report, Worker: 85078c76-e7a4-433f-96d0-74fc65491a1d)\n' +
+2026-01-26T14:43:44.621295442Z [err]    stack: 'Error: Queue run-test does not exist (Queue: run-test, Worker: ac075ef4-a848-4f7a-bc05-9cf42ea1d492)\n' +
+2026-01-26T14:43:44.621298002Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:44.621303872Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:44.621303982Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:44.621308642Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:44.621311492Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:44.621313892Z [err]    queue: 'generate-report',
+2026-01-26T14:43:44.621316732Z [err]    worker: '85078c76-e7a4-433f-96d0-74fc65491a1d'
+2026-01-26T14:43:44.621938790Z [err]    internalQuery: undefined,
+2026-01-26T14:43:44.621939190Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:44.621945330Z [err]    where: undefined,
+2026-01-26T14:43:44.621947690Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:44.621954780Z [err]    schema: 'pgboss',
+2026-01-26T14:43:44.621955120Z [err]    queue: 'run-test',
+2026-01-26T14:43:44.621963620Z [err]    table: 'schedule',
+2026-01-26T14:43:44.621963750Z [err]    worker: 'ac075ef4-a848-4f7a-bc05-9cf42ea1d492'
+2026-01-26T14:43:44.621968989Z [err]  }
+2026-01-26T14:43:44.621972009Z [err]  ❌ Worker startup failed: error: Queue check-session-timeout not found
+2026-01-26T14:43:44.621975089Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:43:44.621978449Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:43:44.621981609Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:43:44.621985169Z [err]      at async Timekeeper.schedule (/app/node_modules/pg-boss/dist/timekeeper.js:144:13)
+2026-01-26T14:43:44.621987949Z [err]      at async setupCronJobs (/app/workers/cron.ts:19:3)
+2026-01-26T14:43:44.621990509Z [err]      at async Promise.all (index 2)
+2026-01-26T14:43:44.621992969Z [err]      at async main (/app/workers/index.ts:25:5) {
+2026-01-26T14:43:44.621995219Z [err]    length: 265,
+2026-01-26T14:43:44.621999109Z [err]    severity: 'ERROR',
+2026-01-26T14:43:44.622002209Z [err]    code: '23503',
+2026-01-26T14:43:44.622005039Z [err]    detail: 'Key (name)=(check-session-timeout) is not present in table "queue".',
+2026-01-26T14:43:44.622007509Z [err]    hint: undefined,
+2026-01-26T14:43:44.622010659Z [err]    position: undefined,
+2026-01-26T14:43:44.622014549Z [err]    internalPosition: undefined,
+2026-01-26T14:43:44.622335672Z [err]    column: undefined,
+2026-01-26T14:43:44.622339612Z [err]    dataType: undefined,
+2026-01-26T14:43:44.622342362Z [err]    constraint: 'schedule_name_fkey',
+2026-01-26T14:43:44.622345092Z [err]    file: 'ri_triggers.c',
+2026-01-26T14:43:44.622348012Z [err]    line: '2599',
+2026-01-26T14:43:44.622351262Z [err]    routine: 'ri_ReportViolation'
+2026-01-26T14:43:44.622354002Z [err]  }
+2026-01-26T14:43:45.031459971Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:45.041958610Z [inf]  
+2026-01-26T14:43:45.041963059Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:43:45.041966109Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:43:45.041968769Z [inf]  
+2026-01-26T14:43:45.105212144Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:45.121236126Z [inf]  
+2026-01-26T14:43:45.121242746Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:43:45.121246426Z [inf]  > tsx workers/index.ts
+2026-01-26T14:43:45.121251106Z [inf]  
+2026-01-26T14:43:45.389556920Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:43:45.389561790Z [inf]     Environment: production
+2026-01-26T14:43:45.538986439Z [inf]  [pg-boss] Started successfully
+2026-01-26T14:43:45.538991199Z [inf]  ✅ pg-boss connected
+2026-01-26T14:43:45.637516795Z [inf]     [report-generator] Registered handler: generate-report
+2026-01-26T14:43:45.637521575Z [inf]     [test-runner] Registered handlers: run-test, generate-personas, run-session
+2026-01-26T14:43:45.637525875Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:45.637529535Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 71a8b118-0a61-487d-a742-3be20e92d81b)',
+2026-01-26T14:43:45.637533555Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 71a8b118-0a61-487d-a742-3be20e92d81b)\n' +
+2026-01-26T14:43:45.637537545Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:45.637541415Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:45.637545815Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:45.637550404Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:45.637556394Z [err]    queue: 'run-session',
+2026-01-26T14:43:45.637561584Z [err]    worker: '71a8b118-0a61-487d-a742-3be20e92d81b'
+2026-01-26T14:43:45.637565964Z [err]  }
+2026-01-26T14:43:45.637570874Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:45.637574504Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: c23e42a4-de4a-4bcf-996f-5397ef351a9c)',
+2026-01-26T14:43:45.637578434Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: c23e42a4-de4a-4bcf-996f-5397ef351a9c)\n' +
+2026-01-26T14:43:45.637582444Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:45.637586604Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:45.637590304Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:45.638188352Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:45.638203012Z [err]    worker: 'f5e3159d-0a41-478d-b368-431dd8ea6bd0'
+2026-01-26T14:43:45.638206702Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:45.638210642Z [err]    message: 'Queue run-test does not exist (Queue: run-test, Worker: 64ce6321-409e-4e43-846e-cd56ab94b067)',
+2026-01-26T14:43:45.638213062Z [err]  }
+2026-01-26T14:43:45.638220342Z [err]    stack: 'Error: Queue run-test does not exist (Queue: run-test, Worker: 64ce6321-409e-4e43-846e-cd56ab94b067)\n' +
+2026-01-26T14:43:45.638221272Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:45.638222752Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:45.638229021Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:45.638231541Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:45.638238811Z [err]    queue: 'run-session',
+2026-01-26T14:43:45.638242321Z [err]    worker: 'c23e42a4-de4a-4bcf-996f-5397ef351a9c'
+2026-01-26T14:43:45.638248571Z [err]  }
+2026-01-26T14:43:45.638252391Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:45.638257181Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: f5e3159d-0a41-478d-b368-431dd8ea6bd0)',
+2026-01-26T14:43:45.638262171Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: f5e3159d-0a41-478d-b368-431dd8ea6bd0)\n' +
+2026-01-26T14:43:45.638266491Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:45.638278091Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:45.638282200Z [err]    queue: 'run-session',
+2026-01-26T14:43:45.638586175Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:45.638590854Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:45.638595414Z [err]    queue: 'run-test',
+2026-01-26T14:43:45.638599974Z [err]    worker: '64ce6321-409e-4e43-846e-cd56ab94b067'
+2026-01-26T14:43:45.638604764Z [err]  }
+2026-01-26T14:43:45.638610324Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:45.638613304Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:45.638613704Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 901b8abf-94ad-4dce-a716-4c6ce6c541ca)\n' +
+2026-01-26T14:43:45.638614804Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:45.638619594Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 901b8abf-94ad-4dce-a716-4c6ce6c541ca)',
+2026-01-26T14:43:45.638620194Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:45.638620224Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:45.638626654Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:45.638631314Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 296d7439-9552-4144-832d-66debc8241bb)',
+2026-01-26T14:43:45.638637944Z [err]    worker: '901b8abf-94ad-4dce-a716-4c6ce6c541ca'
+2026-01-26T14:43:45.638639344Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:45.638639494Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 296d7439-9552-4144-832d-66debc8241bb)\n' +
+2026-01-26T14:43:45.638648353Z [err]  }
+2026-01-26T14:43:45.638651123Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:45.639026886Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:45.639028716Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:45.639030236Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:45.639032406Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:45.639035116Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:45.639035746Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:45.639039066Z [err]    queue: 'run-session',
+2026-01-26T14:43:45.639041296Z [err]    worker: '64b58b1a-91a3-45ec-ae6c-ed3b441c82d0'
+2026-01-26T14:43:45.639042336Z [err]    worker: '296d7439-9552-4144-832d-66debc8241bb'
+2026-01-26T14:43:45.639044706Z [err]  }
+2026-01-26T14:43:45.639045736Z [err]  }
+2026-01-26T14:43:45.639048726Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:45.639049376Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:45.639051756Z [err]    message: 'Queue run-test does not exist (Queue: run-test, Worker: 188c03cf-9f04-4b8d-866c-f348f8bccc0c)',
+2026-01-26T14:43:45.639052666Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 64b58b1a-91a3-45ec-ae6c-ed3b441c82d0)',
+2026-01-26T14:43:45.639054916Z [err]    stack: 'Error: Queue run-test does not exist (Queue: run-test, Worker: 188c03cf-9f04-4b8d-866c-f348f8bccc0c)\n' +
+2026-01-26T14:43:45.639055766Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 64b58b1a-91a3-45ec-ae6c-ed3b441c82d0)\n' +
+2026-01-26T14:43:45.639058826Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:45.639061745Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:45.639616705Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:45.639619445Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:45.639621335Z [err]    worker: '9f8362d4-4882-4f44-97d9-c2eca17beccf'
+2026-01-26T14:43:45.639622075Z [err]  }
+2026-01-26T14:43:45.639622645Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:45.639624965Z [err]  }
+2026-01-26T14:43:45.639625425Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:45.639626115Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:45.639628425Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 9f8362d4-4882-4f44-97d9-c2eca17beccf)',
+2026-01-26T14:43:45.639628475Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:45.639629475Z [err]    queue: 'run-test',
+2026-01-26T14:43:45.639631885Z [err]    message: 'Queue generate-report does not exist (Queue: generate-report, Worker: 2d1c02be-c22f-475f-acb7-820599343fa1)',
+2026-01-26T14:43:45.639632535Z [err]    worker: '188c03cf-9f04-4b8d-866c-f348f8bccc0c'
+2026-01-26T14:43:45.639666254Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 9f8362d4-4882-4f44-97d9-c2eca17beccf)\n' +
+2026-01-26T14:43:45.639677494Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:45.639682244Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:45.639686483Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:45.639690243Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:45.639694473Z [err]    queue: 'run-session',
+2026-01-26T14:43:45.640977609Z [err]    stack: 'Error: Queue generate-report does not exist (Queue: generate-report, Worker: 2d1c02be-c22f-475f-acb7-820599343fa1)\n' +
+2026-01-26T14:43:45.640983809Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:45.640987199Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:45.640991038Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:45.640994598Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:45.640998548Z [err]    queue: 'generate-report',
+2026-01-26T14:43:45.641001628Z [err]    worker: '2d1c02be-c22f-475f-acb7-820599343fa1'
+2026-01-26T14:43:45.641004798Z [err]  }
+2026-01-26T14:43:45.641009348Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:45.641012918Z [err]    message: 'Queue generate-report does not exist (Queue: generate-report, Worker: da49946b-7fda-40e2-b012-2aece7098df7)',
+2026-01-26T14:43:45.641016268Z [err]    stack: 'Error: Queue generate-report does not exist (Queue: generate-report, Worker: da49946b-7fda-40e2-b012-2aece7098df7)\n' +
+2026-01-26T14:43:45.641019918Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:45.641023098Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:45.641026298Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:45.641030238Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:45.641040597Z [err]    queue: 'generate-report',
+2026-01-26T14:43:45.641043837Z [err]    worker: 'da49946b-7fda-40e2-b012-2aece7098df7'
+2026-01-26T14:43:45.641048377Z [err]  }
+2026-01-26T14:43:45.641719664Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:45.641724334Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 7636d556-466f-447e-8cf8-b59d7a679429)',
+2026-01-26T14:43:45.641727814Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 7636d556-466f-447e-8cf8-b59d7a679429)\n' +
+2026-01-26T14:43:45.641731144Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:45.641734664Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:45.641738404Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:45.641741944Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:45.641744814Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:45.641748044Z [err]    worker: '7636d556-466f-447e-8cf8-b59d7a679429'
+2026-01-26T14:43:45.641751004Z [err]  }
+2026-01-26T14:43:45.641754064Z [err]  ❌ Worker startup failed: error: Queue check-session-timeout not found
+2026-01-26T14:43:45.641757424Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:43:45.641760344Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:43:45.641763284Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:43:45.641767124Z [err]      at async Timekeeper.schedule (/app/node_modules/pg-boss/dist/timekeeper.js:144:13)
+2026-01-26T14:43:45.641770273Z [err]      at async setupCronJobs (/app/workers/cron.ts:19:3)
+2026-01-26T14:43:45.641773203Z [err]      at async Promise.all (index 2)
+2026-01-26T14:43:45.641776453Z [err]      at async main (/app/workers/index.ts:25:5) {
+2026-01-26T14:43:45.641780153Z [err]    length: 265,
+2026-01-26T14:43:45.642528379Z [err]    severity: 'ERROR',
+2026-01-26T14:43:45.642532659Z [err]    code: '23503',
+2026-01-26T14:43:45.642536219Z [err]    detail: 'Key (name)=(check-session-timeout) is not present in table "queue".',
+2026-01-26T14:43:45.642540239Z [err]    hint: undefined,
+2026-01-26T14:43:45.642543469Z [err]    position: undefined,
+2026-01-26T14:43:45.642546959Z [err]    internalPosition: undefined,
+2026-01-26T14:43:45.642550429Z [err]    internalQuery: undefined,
+2026-01-26T14:43:45.642553878Z [err]    where: undefined,
+2026-01-26T14:43:45.642556748Z [err]    schema: 'pgboss',
+2026-01-26T14:43:45.642559708Z [err]    table: 'schedule',
+2026-01-26T14:43:45.642562848Z [err]    column: undefined,
+2026-01-26T14:43:45.642566128Z [err]    dataType: undefined,
+2026-01-26T14:43:45.642569268Z [err]    constraint: 'schedule_name_fkey',
+2026-01-26T14:43:45.642572168Z [err]    file: 'ri_triggers.c',
+2026-01-26T14:43:45.642575788Z [err]    line: '2599',
+2026-01-26T14:43:45.642580118Z [err]    routine: 'ri_ReportViolation'
+2026-01-26T14:43:45.642583408Z [err]  }
+2026-01-26T14:43:47.234013504Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:47.254501050Z [inf]  
+2026-01-26T14:43:47.254506780Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:43:47.254510600Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:43:47.254513970Z [inf]  
+2026-01-26T14:43:47.330682326Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:47.330687386Z [inf]  
+2026-01-26T14:43:47.330690056Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:43:47.330693346Z [inf]  > tsx workers/index.ts
+2026-01-26T14:43:47.330696986Z [inf]  
+2026-01-26T14:43:47.590910015Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:43:47.590912685Z [inf]     Environment: production
+2026-01-26T14:43:47.736981898Z [inf]  [pg-boss] Started successfully
+2026-01-26T14:43:47.736986828Z [inf]  ✅ pg-boss connected
+2026-01-26T14:43:47.736989708Z [inf]     [report-generator] Registered handler: generate-report
+2026-01-26T14:43:47.736993038Z [inf]     [test-runner] Registered handlers: run-test, generate-personas, run-session
+2026-01-26T14:43:47.775947299Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:47.775950579Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 690e4ddf-145f-4b1b-9550-03d42a16494f)',
+2026-01-26T14:43:47.775954389Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 690e4ddf-145f-4b1b-9550-03d42a16494f)\n' +
+2026-01-26T14:43:47.775958129Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:47.775963049Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:47.775965819Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:47.775968769Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:47.775972399Z [err]    queue: 'run-session',
+2026-01-26T14:43:47.775975529Z [err]    worker: '690e4ddf-145f-4b1b-9550-03d42a16494f'
+2026-01-26T14:43:47.775978599Z [err]  }
+2026-01-26T14:43:47.781964174Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:47.781977133Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: ce904aac-1be3-47dd-a55f-7487fc36e197)',
+2026-01-26T14:43:47.781979603Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: ce904aac-1be3-47dd-a55f-7487fc36e197)\n' +
+2026-01-26T14:43:47.781981963Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:47.781984623Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:47.781987133Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:47.781989843Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:47.781992043Z [err]    queue: 'run-session',
+2026-01-26T14:43:47.781994793Z [err]    worker: 'ce904aac-1be3-47dd-a55f-7487fc36e197'
+2026-01-26T14:43:47.781996893Z [err]  }
+2026-01-26T14:43:47.792230626Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:47.792239456Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 215cf8c8-00ca-4527-b24c-9eca90f24d8f)',
+2026-01-26T14:43:47.792242316Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 215cf8c8-00ca-4527-b24c-9eca90f24d8f)\n' +
+2026-01-26T14:43:47.792245606Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:47.792249066Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:47.792252446Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:47.792255956Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:47.792258956Z [err]    queue: 'run-session',
+2026-01-26T14:43:47.792262335Z [err]    worker: '215cf8c8-00ca-4527-b24c-9eca90f24d8f'
+2026-01-26T14:43:47.792265605Z [err]  }
+2026-01-26T14:43:47.814927720Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:47.814933170Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: c5949eb9-8873-429a-8949-0b4e75e54250)',
+2026-01-26T14:43:47.814936980Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: c5949eb9-8873-429a-8949-0b4e75e54250)\n' +
+2026-01-26T14:43:47.814940780Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:47.814944510Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:47.814948340Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:47.814948480Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:47.814952740Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:47.814956319Z [err]    queue: 'run-session',
+2026-01-26T14:43:47.814959839Z [err]    worker: 'c5949eb9-8873-429a-8949-0b4e75e54250'
+2026-01-26T14:43:47.814965339Z [err]  }
+2026-01-26T14:43:47.814966509Z [err]    message: 'Queue generate-report does not exist (Queue: generate-report, Worker: 794ebfdd-8886-4fec-8cb4-aee6adf6b9a5)',
+2026-01-26T14:43:47.814973789Z [err]    stack: 'Error: Queue generate-report does not exist (Queue: generate-report, Worker: 794ebfdd-8886-4fec-8cb4-aee6adf6b9a5)\n' +
+2026-01-26T14:43:47.814980489Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:47.814986379Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:47.814993909Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:47.815003139Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:47.816047279Z [err]    queue: 'generate-report',
+2026-01-26T14:43:47.816053028Z [err]    worker: '794ebfdd-8886-4fec-8cb4-aee6adf6b9a5'
+2026-01-26T14:43:47.816058128Z [err]  }
+2026-01-26T14:43:47.816062018Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:47.816066398Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: d1a04b0e-7592-462d-8138-bcce8b819a21)',
+2026-01-26T14:43:47.816068038Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:47.816071738Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: d1a04b0e-7592-462d-8138-bcce8b819a21)\n' +
+2026-01-26T14:43:47.816075268Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:47.816079778Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:47.816081848Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:47.816085098Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:47.816088138Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:47.816090818Z [err]    queue: 'run-session',
+2026-01-26T14:43:47.816093128Z [err]    worker: 'd1a04b0e-7592-462d-8138-bcce8b819a21'
+2026-01-26T14:43:47.816096408Z [err]  }
+2026-01-26T14:43:47.816099418Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:47.816102127Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 0cb35392-ae49-495e-a9ba-03505fa92acc)',
+2026-01-26T14:43:47.816104647Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 0cb35392-ae49-495e-a9ba-03505fa92acc)\n' +
+2026-01-26T14:43:47.816107687Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:47.816544109Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:47.816547239Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:47.816549649Z [err]    worker: '0cb35392-ae49-495e-a9ba-03505fa92acc'
+2026-01-26T14:43:47.816551889Z [err]  }
+2026-01-26T14:43:47.828570488Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:47.828573058Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:47.828588107Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:47.828591697Z [err]    message: 'Queue run-test does not exist (Queue: run-test, Worker: 8f9d58ad-b3dc-4550-bcef-fb339327a7e1)',
+2026-01-26T14:43:47.828594637Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:47.828600847Z [err]    stack: 'Error: Queue run-test does not exist (Queue: run-test, Worker: 8f9d58ad-b3dc-4550-bcef-fb339327a7e1)\n' +
+2026-01-26T14:43:47.828602737Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:47.828610517Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:47.828610567Z [err]    queue: 'run-test',
+2026-01-26T14:43:47.828615497Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:47.828618807Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:47.828621527Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:47.828624437Z [err]    queue: 'run-test',
+2026-01-26T14:43:47.828627387Z [err]    worker: '8f9d58ad-b3dc-4550-bcef-fb339327a7e1'
+2026-01-26T14:43:47.828630937Z [err]  }
+2026-01-26T14:43:47.828633946Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:47.828636476Z [err]    message: 'Queue run-test does not exist (Queue: run-test, Worker: f218beda-3d9b-4d9b-adff-594348730776)',
+2026-01-26T14:43:47.828639306Z [err]    stack: 'Error: Queue run-test does not exist (Queue: run-test, Worker: f218beda-3d9b-4d9b-adff-594348730776)\n' +
+2026-01-26T14:43:47.829625067Z [err]    worker: 'f218beda-3d9b-4d9b-adff-594348730776'
+2026-01-26T14:43:47.829628357Z [err]  }
+2026-01-26T14:43:47.835147981Z [err]  ❌ Worker startup failed: error: Queue check-session-timeout not found
+2026-01-26T14:43:47.835151721Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:43:47.835163101Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:43:47.835166961Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:43:47.835171001Z [err]      at async Timekeeper.schedule (/app/node_modules/pg-boss/dist/timekeeper.js:144:13)
+2026-01-26T14:43:47.835174561Z [err]      at async setupCronJobs (/app/workers/cron.ts:19:3)
+2026-01-26T14:43:47.835198450Z [err]      at async Promise.all (index 2)
+2026-01-26T14:43:47.835201940Z [err]      at async main (/app/workers/index.ts:25:5) {
+2026-01-26T14:43:47.835205480Z [err]    length: 265,
+2026-01-26T14:43:47.835208870Z [err]    severity: 'ERROR',
+2026-01-26T14:43:47.835212820Z [err]    code: '23503',
+2026-01-26T14:43:47.835216280Z [err]    detail: 'Key (name)=(check-session-timeout) is not present in table "queue".',
+2026-01-26T14:43:47.835219520Z [err]    hint: undefined,
+2026-01-26T14:43:47.835222780Z [err]    position: undefined,
+2026-01-26T14:43:47.835225740Z [err]    internalPosition: undefined,
+2026-01-26T14:43:47.835229040Z [err]    internalQuery: undefined,
+2026-01-26T14:43:47.835232390Z [err]    where: undefined,
+2026-01-26T14:43:47.835236060Z [err]    schema: 'pgboss',
+2026-01-26T14:43:47.835240070Z [err]    table: 'schedule',
+2026-01-26T14:43:47.835243200Z [err]    column: undefined,
+2026-01-26T14:43:47.835246470Z [err]    dataType: undefined,
+2026-01-26T14:43:47.835249409Z [err]    constraint: 'schedule_name_fkey',
+2026-01-26T14:43:47.835252739Z [err]    file: 'ri_triggers.c',
+2026-01-26T14:43:47.835256029Z [err]    line: '2599',
+2026-01-26T14:43:47.835259699Z [err]    routine: 'ri_ReportViolation'
+2026-01-26T14:43:47.835764870Z [err]  }
+2026-01-26T14:43:48.492818662Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:48.503870399Z [inf]  
+2026-01-26T14:43:48.503874299Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:43:48.503876949Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:43:48.503879649Z [inf]  
+2026-01-26T14:43:48.569035097Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:48.580364879Z [inf]  
+2026-01-26T14:43:48.580374259Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:43:48.580378099Z [inf]  > tsx workers/index.ts
+2026-01-26T14:43:48.580381849Z [inf]  
+2026-01-26T14:43:48.880521600Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:43:48.880524560Z [inf]     Environment: production
+2026-01-26T14:43:48.999338637Z [inf]  [pg-boss] Started successfully
+2026-01-26T14:43:48.999343316Z [inf]  ✅ pg-boss connected
+2026-01-26T14:43:49.010094500Z [inf]     [report-generator] Registered handler: generate-report
+2026-01-26T14:43:49.010100460Z [inf]     [test-runner] Registered handlers: run-test, generate-personas, run-session
+2026-01-26T14:43:49.042031816Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:49.042034276Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: b5fc4e67-9eaa-40a2-994f-c1e0f87108f0)',
+2026-01-26T14:43:49.042037326Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: b5fc4e67-9eaa-40a2-994f-c1e0f87108f0)\n' +
+2026-01-26T14:43:49.042039936Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:49.042042276Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:49.042044636Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:49.042047256Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:49.042049746Z [err]    queue: 'run-session',
+2026-01-26T14:43:49.042052166Z [err]    worker: 'b5fc4e67-9eaa-40a2-994f-c1e0f87108f0'
+2026-01-26T14:43:49.042054686Z [err]  }
+2026-01-26T14:43:49.053800360Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:49.053803740Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 953e9a7a-6ca0-4687-a6cd-04c53336ea1f)',
+2026-01-26T14:43:49.053807290Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 953e9a7a-6ca0-4687-a6cd-04c53336ea1f)\n' +
+2026-01-26T14:43:49.053812470Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:49.053816310Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:49.053820029Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:49.053823679Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:49.053830079Z [err]    queue: 'run-session',
+2026-01-26T14:43:49.053834219Z [err]    worker: '953e9a7a-6ca0-4687-a6cd-04c53336ea1f'
+2026-01-26T14:43:49.053837679Z [err]  }
+2026-01-26T14:43:49.076191540Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:49.076196419Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: d0d3f715-59d9-487c-a910-4b7b97bd9bf3)',
+2026-01-26T14:43:49.076199489Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: d0d3f715-59d9-487c-a910-4b7b97bd9bf3)\n' +
+2026-01-26T14:43:49.076202629Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:49.076205369Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:49.076209029Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:49.076212129Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:49.076215129Z [err]    queue: 'run-session',
+2026-01-26T14:43:49.076219209Z [err]    worker: 'd0d3f715-59d9-487c-a910-4b7b97bd9bf3'
+2026-01-26T14:43:49.076221829Z [err]  }
+2026-01-26T14:43:49.078776790Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:49.078783460Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 2159d6a8-37a0-4484-8c57-81198fdaf91a)',
+2026-01-26T14:43:49.078787109Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 2159d6a8-37a0-4484-8c57-81198fdaf91a)\n' +
+2026-01-26T14:43:49.078801979Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:49.078805139Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:49.078808459Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:49.078811369Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:49.078814719Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:49.078818729Z [err]    worker: '2159d6a8-37a0-4484-8c57-81198fdaf91a'
+2026-01-26T14:43:49.078823419Z [err]  }
+2026-01-26T14:43:49.078826379Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:49.078830419Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: b0863671-b271-4956-8f90-22157384b497)',
+2026-01-26T14:43:49.078833309Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: b0863671-b271-4956-8f90-22157384b497)\n' +
+2026-01-26T14:43:49.078836219Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:49.078839758Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:49.078843228Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:49.078846658Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:49.079706402Z [err]    queue: 'run-session',
+2026-01-26T14:43:49.079711812Z [err]    worker: 'b0863671-b271-4956-8f90-22157384b497'
+2026-01-26T14:43:49.079716422Z [err]  }
+2026-01-26T14:43:49.086427733Z [err]    internalQuery: undefined,
+2026-01-26T14:43:49.086432363Z [err]    where: undefined,
+2026-01-26T14:43:49.086436152Z [err]    schema: 'pgboss',
+2026-01-26T14:43:49.086439612Z [err]  ❌ Worker startup failed: error: Queue check-session-timeout not found
+2026-01-26T14:43:49.086439932Z [err]    table: 'schedule',
+2026-01-26T14:43:49.086443592Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:43:49.086444152Z [err]    column: undefined,
+2026-01-26T14:43:49.086447782Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:43:49.086448022Z [err]    dataType: undefined,
+2026-01-26T14:43:49.086451922Z [err]    constraint: 'schedule_name_fkey',
+2026-01-26T14:43:49.086452592Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:43:49.086455552Z [err]    file: 'ri_triggers.c',
+2026-01-26T14:43:49.086456412Z [err]      at async Timekeeper.schedule (/app/node_modules/pg-boss/dist/timekeeper.js:144:13)
+2026-01-26T14:43:49.086459472Z [err]    line: '2599',
+2026-01-26T14:43:49.086459882Z [err]      at async setupCronJobs (/app/workers/cron.ts:19:3)
+2026-01-26T14:43:49.086463382Z [err]    routine: 'ri_ReportViolation'
+2026-01-26T14:43:49.086463412Z [err]      at async Promise.all (index 2)
+2026-01-26T14:43:49.086466722Z [err]      at async main (/app/workers/index.ts:25:5) {
+2026-01-26T14:43:49.086469882Z [err]    length: 265,
+2026-01-26T14:43:49.086473622Z [err]    severity: 'ERROR',
+2026-01-26T14:43:49.086476392Z [err]    code: '23503',
+2026-01-26T14:43:49.086479552Z [err]    detail: 'Key (name)=(check-session-timeout) is not present in table "queue".',
+2026-01-26T14:43:49.086482802Z [err]    hint: undefined,
+2026-01-26T14:43:49.086485782Z [err]    position: undefined,
+2026-01-26T14:43:49.086489011Z [err]    internalPosition: undefined,
+2026-01-26T14:43:49.086944463Z [err]  }
+2026-01-26T14:43:49.697340731Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:43:49.697346641Z [inf]  
+2026-01-26T14:43:49.697365470Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:49.697377700Z [inf]  
+2026-01-26T14:43:49.697385390Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:43:49.707271630Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:49.723141935Z [inf]  
+2026-01-26T14:43:49.723145695Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:43:49.723148335Z [inf]  > tsx workers/index.ts
+2026-01-26T14:43:49.723151575Z [inf]  
+2026-01-26T14:43:50.012486872Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:43:50.012489972Z [inf]     Environment: production
+2026-01-26T14:43:50.134950149Z [inf]  [pg-boss] Started successfully
+2026-01-26T14:43:50.134954599Z [inf]  ✅ pg-boss connected
+2026-01-26T14:43:50.139970242Z [inf]     [report-generator] Registered handler: generate-report
+2026-01-26T14:43:50.139973022Z [inf]     [test-runner] Registered handlers: run-test, generate-personas, run-session
+2026-01-26T14:43:50.179202208Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:50.179217128Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 985863fb-e597-43b5-a6cf-f656317d1f0e)',
+2026-01-26T14:43:50.179221968Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 985863fb-e597-43b5-a6cf-f656317d1f0e)\n' +
+2026-01-26T14:43:50.179225747Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:50.179230167Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:50.179234107Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:50.179237587Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:50.179245537Z [err]    worker: '8f135ad1-e3dc-4880-a3f9-2bc9f9d7bfb8'
+2026-01-26T14:43:50.179248717Z [err]    queue: 'run-session',
+2026-01-26T14:43:50.179253167Z [err]  }
+2026-01-26T14:43:50.179255357Z [err]    worker: '985863fb-e597-43b5-a6cf-f656317d1f0e'
+2026-01-26T14:43:50.179259457Z [err]  }
+2026-01-26T14:43:50.179264667Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:50.179268307Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 8f135ad1-e3dc-4880-a3f9-2bc9f9d7bfb8)',
+2026-01-26T14:43:50.179272537Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 8f135ad1-e3dc-4880-a3f9-2bc9f9d7bfb8)\n' +
+2026-01-26T14:43:50.179276276Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:50.179279706Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:50.179283356Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:50.179287646Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:50.179291526Z [err]    queue: 'run-session',
+2026-01-26T14:43:50.190935872Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:50.190940782Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 03b61e95-978d-49fb-a340-863276261c5b)',
+2026-01-26T14:43:50.190943422Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 03b61e95-978d-49fb-a340-863276261c5b)\n' +
+2026-01-26T14:43:50.190946702Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:50.190949292Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:50.190951872Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:50.190954492Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:50.190958662Z [err]    queue: 'run-session',
+2026-01-26T14:43:50.190962192Z [err]    worker: '03b61e95-978d-49fb-a340-863276261c5b'
+2026-01-26T14:43:50.190965182Z [err]  }
+2026-01-26T14:43:50.202188796Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:50.202193496Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: d64d96a8-42a8-438a-8bb8-defec3657d2f)',
+2026-01-26T14:43:50.202196366Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: d64d96a8-42a8-438a-8bb8-defec3657d2f)\n' +
+2026-01-26T14:43:50.202199126Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:50.202202246Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:50.202205106Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:50.202208106Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:50.202210606Z [err]    queue: 'run-session',
+2026-01-26T14:43:50.202213026Z [err]    worker: 'd64d96a8-42a8-438a-8bb8-defec3657d2f'
+2026-01-26T14:43:50.202215436Z [err]  }
+2026-01-26T14:43:50.207165020Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:50.207171400Z [err]    message: 'Queue run-test does not exist (Queue: run-test, Worker: d229ffc7-54a7-4e18-9361-40956da112b3)',
+2026-01-26T14:43:50.207174680Z [err]    stack: 'Error: Queue run-test does not exist (Queue: run-test, Worker: d229ffc7-54a7-4e18-9361-40956da112b3)\n' +
+2026-01-26T14:43:50.207178560Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:50.207182110Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:50.207185390Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:50.207188500Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:50.207191930Z [err]    queue: 'run-test',
+2026-01-26T14:43:50.207195120Z [err]    worker: 'd229ffc7-54a7-4e18-9361-40956da112b3'
+2026-01-26T14:43:50.207197630Z [err]  }
+2026-01-26T14:43:50.208445346Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:50.208448726Z [err]    message: 'Queue run-test does not exist (Queue: run-test, Worker: a6f8d342-fdc5-4b59-9c5d-4db621545a98)',
+2026-01-26T14:43:50.208451706Z [err]    stack: 'Error: Queue run-test does not exist (Queue: run-test, Worker: a6f8d342-fdc5-4b59-9c5d-4db621545a98)\n' +
+2026-01-26T14:43:50.208454276Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:50.208457185Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:50.208460105Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:50.208463005Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:50.208465635Z [err]    queue: 'run-test',
+2026-01-26T14:43:50.208468395Z [err]    worker: 'a6f8d342-fdc5-4b59-9c5d-4db621545a98'
+2026-01-26T14:43:50.208471245Z [err]  }
+2026-01-26T14:43:50.208473705Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:50.208476815Z [err]    message: 'Queue generate-report does not exist (Queue: generate-report, Worker: eb49bbd2-b1ba-4904-9a7a-45afff39dee3)',
+2026-01-26T14:43:50.208479505Z [err]    stack: 'Error: Queue generate-report does not exist (Queue: generate-report, Worker: eb49bbd2-b1ba-4904-9a7a-45afff39dee3)\n' +
+2026-01-26T14:43:50.208482185Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:50.208485205Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:50.208487825Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:50.208490585Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:50.208494215Z [err]    queue: 'generate-report',
+2026-01-26T14:43:50.209484856Z [err]    worker: 'eb49bbd2-b1ba-4904-9a7a-45afff39dee3'
+2026-01-26T14:43:50.209488886Z [err]  }
+2026-01-26T14:43:50.220561733Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:50.220564463Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 4cca57c2-f602-465c-b20a-e6c25a0a1740)',
+2026-01-26T14:43:50.220566783Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 4cca57c2-f602-465c-b20a-e6c25a0a1740)\n' +
+2026-01-26T14:43:50.220569893Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:50.220573403Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:50.220575943Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:50.220591503Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:50.220594293Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:50.220596852Z [err]    worker: '4cca57c2-f602-465c-b20a-e6c25a0a1740'
+2026-01-26T14:43:50.220599922Z [err]  }
+2026-01-26T14:43:50.220602582Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:50.220605172Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: baa9842a-b145-46f2-91fc-6b03f47d23f2)',
+2026-01-26T14:43:50.220607652Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: baa9842a-b145-46f2-91fc-6b03f47d23f2)\n' +
+2026-01-26T14:43:50.220609812Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:50.220612002Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:50.220614712Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:50.220617252Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:50.221307729Z [err]    queue: 'run-session',
+2026-01-26T14:43:50.221311349Z [err]    worker: 'baa9842a-b145-46f2-91fc-6b03f47d23f2'
+2026-01-26T14:43:50.221315689Z [err]  }
+2026-01-26T14:43:50.221319019Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:50.221322598Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 2b7628b8-9fc8-4bb6-86a0-c9ca73c7de59)',
+2026-01-26T14:43:50.221325748Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 2b7628b8-9fc8-4bb6-86a0-c9ca73c7de59)\n' +
+2026-01-26T14:43:50.221329278Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:50.221332188Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:50.221334938Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:50.221338188Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:50.221342008Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:50.221345168Z [err]    worker: '2b7628b8-9fc8-4bb6-86a0-c9ca73c7de59'
+2026-01-26T14:43:50.221348908Z [err]  }
+2026-01-26T14:43:50.232102401Z [err]    position: undefined,
+2026-01-26T14:43:50.232108991Z [err]    internalPosition: undefined,
+2026-01-26T14:43:50.232113001Z [err]    internalQuery: undefined,
+2026-01-26T14:43:50.232116301Z [err]    where: undefined,
+2026-01-26T14:43:50.232119501Z [err]    schema: 'pgboss',
+2026-01-26T14:43:50.232123101Z [err]    table: 'schedule',
+2026-01-26T14:43:50.232126121Z [err]    column: undefined,
+2026-01-26T14:43:50.232129671Z [err]    dataType: undefined,
+2026-01-26T14:43:50.232132751Z [err]    constraint: 'schedule_name_fkey',
+2026-01-26T14:43:50.232136261Z [err]    file: 'ri_triggers.c',
+2026-01-26T14:43:50.232139610Z [err]    line: '2599',
+2026-01-26T14:43:50.232142950Z [err]    routine: 'ri_ReportViolation'
+2026-01-26T14:43:50.232150100Z [err]  ❌ Worker startup failed: error: Queue check-session-timeout not found
+2026-01-26T14:43:50.232153210Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:43:50.232156880Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:43:50.232160670Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:43:50.232164050Z [err]      at async Timekeeper.schedule (/app/node_modules/pg-boss/dist/timekeeper.js:144:13)
+2026-01-26T14:43:50.232167640Z [err]      at async setupCronJobs (/app/workers/cron.ts:19:3)
+2026-01-26T14:43:50.232171070Z [err]      at async Promise.all (index 2)
+2026-01-26T14:43:50.232174000Z [err]      at async main (/app/workers/index.ts:25:5) {
+2026-01-26T14:43:50.232177060Z [err]    length: 265,
+2026-01-26T14:43:50.232180420Z [err]    severity: 'ERROR',
+2026-01-26T14:43:50.232183360Z [err]    code: '23503',
+2026-01-26T14:43:50.232186660Z [err]    detail: 'Key (name)=(check-session-timeout) is not present in table "queue".',
+2026-01-26T14:43:50.232189909Z [err]    hint: undefined,
+2026-01-26T14:43:50.232977814Z [err]  }
+2026-01-26T14:43:50.736318409Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:50.736331589Z [inf]  
+2026-01-26T14:43:50.736336279Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:43:50.736340219Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:43:50.736345529Z [inf]  
+2026-01-26T14:43:50.788799271Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:50.793963361Z [inf]  
+2026-01-26T14:43:50.793967871Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:43:50.793970901Z [inf]  > tsx workers/index.ts
+2026-01-26T14:43:50.793973811Z [inf]  
+2026-01-26T14:43:51.068623762Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:43:51.068626482Z [inf]     Environment: production
+2026-01-26T14:43:51.219432503Z [inf]  [pg-boss] Started successfully
+2026-01-26T14:43:51.219436423Z [inf]  ✅ pg-boss connected
+2026-01-26T14:43:51.235054813Z [inf]     [report-generator] Registered handler: generate-report
+2026-01-26T14:43:51.235057213Z [inf]     [test-runner] Registered handlers: run-test, generate-personas, run-session
+2026-01-26T14:43:51.270752236Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:51.270754446Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 67be1ec5-1ef7-43f3-a7a9-15004ef6ad56)',
+2026-01-26T14:43:51.270757676Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 67be1ec5-1ef7-43f3-a7a9-15004ef6ad56)\n' +
+2026-01-26T14:43:51.270760866Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:51.270763006Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:51.270765206Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:51.270767486Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:51.270769666Z [err]    queue: 'run-session',
+2026-01-26T14:43:51.270771816Z [err]    worker: '67be1ec5-1ef7-43f3-a7a9-15004ef6ad56'
+2026-01-26T14:43:51.270774076Z [err]  }
+2026-01-26T14:43:51.282685467Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:51.282687817Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: edc21167-5afc-4f77-b8f3-ab7b284b7a10)',
+2026-01-26T14:43:51.282689997Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: edc21167-5afc-4f77-b8f3-ab7b284b7a10)\n' +
+2026-01-26T14:43:51.282692567Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:51.282695177Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:51.282697317Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:51.282699747Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:51.282702087Z [err]    queue: 'run-session',
+2026-01-26T14:43:51.282704197Z [err]    worker: 'edc21167-5afc-4f77-b8f3-ab7b284b7a10'
+2026-01-26T14:43:51.282706587Z [err]  }
+2026-01-26T14:43:51.299370077Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:51.299372366Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 566b39dd-f866-46f0-8e73-df7fbdb2ccd1)',
+2026-01-26T14:43:51.299375146Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 566b39dd-f866-46f0-8e73-df7fbdb2ccd1)\n' +
+2026-01-26T14:43:51.299377596Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:51.299379846Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:51.299382466Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:51.299384926Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:51.299388126Z [err]    queue: 'run-session',
+2026-01-26T14:43:51.299390886Z [err]    worker: '566b39dd-f866-46f0-8e73-df7fbdb2ccd1'
+2026-01-26T14:43:51.299393196Z [err]  }
+2026-01-26T14:43:51.304818061Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:51.304821691Z [err]    message: 'Queue run-test does not exist (Queue: run-test, Worker: 0e839c2f-5140-43bd-99db-cc3b5dc2cf12)',
+2026-01-26T14:43:51.304825851Z [err]    stack: 'Error: Queue run-test does not exist (Queue: run-test, Worker: 0e839c2f-5140-43bd-99db-cc3b5dc2cf12)\n' +
+2026-01-26T14:43:51.304830641Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:51.304835391Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:51.304840601Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:51.304845771Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:51.304849581Z [err]    queue: 'run-test',
+2026-01-26T14:43:51.304853561Z [err]    worker: '0e839c2f-5140-43bd-99db-cc3b5dc2cf12'
+2026-01-26T14:43:51.304857131Z [err]  }
+2026-01-26T14:43:51.310454333Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:51.310458793Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 73750c2d-a978-4329-8f34-7ef1b195371e)',
+2026-01-26T14:43:51.310462323Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 73750c2d-a978-4329-8f34-7ef1b195371e)\n' +
+2026-01-26T14:43:51.310465893Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:51.310469723Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:51.310473503Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:51.310477443Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:51.310481203Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:51.310485693Z [err]    worker: '73750c2d-a978-4329-8f34-7ef1b195371e'
+2026-01-26T14:43:51.310489083Z [err]  }
+2026-01-26T14:43:51.311187549Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:51.311191669Z [err]    message: 'Queue generate-report does not exist (Queue: generate-report, Worker: f94a6a72-0ab7-401f-a242-537e0bde89d4)',
+2026-01-26T14:43:51.311195659Z [err]    stack: 'Error: Queue generate-report does not exist (Queue: generate-report, Worker: f94a6a72-0ab7-401f-a242-537e0bde89d4)\n' +
+2026-01-26T14:43:51.311199099Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:51.311202719Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:51.311206129Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:51.311209469Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:51.311213009Z [err]    queue: 'generate-report',
+2026-01-26T14:43:51.311216289Z [err]    worker: 'f94a6a72-0ab7-401f-a242-537e0bde89d4'
+2026-01-26T14:43:51.311219539Z [err]  }
+2026-01-26T14:43:51.316350850Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:51.316353590Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 4c8919c6-c66a-4ac2-9c14-ac974fcf6d56)',
+2026-01-26T14:43:51.316357060Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 4c8919c6-c66a-4ac2-9c14-ac974fcf6d56)\n' +
+2026-01-26T14:43:51.316361170Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:51.316364860Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:51.316367970Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:51.316370780Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:51.316373830Z [err]    queue: 'run-session',
+2026-01-26T14:43:51.316376740Z [err]    worker: '4c8919c6-c66a-4ac2-9c14-ac974fcf6d56'
+2026-01-26T14:43:51.316379650Z [err]  }
+2026-01-26T14:43:51.316382669Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:51.316385529Z [err]    message: 'Queue run-test does not exist (Queue: run-test, Worker: 731c4216-b9cc-4457-bc4e-4a579f7736db)',
+2026-01-26T14:43:51.316388599Z [err]    stack: 'Error: Queue run-test does not exist (Queue: run-test, Worker: 731c4216-b9cc-4457-bc4e-4a579f7736db)\n' +
+2026-01-26T14:43:51.316391489Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:51.316394319Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:51.316397039Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:51.316399639Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:51.316402859Z [err]    queue: 'run-test',
+2026-01-26T14:43:51.317093036Z [err]    worker: '731c4216-b9cc-4457-bc4e-4a579f7736db'
+2026-01-26T14:43:51.317097016Z [err]  }
+2026-01-26T14:43:51.318254213Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:51.318258383Z [err]    message: 'Queue generate-report does not exist (Queue: generate-report, Worker: 7622abc4-68aa-4684-8d9f-ca5e33ab3aba)',
+2026-01-26T14:43:51.318260833Z [err]    stack: 'Error: Queue generate-report does not exist (Queue: generate-report, Worker: 7622abc4-68aa-4684-8d9f-ca5e33ab3aba)\n' +
+2026-01-26T14:43:51.318263293Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:51.318266473Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:51.318269493Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:51.318271663Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:51.318274133Z [err]    queue: 'generate-report',
+2026-01-26T14:43:51.318276533Z [err]    worker: '7622abc4-68aa-4684-8d9f-ca5e33ab3aba'
+2026-01-26T14:43:51.318279353Z [err]  }
+2026-01-26T14:43:51.323797357Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:51.323799797Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 08ea30cc-cbe1-4883-baeb-a61bb25833b9)',
+2026-01-26T14:43:51.323801987Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 08ea30cc-cbe1-4883-baeb-a61bb25833b9)\n' +
+2026-01-26T14:43:51.323804107Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:51.323806297Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:51.323808506Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:51.323811496Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:51.323813776Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:51.323816326Z [err]    worker: '08ea30cc-cbe1-4883-baeb-a61bb25833b9'
+2026-01-26T14:43:51.323818376Z [err]  }
+2026-01-26T14:43:51.325005774Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:51.325010103Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: c161fedb-ef74-4424-b696-8a03e0db76cf)',
+2026-01-26T14:43:51.325013013Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: c161fedb-ef74-4424-b696-8a03e0db76cf)\n' +
+2026-01-26T14:43:51.325015653Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:51.325018203Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:51.325020513Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:51.325022843Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:51.325025223Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:51.325027493Z [err]    worker: 'c161fedb-ef74-4424-b696-8a03e0db76cf'
+2026-01-26T14:43:51.325029613Z [err]  }
+2026-01-26T14:43:51.330713884Z [err]    position: undefined,
+2026-01-26T14:43:51.330723404Z [err]    internalPosition: undefined,
+2026-01-26T14:43:51.330727984Z [err]  ❌ Worker startup failed: error: Queue check-session-timeout not found
+2026-01-26T14:43:51.330732664Z [err]    internalQuery: undefined,
+2026-01-26T14:43:51.330737524Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:43:51.330742143Z [err]    where: undefined,
+2026-01-26T14:43:51.330745233Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:43:51.330749343Z [err]    schema: 'pgboss',
+2026-01-26T14:43:51.330752913Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:43:51.330757413Z [err]    table: 'schedule',
+2026-01-26T14:43:51.330760103Z [err]      at async Timekeeper.schedule (/app/node_modules/pg-boss/dist/timekeeper.js:144:13)
+2026-01-26T14:43:51.330765403Z [err]    column: undefined,
+2026-01-26T14:43:51.330766963Z [err]      at async setupCronJobs (/app/workers/cron.ts:19:3)
+2026-01-26T14:43:51.330771853Z [err]    dataType: undefined,
+2026-01-26T14:43:51.330772663Z [err]      at async Promise.all (index 2)
+2026-01-26T14:43:51.330779563Z [err]    constraint: 'schedule_name_fkey',
+2026-01-26T14:43:51.330779763Z [err]      at async main (/app/workers/index.ts:25:5) {
+2026-01-26T14:43:51.330788193Z [err]    length: 265,
+2026-01-26T14:43:51.330788773Z [err]    file: 'ri_triggers.c',
+2026-01-26T14:43:51.330794752Z [err]    severity: 'ERROR',
+2026-01-26T14:43:51.330797682Z [err]    line: '2599',
+2026-01-26T14:43:51.330800672Z [err]    code: '23503',
+2026-01-26T14:43:51.330806622Z [err]    detail: 'Key (name)=(check-session-timeout) is not present in table "queue".',
+2026-01-26T14:43:51.330807892Z [err]    routine: 'ri_ReportViolation'
+2026-01-26T14:43:51.330811762Z [err]    hint: undefined,
+2026-01-26T14:43:51.331964880Z [err]  }
+2026-01-26T14:43:51.790423067Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:51.804998297Z [inf]  
+2026-01-26T14:43:51.805000747Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:43:51.805003297Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:43:51.805006007Z [inf]  
+2026-01-26T14:43:51.871272963Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:43:51.891459845Z [inf]  
+2026-01-26T14:43:51.891462805Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:43:51.891465575Z [inf]  > tsx workers/index.ts
+2026-01-26T14:43:51.891468145Z [inf]  
+2026-01-26T14:43:52.163961997Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:43:52.163966736Z [inf]     Environment: production
+2026-01-26T14:43:52.304162681Z [inf]  [pg-boss] Started successfully
+2026-01-26T14:43:52.304168191Z [inf]  ✅ pg-boss connected
+2026-01-26T14:43:52.316246759Z [inf]     [report-generator] Registered handler: generate-report
+2026-01-26T14:43:52.316252929Z [inf]     [test-runner] Registered handlers: run-test, generate-personas, run-session
+2026-01-26T14:43:52.355617622Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:52.355621272Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: dd6f6a18-2060-4fa8-9c8d-2eb1cb9bac9c)',
+2026-01-26T14:43:52.355624682Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: dd6f6a18-2060-4fa8-9c8d-2eb1cb9bac9c)\n' +
+2026-01-26T14:43:52.355628392Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:52.355632282Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:52.355640832Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:52.355644142Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:52.355647521Z [err]    queue: 'run-session',
+2026-01-26T14:43:52.355651791Z [err]    worker: 'dd6f6a18-2060-4fa8-9c8d-2eb1cb9bac9c'
+2026-01-26T14:43:52.355655011Z [err]  }
+2026-01-26T14:43:52.360268603Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:52.360272553Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 854fe72c-e0a5-4190-a334-948ac59b0a4f)',
+2026-01-26T14:43:52.360275773Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 854fe72c-e0a5-4190-a334-948ac59b0a4f)\n' +
+2026-01-26T14:43:52.360278722Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:52.360281302Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:52.360283622Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:52.360286372Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:52.360289262Z [err]    queue: 'run-session',
+2026-01-26T14:43:52.360291782Z [err]    worker: '854fe72c-e0a5-4190-a334-948ac59b0a4f'
+2026-01-26T14:43:52.360294712Z [err]  }
+2026-01-26T14:43:52.371673423Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:52.371676883Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 503206ef-7123-4baf-ba2a-6b3ae928e5de)',
+2026-01-26T14:43:52.371679553Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 503206ef-7123-4baf-ba2a-6b3ae928e5de)\n' +
+2026-01-26T14:43:52.371683433Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:52.371687303Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:52.371689993Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:52.371692393Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:52.371694893Z [err]    queue: 'run-session',
+2026-01-26T14:43:52.371697113Z [err]    worker: '503206ef-7123-4baf-ba2a-6b3ae928e5de'
+2026-01-26T14:43:52.371699573Z [err]  }
+2026-01-26T14:43:52.382766530Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:52.382775440Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: ff2a1623-42a1-49a1-a34e-d715dac23feb)',
+2026-01-26T14:43:52.382781150Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: ff2a1623-42a1-49a1-a34e-d715dac23feb)\n' +
+2026-01-26T14:43:52.382785450Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:52.382789020Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:52.382797300Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:52.382800600Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:52.382804500Z [err]    queue: 'run-session',
+2026-01-26T14:43:52.382808210Z [err]    worker: 'ff2a1623-42a1-49a1-a34e-d715dac23feb'
+2026-01-26T14:43:52.382812309Z [err]  }
+2026-01-26T14:43:52.395037424Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:52.395042284Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 5f110803-b5ca-4ef8-9b54-c5526b9c0a83)',
+2026-01-26T14:43:52.395046564Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 5f110803-b5ca-4ef8-9b54-c5526b9c0a83)\n' +
+2026-01-26T14:43:52.395049264Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:52.395052064Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:52.395054574Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:52.395056824Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:52.395061154Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:52.395063674Z [err]    worker: '5f110803-b5ca-4ef8-9b54-c5526b9c0a83'
+2026-01-26T14:43:52.395065924Z [err]  }
+2026-01-26T14:43:52.395068254Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:52.395071164Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 94e5011d-fcd6-49fb-99c6-4ccde53b5e4e)',
+2026-01-26T14:43:52.395073484Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 94e5011d-fcd6-49fb-99c6-4ccde53b5e4e)\n' +
+2026-01-26T14:43:52.395075924Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:52.395078334Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:52.395081174Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:52.395083384Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:52.395777780Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:52.395784040Z [err]    worker: '94e5011d-fcd6-49fb-99c6-4ccde53b5e4e'
+2026-01-26T14:43:52.395791540Z [err]  }
+2026-01-26T14:43:52.395794980Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:52.395798060Z [err]    message: 'Queue generate-report does not exist (Queue: generate-report, Worker: 5886ab29-7d99-401e-8950-9a9107078cb0)',
+2026-01-26T14:43:52.395801000Z [err]    stack: 'Error: Queue generate-report does not exist (Queue: generate-report, Worker: 5886ab29-7d99-401e-8950-9a9107078cb0)\n' +
+2026-01-26T14:43:52.395804010Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:52.395806960Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:52.395809700Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:52.395813339Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:52.395816139Z [err]    queue: 'generate-report',
+2026-01-26T14:43:52.395819009Z [err]    worker: '5886ab29-7d99-401e-8950-9a9107078cb0'
+2026-01-26T14:43:52.395822199Z [err]  }
+2026-01-26T14:43:52.396867759Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:52.396872539Z [err]    message: 'Queue generate-personas does not exist (Queue: generate-personas, Worker: 757d6bc3-3293-4bdc-95ad-181097804dc7)',
+2026-01-26T14:43:52.396876299Z [err]    stack: 'Error: Queue generate-personas does not exist (Queue: generate-personas, Worker: 757d6bc3-3293-4bdc-95ad-181097804dc7)\n' +
+2026-01-26T14:43:52.396881009Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:52.396884509Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:52.396887909Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:52.396891389Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:52.396895439Z [err]    queue: 'generate-personas',
+2026-01-26T14:43:52.396900199Z [err]    worker: '757d6bc3-3293-4bdc-95ad-181097804dc7'
+2026-01-26T14:43:52.396905179Z [err]  }
+2026-01-26T14:43:52.407382007Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:52.407386857Z [err]    message: 'Queue run-session does not exist (Queue: run-session, Worker: 4d7806e9-0f5d-4be0-a795-3a4f0291f0e9)',
+2026-01-26T14:43:52.407389297Z [err]    stack: 'Error: Queue run-session does not exist (Queue: run-session, Worker: 4d7806e9-0f5d-4be0-a795-3a4f0291f0e9)\n' +
+2026-01-26T14:43:52.407391727Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:52.407394407Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:52.407397227Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:52.407399857Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:52.407402477Z [err]    queue: 'run-session',
+2026-01-26T14:43:52.407404867Z [err]    worker: '4d7806e9-0f5d-4be0-a795-3a4f0291f0e9'
+2026-01-26T14:43:52.407407636Z [err]  }
+2026-01-26T14:43:52.407410416Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:52.407413956Z [err]    message: 'Queue generate-report does not exist (Queue: generate-report, Worker: 5ff23aa5-d833-4479-8a46-ffa3e8c8db75)',
+2026-01-26T14:43:52.407416736Z [err]    stack: 'Error: Queue generate-report does not exist (Queue: generate-report, Worker: 5ff23aa5-d833-4479-8a46-ffa3e8c8db75)\n' +
+2026-01-26T14:43:52.407419076Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:52.407421626Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:52.407424866Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:52.407427536Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:52.408570134Z [err]    queue: 'generate-report',
+2026-01-26T14:43:52.408575004Z [err]    worker: '5ff23aa5-d833-4479-8a46-ffa3e8c8db75'
+2026-01-26T14:43:52.408578044Z [err]  }
+2026-01-26T14:43:52.408578934Z [err]    worker: '64f9f1b7-ef73-4354-a1da-40763cf73f9c'
+2026-01-26T14:43:52.408590034Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:52.408592994Z [err]    message: 'Queue run-test does not exist (Queue: run-test, Worker: 64f9f1b7-ef73-4354-a1da-40763cf73f9c)',
+2026-01-26T14:43:52.408593244Z [err]  }
+2026-01-26T14:43:52.408596254Z [err]    stack: 'Error: Queue run-test does not exist (Queue: run-test, Worker: 64f9f1b7-ef73-4354-a1da-40763cf73f9c)\n' +
+2026-01-26T14:43:52.408600184Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:52.408603114Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:52.408605403Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:52.408608163Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:52.408611083Z [err]    queue: 'run-test',
+2026-01-26T14:43:52.409504196Z [err]  [pg-boss] Error: {
+2026-01-26T14:43:52.409508026Z [err]    message: 'Queue run-test does not exist (Queue: run-test, Worker: 835727f2-20fe-4421-9cdd-043b2fb7eb71)',
+2026-01-26T14:43:52.409511546Z [err]    stack: 'Error: Queue run-test does not exist (Queue: run-test, Worker: 835727f2-20fe-4421-9cdd-043b2fb7eb71)\n' +
+2026-01-26T14:43:52.409515026Z [err]      '    at Manager.getQueueCache (/app/node_modules/pg-boss/dist/manager.js:215:19)\n' +
+2026-01-26T14:43:52.409519146Z [err]      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+2026-01-26T14:43:52.409522616Z [err]      '    at async Manager.fetch (/app/node_modules/pg-boss/dist/manager.js:484:53)\n' +
+2026-01-26T14:43:52.409529566Z [err]      '    at async Worker.run (/app/node_modules/pg-boss/dist/worker.js:48:30)',
+2026-01-26T14:43:52.409532636Z [err]    queue: 'run-test',
+2026-01-26T14:43:52.409535506Z [err]    worker: '835727f2-20fe-4421-9cdd-043b2fb7eb71'
+2026-01-26T14:43:52.409539036Z [err]  }
+2026-01-26T14:43:52.414455081Z [err]  ❌ Worker startup failed: error: Queue check-session-timeout not found
+2026-01-26T14:43:52.414461831Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:43:52.414465781Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:43:52.414469141Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:43:52.414471601Z [err]      at async Timekeeper.schedule (/app/node_modules/pg-boss/dist/timekeeper.js:144:13)
+2026-01-26T14:43:52.414474281Z [err]      at async setupCronJobs (/app/workers/cron.ts:19:3)
+2026-01-26T14:43:52.414476641Z [err]      at async Promise.all (index 2)
+2026-01-26T14:43:52.414479051Z [err]      at async main (/app/workers/index.ts:25:5) {
+2026-01-26T14:43:52.414481811Z [err]    length: 265,
+2026-01-26T14:43:52.414484731Z [err]    severity: 'ERROR',
+2026-01-26T14:43:52.414486991Z [err]    code: '23503',
+2026-01-26T14:43:52.414489281Z [err]    detail: 'Key (name)=(check-session-timeout) is not present in table "queue".',
+2026-01-26T14:43:52.414492031Z [err]    hint: undefined,
+2026-01-26T14:43:52.414494450Z [err]    position: undefined,
+2026-01-26T14:43:52.414496920Z [err]    internalPosition: undefined,
+2026-01-26T14:43:52.414499260Z [err]    internalQuery: undefined,
+2026-01-26T14:43:52.414501780Z [err]    where: undefined,
+2026-01-26T14:43:52.414505080Z [err]    schema: 'pgboss',
+2026-01-26T14:43:52.414507520Z [err]    table: 'schedule',
+2026-01-26T14:43:52.414510200Z [err]    column: undefined,
+2026-01-26T14:43:52.414512700Z [err]    dataType: undefined,
+2026-01-26T14:43:52.414515230Z [err]    constraint: 'schedule_name_fkey',
+2026-01-26T14:43:52.414517550Z [err]    file: 'ri_triggers.c',
+2026-01-26T14:43:52.414520070Z [err]    line: '2599',
+2026-01-26T14:43:52.414523170Z [err]    routine: 'ri_ReportViolation'
+2026-01-26T14:43:52.415209637Z [err]  }

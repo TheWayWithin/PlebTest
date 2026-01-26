@@ -1,0 +1,245 @@
+2026-01-26T14:18:22.000000000Z [inf]  Starting Container
+2026-01-26T14:18:23.256109075Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:18:23.256113285Z [inf]  
+2026-01-26T14:18:23.256117455Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:18:23.256122062Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:18:23.256126660Z [inf]  
+2026-01-26T14:18:23.256130383Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:18:23.256135060Z [inf]  
+2026-01-26T14:18:23.256139248Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:18:23.256143353Z [inf]  > tsx workers/index.ts
+2026-01-26T14:18:23.256148235Z [inf]  
+2026-01-26T14:18:23.479374870Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:18:23.479381347Z [inf]     Environment: production
+2026-01-26T14:18:43.479859374Z [err]  ❌ Worker startup failed: Error: Connection terminated due to connection timeout
+2026-01-26T14:18:43.479867666Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:18:43.479873485Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:18:43.479879074Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:18:43.479885568Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:18:43.479891432Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:18:43.479898415Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:18:43.479918211Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:18:43.479925855Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:18:43.479935915Z [err]    [cause]: Error: Connection terminated unexpectedly
+2026-01-26T14:18:43.479943477Z [err]        at Connection.<anonymous> (/app/node_modules/pg/lib/client.js:177:73)
+2026-01-26T14:18:43.479950640Z [err]        at Object.onceWrapper (node:events:632:28)
+2026-01-26T14:18:43.479957353Z [err]        at Connection.emit (node:events:518:28)
+2026-01-26T14:18:43.479963275Z [err]        at Socket.<anonymous> (/app/node_modules/pg/lib/connection.js:61:12)
+2026-01-26T14:18:43.479968795Z [err]        at Socket.emit (node:events:518:28)
+2026-01-26T14:18:43.479973955Z [err]        at TCP.<anonymous> (node:net:343:12)
+2026-01-26T14:18:43.479979475Z [err]  }
+2026-01-26T14:18:43.479985180Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:18:43.479992618Z [inf]  
+2026-01-26T14:18:43.479998334Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:18:43.480003979Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:18:43.480014435Z [inf]  
+2026-01-26T14:18:43.480023195Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:18:43.480031325Z [inf]  
+2026-01-26T14:18:43.480039288Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:18:43.480049155Z [inf]  > tsx workers/index.ts
+2026-01-26T14:18:43.480054659Z [inf]  
+2026-01-26T14:18:43.480060725Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:18:43.480066008Z [inf]     Environment: production
+2026-01-26T14:18:44.779322392Z [err]  ❌ Worker startup failed: Error: Connection terminated due to connection timeout
+2026-01-26T14:18:44.779332320Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:18:44.779341120Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:18:44.779350197Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:18:44.779358336Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:18:44.779366635Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:18:44.779372821Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:18:44.779378735Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:18:44.779384521Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:18:44.779390418Z [err]    [cause]: Error: Connection terminated unexpectedly
+2026-01-26T14:18:44.779396003Z [err]        at Connection.<anonymous> (/app/node_modules/pg/lib/client.js:177:73)
+2026-01-26T14:18:44.779401679Z [err]        at Object.onceWrapper (node:events:632:28)
+2026-01-26T14:18:44.779407355Z [err]        at Connection.emit (node:events:518:28)
+2026-01-26T14:18:44.779412941Z [err]        at Socket.<anonymous> (/app/node_modules/pg/lib/connection.js:61:12)
+2026-01-26T14:18:44.779418703Z [err]        at Socket.emit (node:events:518:28)
+2026-01-26T14:18:44.779424971Z [err]        at TCP.<anonymous> (node:net:343:12)
+2026-01-26T14:18:44.779430742Z [err]  }
+2026-01-26T14:18:45.591361735Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:18:45.621631452Z [inf]  
+2026-01-26T14:18:45.621638868Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:18:45.621644051Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:18:45.621648122Z [inf]  
+2026-01-26T14:18:45.745985010Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:18:45.771777010Z [inf]  
+2026-01-26T14:18:45.771787073Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:18:45.771795187Z [inf]  > tsx workers/index.ts
+2026-01-26T14:18:45.771804979Z [inf]  
+2026-01-26T14:18:46.468141445Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:18:46.468148488Z [inf]     Environment: production
+2026-01-26T14:19:06.469381962Z [err]  ❌ Worker startup failed: Error: Connection terminated due to connection timeout
+2026-01-26T14:19:06.469392356Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:19:06.469399573Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:19:06.469406466Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:19:06.469413616Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:19:06.469420671Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:19:06.469428967Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:19:06.469436385Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:19:06.469443779Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:19:06.469451741Z [err]    [cause]: Error: Connection terminated unexpectedly
+2026-01-26T14:19:06.469458761Z [err]        at Connection.<anonymous> (/app/node_modules/pg/lib/client.js:177:73)
+2026-01-26T14:19:06.469465710Z [err]        at Object.onceWrapper (node:events:632:28)
+2026-01-26T14:19:06.469472388Z [err]        at Connection.emit (node:events:518:28)
+2026-01-26T14:19:06.469481025Z [err]        at Socket.<anonymous> (/app/node_modules/pg/lib/connection.js:61:12)
+2026-01-26T14:19:06.469487962Z [err]        at Socket.emit (node:events:518:28)
+2026-01-26T14:19:06.469495551Z [err]        at TCP.<anonymous> (node:net:343:12)
+2026-01-26T14:19:06.469503315Z [err]  }
+2026-01-26T14:19:06.469510297Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:19:06.469517618Z [inf]  
+2026-01-26T14:19:06.469525150Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:19:06.469533116Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:19:06.469548161Z [inf]  
+2026-01-26T14:19:06.469554177Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:19:06.469559882Z [inf]  
+2026-01-26T14:19:06.469567301Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:19:06.469573831Z [inf]  > tsx workers/index.ts
+2026-01-26T14:19:06.469581233Z [inf]  
+2026-01-26T14:19:06.469586873Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:19:06.469592753Z [inf]     Environment: production
+2026-01-26T14:19:08.275165062Z [err]  ❌ Worker startup failed: Error: Connection terminated due to connection timeout
+2026-01-26T14:19:08.275172176Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:19:08.275177217Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:19:08.275184583Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:19:08.275189872Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:19:08.275196911Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:19:08.275201675Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:19:08.275207020Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:19:08.275214500Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:19:08.275221933Z [err]    [cause]: Error: Connection terminated unexpectedly
+2026-01-26T14:19:08.275229612Z [err]        at Connection.<anonymous> (/app/node_modules/pg/lib/client.js:177:73)
+2026-01-26T14:19:08.275237417Z [err]        at Object.onceWrapper (node:events:632:28)
+2026-01-26T14:19:08.275245796Z [err]        at Connection.emit (node:events:518:28)
+2026-01-26T14:19:08.275255325Z [err]        at Socket.<anonymous> (/app/node_modules/pg/lib/connection.js:61:12)
+2026-01-26T14:19:08.275262572Z [err]        at Socket.emit (node:events:518:28)
+2026-01-26T14:19:08.275269417Z [err]        at TCP.<anonymous> (node:net:343:12)
+2026-01-26T14:19:08.275277582Z [err]  }
+2026-01-26T14:19:08.857989223Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:19:08.883442982Z [inf]  
+2026-01-26T14:19:08.883451898Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:19:08.883458498Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:19:08.883464731Z [inf]  
+2026-01-26T14:19:08.988965338Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:19:09.012190563Z [inf]  
+2026-01-26T14:19:09.012203326Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:19:09.012216059Z [inf]  > tsx workers/index.ts
+2026-01-26T14:19:09.012227117Z [inf]  
+2026-01-26T14:19:09.496860807Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:19:09.496868428Z [inf]     Environment: production
+2026-01-26T14:19:29.498016073Z [err]  ❌ Worker startup failed: Error: Connection terminated due to connection timeout
+2026-01-26T14:19:29.498025821Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:19:29.498034658Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:19:29.498043421Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:19:29.498050498Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:19:29.498055965Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:19:29.498060683Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:19:29.498065222Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:19:29.498070637Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:19:29.498074810Z [err]    [cause]: Error: Connection terminated unexpectedly
+2026-01-26T14:19:29.498079371Z [err]        at Connection.<anonymous> (/app/node_modules/pg/lib/client.js:177:73)
+2026-01-26T14:19:29.498083145Z [err]        at Object.onceWrapper (node:events:632:28)
+2026-01-26T14:19:29.498087206Z [err]        at Connection.emit (node:events:518:28)
+2026-01-26T14:19:29.498091336Z [err]        at Socket.<anonymous> (/app/node_modules/pg/lib/connection.js:61:12)
+2026-01-26T14:19:29.498095519Z [err]        at Socket.emit (node:events:518:28)
+2026-01-26T14:19:29.498099515Z [err]        at TCP.<anonymous> (node:net:343:12)
+2026-01-26T14:19:29.498103884Z [err]  }
+2026-01-26T14:19:29.498108869Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:19:29.498113223Z [inf]  
+2026-01-26T14:19:29.498117591Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:19:29.498121934Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:19:29.498131221Z [inf]  
+2026-01-26T14:19:29.498136220Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:19:29.498140548Z [inf]  
+2026-01-26T14:19:29.498145341Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:19:29.498150294Z [inf]  > tsx workers/index.ts
+2026-01-26T14:19:29.498154745Z [inf]  
+2026-01-26T14:19:29.498160091Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:19:29.498164717Z [inf]     Environment: production
+2026-01-26T14:19:30.919742813Z [err]  ❌ Worker startup failed: Error: Connection terminated due to connection timeout
+2026-01-26T14:19:30.919752136Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:19:30.919759171Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:19:30.919765523Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:19:30.919770500Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:19:30.919775405Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:19:30.919779777Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:19:30.919784457Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:19:30.919789458Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:19:30.919793977Z [err]    [cause]: Error: Connection terminated unexpectedly
+2026-01-26T14:19:30.919798044Z [err]        at Connection.<anonymous> (/app/node_modules/pg/lib/client.js:177:73)
+2026-01-26T14:19:30.919802121Z [err]        at Object.onceWrapper (node:events:632:28)
+2026-01-26T14:19:30.919808068Z [err]        at Connection.emit (node:events:518:28)
+2026-01-26T14:19:30.919812000Z [err]        at Socket.<anonymous> (/app/node_modules/pg/lib/connection.js:61:12)
+2026-01-26T14:19:30.919815967Z [err]        at Socket.emit (node:events:518:28)
+2026-01-26T14:19:30.919820147Z [err]        at TCP.<anonymous> (node:net:343:12)
+2026-01-26T14:19:30.919824782Z [err]  }
+2026-01-26T14:19:31.682191285Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:19:31.710530520Z [inf]  
+2026-01-26T14:19:31.710539382Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:19:31.710546937Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:19:31.710553793Z [inf]  
+2026-01-26T14:19:31.833101401Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:19:31.864472823Z [inf]  
+2026-01-26T14:19:31.864480014Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:19:31.864485283Z [inf]  > tsx workers/index.ts
+2026-01-26T14:19:31.864489621Z [inf]  
+2026-01-26T14:19:32.352528356Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:19:32.352535033Z [inf]     Environment: production
+2026-01-26T14:19:52.388464486Z [err]  ❌ Worker startup failed: Error: Connection terminated due to connection timeout
+2026-01-26T14:19:52.388474901Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:19:52.388484458Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:19:52.388492894Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:19:52.388501428Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:19:52.388511012Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:19:52.388518381Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:19:52.388525069Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:19:52.388531921Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:19:52.388538485Z [err]    [cause]: Error: Connection terminated unexpectedly
+2026-01-26T14:19:52.388543486Z [err]        at Connection.<anonymous> (/app/node_modules/pg/lib/client.js:177:73)
+2026-01-26T14:19:52.388547966Z [err]        at Object.onceWrapper (node:events:632:28)
+2026-01-26T14:19:52.388556523Z [err]        at Connection.emit (node:events:518:28)
+2026-01-26T14:19:52.388561242Z [err]        at Socket.<anonymous> (/app/node_modules/pg/lib/connection.js:61:12)
+2026-01-26T14:19:52.388565714Z [err]        at Socket.emit (node:events:518:28)
+2026-01-26T14:19:52.388574704Z [err]        at TCP.<anonymous> (node:net:343:12)
+2026-01-26T14:19:52.388579709Z [err]  }
+2026-01-26T14:19:52.388583854Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:19:52.388589043Z [inf]  
+2026-01-26T14:19:52.388593987Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:19:52.388601224Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:19:52.389159422Z [inf]  
+2026-01-26T14:19:52.389173372Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:19:52.389181948Z [inf]  
+2026-01-26T14:19:52.389189567Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:19:52.389197219Z [inf]  > tsx workers/index.ts
+2026-01-26T14:19:52.389206344Z [inf]  
+2026-01-26T14:19:52.389213919Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:19:52.389225337Z [inf]     Environment: production
+2026-01-26T14:19:54.074855102Z [err]  ❌ Worker startup failed: Error: Connection terminated due to connection timeout
+2026-01-26T14:19:54.074866196Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:19:54.074875084Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:19:54.074879688Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:19:54.074885197Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:19:54.074892199Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:19:54.074897056Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:19:54.074902270Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:19:54.074906641Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:19:54.074911753Z [err]    [cause]: Error: Connection terminated unexpectedly
+2026-01-26T14:19:54.074916576Z [err]        at Connection.<anonymous> (/app/node_modules/pg/lib/client.js:177:73)
+2026-01-26T14:19:54.074921603Z [err]        at Object.onceWrapper (node:events:632:28)
+2026-01-26T14:19:54.074926603Z [err]        at Connection.emit (node:events:518:28)
+2026-01-26T14:19:54.074931534Z [err]        at Socket.<anonymous> (/app/node_modules/pg/lib/connection.js:61:12)
+2026-01-26T14:19:54.074936156Z [err]        at Socket.emit (node:events:518:28)
+2026-01-26T14:19:54.074941266Z [err]        at TCP.<anonymous> (node:net:343:12)
+2026-01-26T14:19:54.074947526Z [err]  }
+2026-01-26T14:19:59.555668194Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:19:59.581146929Z [inf]  
+2026-01-26T14:19:59.581155838Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:19:59.581164221Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:19:59.581171114Z [inf]  
+2026-01-26T14:19:59.686103506Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:19:59.711189765Z [inf]  
+2026-01-26T14:19:59.711200098Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:19:59.711206444Z [inf]  > tsx workers/index.ts
+2026-01-26T14:19:59.711212082Z [inf]  
+2026-01-26T14:20:00.211432149Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:20:00.211441740Z [inf]     Environment: production

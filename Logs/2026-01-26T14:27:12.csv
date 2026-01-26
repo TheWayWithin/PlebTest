@@ -1,0 +1,426 @@
+2026-01-26T14:27:12.000000000Z [inf]  Starting Container
+2026-01-26T14:27:13.622575809Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:13.622584894Z [inf]  
+2026-01-26T14:27:13.622594100Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:27:13.622602613Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:27:13.622609277Z [inf]  
+2026-01-26T14:27:13.622616200Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:13.622622811Z [inf]  
+2026-01-26T14:27:13.622629871Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:27:13.622636084Z [inf]  > tsx workers/index.ts
+2026-01-26T14:27:13.622642582Z [inf]  
+2026-01-26T14:27:15.584055277Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:27:15.584059982Z [inf]     Environment: production
+2026-01-26T14:27:15.584064924Z [err]  ❌ Worker startup failed: error: Tenant or user not found
+2026-01-26T14:27:15.584069523Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:27:15.584074379Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:27:15.584079772Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:27:15.584086530Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:27:15.584091222Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:27:15.584095921Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:27:15.584100274Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:27:15.584105868Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:27:15.584110275Z [err]    length: 52,
+2026-01-26T14:27:15.584115080Z [err]    severity: 'FATAL',
+2026-01-26T14:27:15.584119803Z [err]    code: 'XX000',
+2026-01-26T14:27:15.584125652Z [err]    detail: undefined,
+2026-01-26T14:27:15.584129911Z [err]    hint: undefined,
+2026-01-26T14:27:15.584292624Z [err]    position: undefined,
+2026-01-26T14:27:15.584308554Z [err]    internalPosition: undefined,
+2026-01-26T14:27:15.584317274Z [err]    internalQuery: undefined,
+2026-01-26T14:27:15.584325253Z [err]    where: undefined,
+2026-01-26T14:27:15.584333395Z [err]    schema: undefined,
+2026-01-26T14:27:15.584340229Z [err]    table: undefined,
+2026-01-26T14:27:15.584351753Z [err]    column: undefined,
+2026-01-26T14:27:15.584360527Z [err]    dataType: undefined,
+2026-01-26T14:27:15.584366604Z [err]    constraint: undefined,
+2026-01-26T14:27:17.023331042Z [err]    file: undefined,
+2026-01-26T14:27:17.023338703Z [err]    line: undefined,
+2026-01-26T14:27:17.023345749Z [err]    routine: undefined
+2026-01-26T14:27:17.023351398Z [err]  }
+2026-01-26T14:27:17.023357052Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:17.023364111Z [inf]  
+2026-01-26T14:27:17.023369827Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:27:17.023375443Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:27:17.023380462Z [inf]  
+2026-01-26T14:27:17.023387468Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:17.023393720Z [inf]  
+2026-01-26T14:27:17.023399687Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:27:17.023408364Z [inf]  > tsx workers/index.ts
+2026-01-26T14:27:17.023414314Z [inf]  
+2026-01-26T14:27:18.549471049Z [err]    schema: undefined,
+2026-01-26T14:27:18.549485131Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:27:18.549487601Z [err]    table: undefined,
+2026-01-26T14:27:18.549497825Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:27:18.549501940Z [err]    column: undefined,
+2026-01-26T14:27:18.549514129Z [err]    dataType: undefined,
+2026-01-26T14:27:18.549522805Z [err]    constraint: undefined,
+2026-01-26T14:27:18.549531672Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:27:18.549540775Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:27:18.549554346Z [inf]     Environment: production
+2026-01-26T14:27:18.549558004Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:27:18.549558268Z [err]    severity: 'FATAL',
+2026-01-26T14:27:18.549572033Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:27:18.549574316Z [err]  ❌ Worker startup failed: error: Tenant or user not found
+2026-01-26T14:27:18.549580086Z [err]    internalPosition: undefined,
+2026-01-26T14:27:18.549580290Z [err]    length: 52,
+2026-01-26T14:27:18.549580470Z [err]    hint: undefined,
+2026-01-26T14:27:18.549591630Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:27:18.549598334Z [err]    code: 'XX000',
+2026-01-26T14:27:18.549601900Z [err]    position: undefined,
+2026-01-26T14:27:18.549605382Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:27:18.549613560Z [err]    detail: undefined,
+2026-01-26T14:27:18.549614674Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:27:18.549711626Z [err]    internalQuery: undefined,
+2026-01-26T14:27:18.549724836Z [err]    where: undefined,
+2026-01-26T14:27:20.107738664Z [err]    file: undefined,
+2026-01-26T14:27:20.107746476Z [err]    line: undefined,
+2026-01-26T14:27:20.107755279Z [err]    routine: undefined
+2026-01-26T14:27:20.107765162Z [err]  }
+2026-01-26T14:27:20.107772692Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:20.107779313Z [inf]  
+2026-01-26T14:27:20.107786423Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:27:20.107795215Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:27:20.107801684Z [inf]  
+2026-01-26T14:27:20.107808556Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:20.107839181Z [inf]  
+2026-01-26T14:27:20.107847241Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:27:20.107854498Z [inf]  > tsx workers/index.ts
+2026-01-26T14:27:20.107861730Z [inf]  
+2026-01-26T14:27:20.107875131Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:27:20.107882564Z [inf]     Environment: production
+2026-01-26T14:27:21.746628409Z [err]    severity: 'FATAL',
+2026-01-26T14:27:21.746643794Z [err]    code: 'XX000',
+2026-01-26T14:27:21.746657965Z [err]    detail: undefined,
+2026-01-26T14:27:21.746672261Z [err]    hint: undefined,
+2026-01-26T14:27:21.747070813Z [err]    position: undefined,
+2026-01-26T14:27:21.747089853Z [err]    internalPosition: undefined,
+2026-01-26T14:27:21.747100119Z [err]    internalQuery: undefined,
+2026-01-26T14:27:21.747102640Z [err]  ❌ Worker startup failed: error: Tenant or user not found
+2026-01-26T14:27:21.747109742Z [err]    where: undefined,
+2026-01-26T14:27:21.747113165Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:27:21.747118478Z [err]    schema: undefined,
+2026-01-26T14:27:21.747123128Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:27:21.747129116Z [err]    table: undefined,
+2026-01-26T14:27:21.747133537Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:27:21.747141316Z [err]    column: undefined,
+2026-01-26T14:27:21.747143444Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:27:21.747152069Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:27:21.747154460Z [err]    dataType: undefined,
+2026-01-26T14:27:21.747162941Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:27:21.747164947Z [err]    constraint: undefined,
+2026-01-26T14:27:21.747172596Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:27:21.747175662Z [err]    file: undefined,
+2026-01-26T14:27:21.747185518Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:27:21.747185519Z [err]    line: undefined,
+2026-01-26T14:27:21.747194355Z [err]    length: 52,
+2026-01-26T14:27:22.787785298Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:22.787796400Z [inf]  
+2026-01-26T14:27:22.787815758Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:27:22.787827017Z [inf]  > tsx workers/index.ts
+2026-01-26T14:27:22.787831285Z [err]    routine: undefined
+2026-01-26T14:27:22.787838615Z [err]  }
+2026-01-26T14:27:22.787846596Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:22.787850197Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:27:22.787858233Z [inf]  
+2026-01-26T14:27:22.787862448Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:27:22.787867334Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:27:22.787876122Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:27:22.787877796Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:27:22.787885111Z [inf]  
+2026-01-26T14:27:22.787888910Z [inf]  
+2026-01-26T14:27:22.787900900Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:27:22.787901210Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:27:22.787916328Z [err]    length: 52,
+2026-01-26T14:27:22.787917477Z [inf]     Environment: production
+2026-01-26T14:27:22.787931791Z [err]    severity: 'FATAL',
+2026-01-26T14:27:22.787933512Z [err]  ❌ Worker startup failed: error: Tenant or user not found
+2026-01-26T14:27:22.787943477Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:27:22.787959818Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:27:22.787969379Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:27:22.787978530Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:27:23.913940222Z [err]    code: 'XX000',
+2026-01-26T14:27:23.913947280Z [err]    detail: undefined,
+2026-01-26T14:27:23.913954651Z [err]    hint: undefined,
+2026-01-26T14:27:23.913961973Z [err]    position: undefined,
+2026-01-26T14:27:23.913970071Z [err]    internalPosition: undefined,
+2026-01-26T14:27:23.913978318Z [err]    internalQuery: undefined,
+2026-01-26T14:27:23.913989914Z [err]    where: undefined,
+2026-01-26T14:27:23.913998471Z [err]    schema: undefined,
+2026-01-26T14:27:23.914006234Z [err]    table: undefined,
+2026-01-26T14:27:23.914021409Z [err]    column: undefined,
+2026-01-26T14:27:23.914030514Z [err]    dataType: undefined,
+2026-01-26T14:27:23.914038492Z [err]    constraint: undefined,
+2026-01-26T14:27:23.914045228Z [err]    file: undefined,
+2026-01-26T14:27:23.914052671Z [err]    line: undefined,
+2026-01-26T14:27:23.914062992Z [err]    routine: undefined
+2026-01-26T14:27:23.914070498Z [err]  }
+2026-01-26T14:27:25.249085449Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:27:25.249100981Z [inf]  
+2026-01-26T14:27:25.249110574Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:25.249124523Z [inf]  
+2026-01-26T14:27:25.249134979Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:27:25.249144236Z [inf]  > tsx workers/index.ts
+2026-01-26T14:27:25.249153573Z [inf]  
+2026-01-26T14:27:25.249611371Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:25.249618309Z [inf]  
+2026-01-26T14:27:25.249626791Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:27:26.553248913Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:27:26.553255598Z [inf]     Environment: production
+2026-01-26T14:27:26.553261803Z [err]  ❌ Worker startup failed: error: Tenant or user not found
+2026-01-26T14:27:26.553267798Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:27:26.553274439Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:27:26.553283258Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:27:26.553290476Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:27:26.553297656Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:27:26.553304494Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:27:26.553311320Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:27:26.553317776Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:27:26.553324822Z [err]    length: 52,
+2026-01-26T14:27:26.553334354Z [err]    severity: 'FATAL',
+2026-01-26T14:27:26.553341302Z [err]    code: 'XX000',
+2026-01-26T14:27:26.553347527Z [err]    detail: undefined,
+2026-01-26T14:27:26.553353593Z [err]    hint: undefined,
+2026-01-26T14:27:26.553360235Z [err]    position: undefined,
+2026-01-26T14:27:26.553366655Z [err]    internalPosition: undefined,
+2026-01-26T14:27:26.553373567Z [err]    internalQuery: undefined,
+2026-01-26T14:27:26.553380088Z [err]    where: undefined,
+2026-01-26T14:27:26.553390649Z [err]    schema: undefined,
+2026-01-26T14:27:26.553397879Z [err]    table: undefined,
+2026-01-26T14:27:26.553404722Z [err]    column: undefined,
+2026-01-26T14:27:26.553412060Z [err]    dataType: undefined,
+2026-01-26T14:27:26.553418672Z [err]    constraint: undefined,
+2026-01-26T14:27:27.843718481Z [err]    file: undefined,
+2026-01-26T14:27:27.843728936Z [err]    line: undefined,
+2026-01-26T14:27:27.843736508Z [err]    routine: undefined
+2026-01-26T14:27:27.843744272Z [err]  }
+2026-01-26T14:27:27.843752334Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:27.843760394Z [inf]  
+2026-01-26T14:27:27.843768760Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:27:27.843775992Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:27:27.843784489Z [inf]  
+2026-01-26T14:27:27.843791610Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:29.473366206Z [inf]  
+2026-01-26T14:27:29.473371899Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:27:29.473376620Z [inf]  > tsx workers/index.ts
+2026-01-26T14:27:29.473382935Z [inf]  
+2026-01-26T14:27:29.473390079Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:27:29.473396399Z [inf]     Environment: production
+2026-01-26T14:27:29.473401310Z [err]  ❌ Worker startup failed: error: Tenant or user not found
+2026-01-26T14:27:29.473406888Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:27:29.473412008Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:27:29.473417854Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:27:29.473423553Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:27:29.473428936Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:27:29.473434476Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:27:29.473440008Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:27:29.473445934Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:27:29.473451679Z [err]    length: 52,
+2026-01-26T14:27:29.473457051Z [err]    severity: 'FATAL',
+2026-01-26T14:27:29.473462838Z [err]    code: 'XX000',
+2026-01-26T14:27:29.473468247Z [err]    detail: undefined,
+2026-01-26T14:27:29.473473398Z [err]    hint: undefined,
+2026-01-26T14:27:29.473480164Z [err]    position: undefined,
+2026-01-26T14:27:29.473485663Z [err]    internalPosition: undefined,
+2026-01-26T14:27:29.473490984Z [err]    internalQuery: undefined,
+2026-01-26T14:27:29.473496386Z [err]    where: undefined,
+2026-01-26T14:27:29.473503117Z [err]    schema: undefined,
+2026-01-26T14:27:29.473514795Z [err]    table: undefined,
+2026-01-26T14:27:30.690955403Z [err]    column: undefined,
+2026-01-26T14:27:30.690976814Z [err]    dataType: undefined,
+2026-01-26T14:27:30.690984146Z [err]    constraint: undefined,
+2026-01-26T14:27:30.690990805Z [err]    file: undefined,
+2026-01-26T14:27:30.690998239Z [err]    line: undefined,
+2026-01-26T14:27:30.691005145Z [err]    routine: undefined
+2026-01-26T14:27:30.691012133Z [err]  }
+2026-01-26T14:27:31.919111250Z [inf]  
+2026-01-26T14:27:31.919128783Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:27:31.919139625Z [inf]  > tsx workers/index.ts
+2026-01-26T14:27:31.919149496Z [inf]  
+2026-01-26T14:27:31.919176579Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:31.919192891Z [inf]  
+2026-01-26T14:27:31.919203444Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:27:31.919212114Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:27:31.919222218Z [inf]  
+2026-01-26T14:27:31.919230094Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:33.118289316Z [err]    internalQuery: undefined,
+2026-01-26T14:27:33.118311004Z [err]    where: undefined,
+2026-01-26T14:27:33.118322913Z [err]    schema: undefined,
+2026-01-26T14:27:33.118331882Z [err]    table: undefined,
+2026-01-26T14:27:33.118340359Z [err]    column: undefined,
+2026-01-26T14:27:33.118349457Z [err]    dataType: undefined,
+2026-01-26T14:27:33.118358872Z [err]    constraint: undefined,
+2026-01-26T14:27:33.118476273Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:27:33.118482990Z [inf]     Environment: production
+2026-01-26T14:27:33.118491025Z [err]  ❌ Worker startup failed: error: Tenant or user not found
+2026-01-26T14:27:33.118578355Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:27:33.118585824Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:27:33.118593733Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:27:33.118601591Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:27:33.118608645Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:27:33.118615644Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:27:33.118623567Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:27:33.118631598Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:27:33.118639538Z [err]    length: 52,
+2026-01-26T14:27:33.118646933Z [err]    severity: 'FATAL',
+2026-01-26T14:27:33.118654200Z [err]    code: 'XX000',
+2026-01-26T14:27:33.118660641Z [err]    detail: undefined,
+2026-01-26T14:27:33.118668416Z [err]    hint: undefined,
+2026-01-26T14:27:33.118675797Z [err]    position: undefined,
+2026-01-26T14:27:33.118682600Z [err]    internalPosition: undefined,
+2026-01-26T14:27:34.095764888Z [err]    file: undefined,
+2026-01-26T14:27:34.095771989Z [err]    line: undefined,
+2026-01-26T14:27:34.095779362Z [err]    routine: undefined
+2026-01-26T14:27:34.095787399Z [err]  }
+2026-01-26T14:27:34.095809292Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:34.095816057Z [inf]  
+2026-01-26T14:27:34.095820941Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:27:34.095825780Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:27:34.095830508Z [inf]  
+2026-01-26T14:27:34.095836629Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:34.095844164Z [inf]  
+2026-01-26T14:27:34.095849577Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:27:34.095854764Z [inf]  > tsx workers/index.ts
+2026-01-26T14:27:34.095859160Z [inf]  
+2026-01-26T14:27:35.212975248Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:27:35.212986556Z [inf]     Environment: production
+2026-01-26T14:27:35.212993467Z [err]  ❌ Worker startup failed: error: Tenant or user not found
+2026-01-26T14:27:35.213000984Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:27:35.213007536Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:27:35.213014405Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:27:35.213020549Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:27:35.213026876Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:27:35.213033585Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:27:35.213042068Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:27:35.213049711Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:27:35.213056097Z [err]    length: 52,
+2026-01-26T14:27:35.213063510Z [err]    severity: 'FATAL',
+2026-01-26T14:27:35.213070062Z [err]    code: 'XX000',
+2026-01-26T14:27:35.213078238Z [err]    detail: undefined,
+2026-01-26T14:27:35.213085826Z [err]    hint: undefined,
+2026-01-26T14:27:35.213093004Z [err]    position: undefined,
+2026-01-26T14:27:35.213099521Z [err]    internalPosition: undefined,
+2026-01-26T14:27:35.213107516Z [err]    internalQuery: undefined,
+2026-01-26T14:27:35.213116700Z [err]    where: undefined,
+2026-01-26T14:27:35.213124163Z [err]    schema: undefined,
+2026-01-26T14:27:35.213130762Z [err]    table: undefined,
+2026-01-26T14:27:35.213137873Z [err]    column: undefined,
+2026-01-26T14:27:35.213144816Z [err]    dataType: undefined,
+2026-01-26T14:27:35.213152011Z [err]    constraint: undefined,
+2026-01-26T14:27:36.298633918Z [err]    file: undefined,
+2026-01-26T14:27:36.298641793Z [err]    line: undefined,
+2026-01-26T14:27:36.298649819Z [err]    routine: undefined
+2026-01-26T14:27:36.298659746Z [err]  }
+2026-01-26T14:27:36.298667059Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:36.298675865Z [inf]  
+2026-01-26T14:27:36.298682955Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:27:36.298689837Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:27:36.298697755Z [inf]  
+2026-01-26T14:27:37.259361766Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:37.259368884Z [inf]  
+2026-01-26T14:27:37.259376054Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:27:37.259381888Z [inf]  > tsx workers/index.ts
+2026-01-26T14:27:37.259387494Z [inf]  
+2026-01-26T14:27:37.259393176Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:27:37.259400808Z [inf]     Environment: production
+2026-01-26T14:27:37.259409221Z [err]  ❌ Worker startup failed: error: Tenant or user not found
+2026-01-26T14:27:37.259415526Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:27:37.259421978Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:27:37.259427828Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:27:37.259433545Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:27:37.259440422Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:27:37.259446378Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:27:37.259453318Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:27:37.259459718Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:27:37.259465994Z [err]    length: 52,
+2026-01-26T14:27:37.259472124Z [err]    severity: 'FATAL',
+2026-01-26T14:27:37.259478064Z [err]    code: 'XX000',
+2026-01-26T14:27:37.259483658Z [err]    detail: undefined,
+2026-01-26T14:27:37.259495965Z [err]    hint: undefined,
+2026-01-26T14:27:37.259502172Z [err]    position: undefined,
+2026-01-26T14:27:37.259508637Z [err]    internalPosition: undefined,
+2026-01-26T14:27:37.259515660Z [err]    internalQuery: undefined,
+2026-01-26T14:27:37.259522611Z [err]    where: undefined,
+2026-01-26T14:27:37.265902234Z [err]    schema: undefined,
+2026-01-26T14:27:37.265909814Z [err]    table: undefined,
+2026-01-26T14:27:37.265917443Z [err]    column: undefined,
+2026-01-26T14:27:37.265924655Z [err]    dataType: undefined,
+2026-01-26T14:27:37.265932180Z [err]    constraint: undefined,
+2026-01-26T14:27:37.265940076Z [err]    file: undefined,
+2026-01-26T14:27:37.265947592Z [err]    line: undefined,
+2026-01-26T14:27:37.265955715Z [err]    routine: undefined
+2026-01-26T14:27:37.265964482Z [err]  }
+2026-01-26T14:27:38.620012170Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:38.620026262Z [inf]  
+2026-01-26T14:27:38.620038865Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:27:38.620051210Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:27:38.620062825Z [inf]  
+2026-01-26T14:27:39.819541184Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:39.819547691Z [inf]  
+2026-01-26T14:27:39.819552509Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:27:39.819557238Z [inf]  > tsx workers/index.ts
+2026-01-26T14:27:39.819562677Z [inf]  
+2026-01-26T14:27:39.819567266Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:27:39.819571490Z [inf]     Environment: production
+2026-01-26T14:27:39.819575553Z [err]  ❌ Worker startup failed: error: Tenant or user not found
+2026-01-26T14:27:39.819581247Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:27:39.819587231Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:27:39.819593032Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:27:39.819598554Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:27:39.819603983Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:27:39.819609370Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:27:39.819614441Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:27:39.822546324Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:27:39.822587935Z [err]    length: 52,
+2026-01-26T14:27:39.822596407Z [err]    severity: 'FATAL',
+2026-01-26T14:27:39.822603941Z [err]    code: 'XX000',
+2026-01-26T14:27:39.822619039Z [err]    detail: undefined,
+2026-01-26T14:27:39.822626035Z [err]    hint: undefined,
+2026-01-26T14:27:39.822632746Z [err]    position: undefined,
+2026-01-26T14:27:39.822638838Z [err]    internalPosition: undefined,
+2026-01-26T14:27:39.822645292Z [err]    internalQuery: undefined,
+2026-01-26T14:27:39.822651362Z [err]    where: undefined,
+2026-01-26T14:27:40.661601892Z [err]    schema: undefined,
+2026-01-26T14:27:40.661611762Z [err]    table: undefined,
+2026-01-26T14:27:40.661621143Z [err]    column: undefined,
+2026-01-26T14:27:40.661629681Z [err]    dataType: undefined,
+2026-01-26T14:27:40.661639307Z [err]    constraint: undefined,
+2026-01-26T14:27:40.661648725Z [err]    file: undefined,
+2026-01-26T14:27:40.661658401Z [err]    line: undefined,
+2026-01-26T14:27:40.661665565Z [err]    routine: undefined
+2026-01-26T14:27:40.661673848Z [err]  }
+2026-01-26T14:27:41.698977457Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:41.702902322Z [inf]  
+2026-01-26T14:27:41.702915296Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:27:41.702921320Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:27:41.702927796Z [inf]  
+2026-01-26T14:27:41.702934225Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:27:41.702939371Z [inf]  
+2026-01-26T14:27:41.702943945Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:27:41.702948933Z [inf]  > tsx workers/index.ts
+2026-01-26T14:27:41.702954785Z [inf]  
+2026-01-26T14:27:42.980161574Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2026-01-26T14:27:42.980537260Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:27:42.980546603Z [inf]     Environment: production
+2026-01-26T14:27:42.980554975Z [err]  ❌ Worker startup failed: error: Tenant or user not found
+2026-01-26T14:27:42.989781477Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-26T14:27:42.989795710Z [err]      at async Db.executeSql (/app/node_modules/pg-boss/dist/db.js:43:16)
+2026-01-26T14:27:42.989802823Z [err]      at async Contractor.isInstalled (/app/node_modules/pg-boss/dist/contractor.js:29:24)
+2026-01-26T14:27:42.989809169Z [err]      at async Contractor.start (/app/node_modules/pg-boss/dist/contractor.js:33:27)
+2026-01-26T14:27:42.989817700Z [err]      at async PgBoss.start (/app/node_modules/pg-boss/dist/index.js:82:13)
+2026-01-26T14:27:42.989825178Z [err]      at async getBoss (/app/src/lib/jobs/boss.ts:72:3)
+2026-01-26T14:27:42.989831200Z [err]      at async main (/app/workers/index.ts:21:18) {
+2026-01-26T14:27:42.989838126Z [err]    length: 52,
+2026-01-26T14:27:42.989843848Z [err]    severity: 'FATAL',
+2026-01-26T14:27:42.989850825Z [err]    code: 'XX000',
+2026-01-26T14:27:42.989857473Z [err]    detail: undefined,
+2026-01-26T14:27:42.989873344Z [err]    hint: undefined,
+2026-01-26T14:27:42.989880159Z [err]    position: undefined,
+2026-01-26T14:27:42.989889062Z [err]    internalPosition: undefined,
+2026-01-26T14:27:42.989896934Z [err]    internalQuery: undefined,
+2026-01-26T14:27:42.989908827Z [err]    where: undefined,
+2026-01-26T14:27:42.989915706Z [err]    schema: undefined,
+2026-01-26T14:27:42.989924052Z [err]    table: undefined,
+2026-01-26T14:27:42.989931195Z [err]    column: undefined,
+2026-01-26T14:27:42.989936989Z [err]    dataType: undefined,
+2026-01-26T14:27:42.989941710Z [err]    constraint: undefined,

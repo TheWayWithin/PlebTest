@@ -1,0 +1,70 @@
+2026-01-26T14:52:27.000000000Z [inf]  Starting Container
+2026-01-26T14:52:28.221060579Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:52:28.221067140Z [inf]  
+2026-01-26T14:52:28.221073010Z [inf]  > plebtest@0.1.0 start:auto
+2026-01-26T14:52:28.221079740Z [inf]  > if [ "$SERVICE_TYPE" = "worker" ]; then npm run worker; else npm run start; fi
+2026-01-26T14:52:28.221086576Z [inf]  
+2026-01-26T14:52:28.221093188Z [err]  npm warn config production Use `--omit=dev` instead.
+2026-01-26T14:52:28.221098696Z [inf]  
+2026-01-26T14:52:28.221104035Z [inf]  > plebtest@0.1.0 worker
+2026-01-26T14:52:28.221110594Z [inf]  > tsx workers/index.ts
+2026-01-26T14:52:28.221115998Z [inf]  
+2026-01-26T14:52:29.117515225Z [inf]  🚀 Starting PlebTest workers...
+2026-01-26T14:52:29.117521209Z [inf]     Environment: production
+2026-01-26T14:52:29.117527136Z [inf]  [pg-boss] Started successfully
+2026-01-26T14:52:29.117534030Z [inf]  ✅ pg-boss connected
+2026-01-26T14:52:29.153666403Z [inf]     [report-generator] Registered handler: generate-report
+2026-01-26T14:52:29.808292630Z [inf]  
+2026-01-26T14:52:29.808303801Z [inf]  👀 Waiting for jobs...
+2026-01-26T14:52:29.808313286Z [inf]     [test-runner] Registered handlers: run-test, generate-personas, run-session
+2026-01-26T14:52:29.808321491Z [inf]  ✅ All workers started successfully
+2026-01-26T14:52:29.808322367Z [inf]     [cron] Registered job: check-session-timeout (every 5 min)
+2026-01-26T14:52:29.808329215Z [inf]  
+2026-01-26T14:52:29.808335818Z [inf]  📋 Active job handlers:
+2026-01-26T14:52:29.808342630Z [inf]     - run-test
+2026-01-26T14:52:29.808357710Z [inf]     - generate-personas
+2026-01-26T14:52:29.808364548Z [inf]     - run-session
+2026-01-26T14:52:29.808371242Z [inf]     - generate-report
+2026-01-26T14:52:29.808378003Z [inf]     - check-session-timeout (cron)
+2026-01-26T14:56:10.817212002Z [inf]  [check-session-timeout] Checking for expired sessions...
+2026-01-26T14:56:10.817223508Z [err]  [check-session-timeout] Error: {
+2026-01-26T14:56:10.817231268Z [err]    code: 'PGRST205',
+2026-01-26T14:56:10.817238511Z [err]    details: null,
+2026-01-26T14:56:10.817245347Z [err]    hint: null,
+2026-01-26T14:56:10.817252200Z [err]    message: "Could not find the table 'public.sessions' in the schema cache"
+2026-01-26T14:56:10.817260893Z [err]  }
+2026-01-26T14:56:10.817267499Z [inf]  [check-session-timeout] Checking for expired sessions...
+2026-01-26T14:56:10.817273938Z [err]  [check-session-timeout] Error: {
+2026-01-26T14:56:10.817280514Z [err]    code: 'PGRST205',
+2026-01-26T14:56:10.817287566Z [err]    details: null,
+2026-01-26T14:56:10.817294261Z [err]    hint: null,
+2026-01-26T14:56:10.817300595Z [err]    message: "Could not find the table 'public.sessions' in the schema cache"
+2026-01-26T14:56:10.817307109Z [err]  }
+2026-01-26T14:56:10.817313698Z [inf]  [check-session-timeout] Checking for expired sessions...
+2026-01-26T14:56:10.817320148Z [err]  [check-session-timeout] Error: {
+2026-01-26T14:56:10.817326741Z [err]    code: 'PGRST205',
+2026-01-26T14:56:10.817333077Z [err]    details: null,
+2026-01-26T14:56:10.817339232Z [err]    hint: null,
+2026-01-26T14:56:10.817345634Z [err]    message: "Could not find the table 'public.sessions' in the schema cache"
+2026-01-26T14:56:10.817351869Z [err]  }
+2026-01-26T15:00:31.877445837Z [inf]  [check-session-timeout] Checking for expired sessions...
+2026-01-26T15:00:31.877447142Z [err]    code: 'PGRST205',
+2026-01-26T15:00:31.877457916Z [err]  [check-session-timeout] Error: {
+2026-01-26T15:00:31.877460264Z [err]    details: null,
+2026-01-26T15:00:31.877467124Z [err]    code: 'PGRST205',
+2026-01-26T15:00:31.877469768Z [err]    hint: null,
+2026-01-26T15:00:31.877475920Z [err]    details: null,
+2026-01-26T15:00:31.877478662Z [err]    message: "Could not find the table 'public.sessions' in the schema cache"
+2026-01-26T15:00:31.877483863Z [err]    hint: null,
+2026-01-26T15:00:31.877486759Z [err]  }
+2026-01-26T15:00:31.877490946Z [err]    message: "Could not find the table 'public.sessions' in the schema cache"
+2026-01-26T15:00:31.877497159Z [err]  }
+2026-01-26T15:00:31.877502592Z [inf]  [check-session-timeout] Checking for expired sessions...
+2026-01-26T15:00:31.877509380Z [err]  [check-session-timeout] Error: {
+2026-01-26T15:00:33.879011861Z [inf]  [check-session-timeout] Checking for expired sessions...
+2026-01-26T15:00:33.879017031Z [err]  [check-session-timeout] Error: {
+2026-01-26T15:00:33.879021782Z [err]    code: 'PGRST205',
+2026-01-26T15:00:33.879026105Z [err]    details: null,
+2026-01-26T15:00:33.879030978Z [err]    hint: null,
+2026-01-26T15:00:33.879035760Z [err]    message: "Could not find the table 'public.sessions' in the schema cache"
+2026-01-26T15:00:33.879043207Z [err]  }
