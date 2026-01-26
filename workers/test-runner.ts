@@ -64,6 +64,11 @@ async function isSessionAlreadyProcessed(sessionId: string): Promise<boolean> {
 export async function startTestRunnerWorker(): Promise<void> {
   const boss = await getBoss();
 
+  // Create queues explicitly (required in pg-boss v10+)
+  await boss.createQueue(JobTypes.RUN_TEST);
+  await boss.createQueue(JobTypes.GENERATE_PERSONAS);
+  await boss.createQueue(JobTypes.RUN_SESSION);
+
   // Handler for RUN_TEST job
   await boss.work<RunTestPayload>(
     JobTypes.RUN_TEST,

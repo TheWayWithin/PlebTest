@@ -43,6 +43,9 @@ async function isReportAlreadyGenerated(testId: string): Promise<boolean> {
 export async function startReportGeneratorWorker(): Promise<void> {
   const boss = await getBoss();
 
+  // Create queue explicitly (required in pg-boss v10+)
+  await boss.createQueue(JobTypes.GENERATE_REPORT);
+
   await boss.work<GenerateReportPayload>(
     JobTypes.GENERATE_REPORT,
     { localConcurrency: 2 }, // Max 2 reports generating at once

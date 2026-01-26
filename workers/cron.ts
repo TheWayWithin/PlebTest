@@ -16,7 +16,10 @@ export async function setupCronJobs(): Promise<void> {
   // =========================================
   // Session Timeout Check - Every 5 minutes
   // =========================================
-  // Register worker first (creates queue), then schedule
+  // Create queue explicitly (required in pg-boss v10+)
+  await boss.createQueue(JobTypes.CHECK_SESSION_TIMEOUT);
+
+  // Register worker, then schedule
   await boss.work(JobTypes.CHECK_SESSION_TIMEOUT, async () => {
     console.log(`[${JobTypes.CHECK_SESSION_TIMEOUT}] Checking for expired sessions...`);
 
