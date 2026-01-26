@@ -244,15 +244,25 @@ export function PricingClient({ isLoggedIn, currentTier, subscriptionStatus, pri
               <div className="mb-6">
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-bold text-white">
-                    ${billingInterval === 'monthly' ? tier.monthlyPrice : tier.annualPrice}
+                    ${billingInterval === 'monthly'
+                      ? tier.monthlyPrice.toFixed(2)
+                      : (tier.annualPrice / 12).toFixed(2)
+                    }
                   </span>
-                  <span className="text-zinc-400">
-                    /{billingInterval === 'monthly' ? 'mo' : 'yr'}
-                  </span>
+                  <span className="text-zinc-400">/mo</span>
                 </div>
-                {billingInterval === 'annual' && (
-                  <p className="text-sm text-emerald-400 mt-1">
-                    Save ${((tier.monthlyPrice * 12) - tier.annualPrice).toFixed(2)}/year
+                {billingInterval === 'annual' ? (
+                  <div className="mt-1 space-y-0.5">
+                    <p className="text-sm text-zinc-400">
+                      Billed ${tier.annualPrice.toFixed(2)}/year
+                    </p>
+                    <p className="text-sm text-emerald-400">
+                      Save ${((tier.monthlyPrice * 12) - tier.annualPrice).toFixed(2)}/year
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-sm text-zinc-500 mt-1">
+                    Billed monthly
                   </p>
                 )}
               </div>
