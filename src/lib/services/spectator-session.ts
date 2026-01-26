@@ -30,6 +30,13 @@ const PERSONA_MODEL = 'anthropic/claude-3-haiku';
 const MIN_EXCHANGES = 5; // Minimum back-and-forth exchanges
 const MAX_EXCHANGES = 12; // Maximum exchanges before ending
 const TARGET_EXCHANGES = 8; // Target number of exchanges
+const SESSION_TOKEN_BUDGET = 8000; // Max tokens per session
+
+interface AICallResult {
+  content: string;
+  promptTokens: number;
+  completionTokens: number;
+}
 
 interface SpectatorSessionConfig {
   sessionId: string;
@@ -70,12 +77,13 @@ function buildPersona(personaRow: any): Persona {
 
 /**
  * Call OpenRouter API for a chat completion (non-streaming)
+ * Returns content and token usage
  */
 async function callAI(
   systemPrompt: string,
   messages: Array<{ role: string; content: string }>,
   model: string
-): Promise<string> {
+): Promise<AICallResult> {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
     throw new Error('OpenRouter API key not configured');
@@ -106,7 +114,11 @@ async function callAI(
   }
 
   const data = await response.json();
-  return data.choices?.[0]?.message?.content || '';
+  return {
+    content: data.choices?.[0]?.message?.content || '',
+    promptTokens: data.usage?.prompt_tokens || 0,
+    completionTokens: data.usage?.completion_tokens || 0,
+  };
 }
 
 /**
@@ -241,60 +253,100 @@ export async function runSpectatorSession(
     // 5. Run conversation loop
     const conversationHistory: Array<{ role: string; content: string }> = [];
     let exchangeCount = 0;
+    let totalPromptTokens = 0;
+    let totalCompletionTokens = 0;
+
+    // Helper to check and update token budget
+    const checkAndUpdateTokens = async (result: AICallResult): Promise<boolean> => {
+      totalPromptTokens += result.promptTokens;
+      totalCompletionTokens += result.completionTokens;
+      const totalTokens = totalPromptTokens + totalCompletionTokens;
+
+      // Update session with token counts
+      await supabase
+        .from('sessions')
+        .update({
+          prompt_tokens: totalPromptTokens,
+          completion_tokens: totalCompletionTokens,
+          last_activity_at: new Date().toISOString(),
+        })
+        .eq('id', sessionId);
+
+      // Return true if budget exceeded
+      return totalTokens >= SESSION_TOKEN_BUDGET;
+    };
 
     // Interviewer starts the conversation
-    let interviewerMessage = await callAI(
+    const interviewerResult = await callAI(
       interviewerPrompt,
       [],
       INTERVIEWER_MODEL
     );
+    let interviewerMessage = interviewerResult.content;
 
-    // Save interviewer's opening
-    await saveMessage(supabase, sessionId, 'user', interviewerMessage);
-    onMessage?.('interviewer', interviewerMessage);
-    conversationHistory.push({ role: 'user', content: interviewerMessage });
-
-    // Conversation loop
-    while (true) {
-      exchangeCount++;
-
-      // Update activity timestamp
-      await supabase
-        .from('sessions')
-        .update({ last_activity_at: new Date().toISOString() })
-        .eq('id', sessionId);
-
-      // Persona responds
-      const personaMessage = await callAI(
-        personaPrompt,
-        conversationHistory,
-        PERSONA_MODEL
-      );
-
-      // Save persona's response
-      await saveMessage(supabase, sessionId, 'assistant', personaMessage);
-      onMessage?.('persona', personaMessage);
-      conversationHistory.push({ role: 'assistant', content: personaMessage });
-
-      // Check if we should end
-      if (shouldEndConversation(exchangeCount, interviewerMessage)) {
-        break;
-      }
-
-      // Interviewer follows up
-      interviewerMessage = await callAI(
-        interviewerPrompt,
-        conversationHistory,
-        INTERVIEWER_MODEL
-      );
-
-      // Save interviewer's follow-up
+    // Check budget after first call
+    if (await checkAndUpdateTokens(interviewerResult)) {
+      console.log(`[spectator] Session ${sessionId} ended: token budget exceeded`);
+      // Continue to completion logic below
+    } else {
+      // Save interviewer's opening
       await saveMessage(supabase, sessionId, 'user', interviewerMessage);
       onMessage?.('interviewer', interviewerMessage);
       conversationHistory.push({ role: 'user', content: interviewerMessage });
 
-      // Small delay to prevent rate limiting
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // Conversation loop
+      while (true) {
+        exchangeCount++;
+
+        // Persona responds
+        const personaResult = await callAI(
+          personaPrompt,
+          conversationHistory,
+          PERSONA_MODEL
+        );
+        const personaMessage = personaResult.content;
+
+        // Check budget
+        const budgetExceeded = await checkAndUpdateTokens(personaResult);
+
+        // Save persona's response
+        await saveMessage(supabase, sessionId, 'assistant', personaMessage);
+        onMessage?.('persona', personaMessage);
+        conversationHistory.push({ role: 'assistant', content: personaMessage });
+
+        // End if budget exceeded
+        if (budgetExceeded) {
+          console.log(`[spectator] Session ${sessionId} ended: token budget exceeded`);
+          break;
+        }
+
+        // Check if we should end naturally
+        if (shouldEndConversation(exchangeCount, interviewerMessage)) {
+          break;
+        }
+
+        // Interviewer follows up
+        const nextInterviewerResult = await callAI(
+          interviewerPrompt,
+          conversationHistory,
+          INTERVIEWER_MODEL
+        );
+        interviewerMessage = nextInterviewerResult.content;
+
+        // Check budget
+        if (await checkAndUpdateTokens(nextInterviewerResult)) {
+          console.log(`[spectator] Session ${sessionId} ended: token budget exceeded`);
+          break;
+        }
+
+        // Save interviewer's follow-up
+        await saveMessage(supabase, sessionId, 'user', interviewerMessage);
+        onMessage?.('interviewer', interviewerMessage);
+        conversationHistory.push({ role: 'user', content: interviewerMessage });
+
+        // Small delay to prevent rate limiting
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
     }
 
     // 6. Complete the session (extract signals)

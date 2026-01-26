@@ -15,6 +15,7 @@ import type { Database } from '@/types/database.types';
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const DEFAULT_MODEL = 'anthropic/claude-3-haiku'; // Fast, cost-effective for conversations
 const CHECKPOINT_INTERVAL = 50; // Save every 50 tokens
+const SESSION_TOKEN_BUDGET = 8000; // Max tokens per session (~$0.02 at haiku rates)
 
 interface RouteContext {
   params: Promise<{ sessionId: string }>;
@@ -109,6 +110,30 @@ export async function POST(request: NextRequest, context: RouteContext) {
       // Check session is active
       if (session.status !== 'active' && session.status !== 'pending') {
         await sendEvent('error', { error: `Session is ${session.status}` });
+        await writer.close();
+        return;
+      }
+
+      // Check token budget
+      const currentPromptTokens = session.prompt_tokens || 0;
+      const currentCompletionTokens = session.completion_tokens || 0;
+      const totalTokensUsed = currentPromptTokens + currentCompletionTokens;
+
+      if (totalTokensUsed >= SESSION_TOKEN_BUDGET) {
+        await sendEvent('error', {
+          error: 'Session token budget exceeded',
+          code: 'TOKEN_BUDGET_EXCEEDED',
+          tokensUsed: totalTokensUsed,
+          budget: SESSION_TOKEN_BUDGET,
+        });
+        // Mark session as completed due to budget
+        await supabase
+          .from('sessions')
+          .update({
+            status: 'completed',
+            completed_at: new Date().toISOString(),
+          })
+          .eq('id', sessionId);
         await writer.close();
         return;
       }
@@ -209,6 +234,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
           messages,
           stream: true,
           max_tokens: 500,
+          stream_options: { include_usage: true }, // Get token usage in stream
         }),
       });
 
@@ -233,6 +259,8 @@ export async function POST(request: NextRequest, context: RouteContext) {
       let tokenCount = 0;
       let lastCheckpoint = 0;
       let assistantMessageId: string | null = null;
+      let promptTokensUsed = 0;
+      let completionTokensUsed = 0;
 
       // Create initial assistant message record
       const { data: assistantMessage } = await supabase
@@ -273,6 +301,12 @@ export async function POST(request: NextRequest, context: RouteContext) {
               try {
                 const parsed = JSON.parse(data);
                 const content = parsed.choices?.[0]?.delta?.content || '';
+
+                // Capture usage info from OpenRouter (sent in final chunks)
+                if (parsed.usage) {
+                  promptTokensUsed = parsed.usage.prompt_tokens || 0;
+                  completionTokensUsed = parsed.usage.completion_tokens || 0;
+                }
 
                 if (content) {
                   fullContent += content;
@@ -317,14 +351,33 @@ export async function POST(request: NextRequest, context: RouteContext) {
       if (assistantMessageId) {
         await supabase
           .from('messages')
-          .update({ content: fullContent })
+          .update({
+            content: fullContent,
+            token_count: completionTokensUsed || tokenCount,
+          })
           .eq('id', assistantMessageId);
       }
 
-      // Update session activity
+      // Update session with token usage (accumulate totals)
+      const newPromptTokens = currentPromptTokens + promptTokensUsed;
+      const newCompletionTokens = currentCompletionTokens + completionTokensUsed;
+      const newTotalTokens = newPromptTokens + newCompletionTokens;
+
+      // Check if we've exceeded budget after this message
+      const budgetExceeded = newTotalTokens >= SESSION_TOKEN_BUDGET;
+
       await supabase
         .from('sessions')
-        .update({ last_activity_at: new Date().toISOString() })
+        .update({
+          last_activity_at: new Date().toISOString(),
+          prompt_tokens: newPromptTokens,
+          completion_tokens: newCompletionTokens,
+          message_count: (session.message_count || 0) + 2, // user + assistant
+          ...(budgetExceeded && {
+            status: 'completed',
+            completed_at: new Date().toISOString(),
+          }),
+        })
         .eq('id', sessionId);
 
       // Send completion event
@@ -332,6 +385,13 @@ export async function POST(request: NextRequest, context: RouteContext) {
         messageId: assistantMessageId,
         content: fullContent,
         tokens: tokenCount,
+        usage: {
+          promptTokens: promptTokensUsed,
+          completionTokens: completionTokensUsed,
+          totalSessionTokens: newTotalTokens,
+          budgetRemaining: SESSION_TOKEN_BUDGET - newTotalTokens,
+          budgetExceeded,
+        },
       });
 
       await writer.close();
