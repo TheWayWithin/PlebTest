@@ -1240,7 +1240,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.16.1
   - **Completed**: Full scorecard service with regex pattern matching, preset-specific thresholds, 0-100 score calculation, recommendations generator
 
-- [ ] **task-1.16.3** Add prompt regression tests
+- [x] **task-1.16.3** Add prompt regression tests - ✅ 2026-01-26 11:45
   - Agent: developer
   - Priority: p1
   - Acceptance Criteria:
@@ -1248,6 +1248,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Alerts if anti-sycophancy score drops
     - Run before any prompt or model changes
   - Dependencies: task-1.16.2
+  - **Completed**: Full regression test suite with CLI runner, Jest-compatible exports, recommendations generator, test results by quality/preset
 
 #### 1.17 Data Privacy & Security
 - [ ] **task-1.17.1** Implement "Delete my account" flow

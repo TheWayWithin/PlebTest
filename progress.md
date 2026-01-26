@@ -1721,6 +1721,60 @@ healthcheckTimeout = 30
 **Build Status**: ✅ `npx tsc --noEmit` passes
 **Verified**: File exists on filesystem (2026-01-26 18:40)
 
+### 2026-01-26 18:45 Deliverable: Prompt Regression Tests (task-1.16.3)
+
+**Feature**: Anti-Sycophancy Prompt Regression Test Suite
+**Description**: Validates that prompt changes don't degrade anti-sycophancy quality
+
+**Files Created**:
+- `src/__tests__/anti-sycophancy-regression.test.ts` - 15KB test suite
+
+**Capabilities**:
+- Runs against golden test set (12 test cases × 3 presets = 36 tests)
+- Validates objection counts, compliment ratios, score ranges
+- Generates mock conversations based on expected behavior
+- Reports by idea quality (strong/weak/terrible) and preset (cheerleader/pragmatist/critic)
+- Provides actionable recommendations for failures
+
+**Test Configuration**:
+```typescript
+{
+  minScoreThreshold: 30,    // Minimum acceptable score
+  maxComplimentRatio: 0.40, // Max 40% compliment ratio
+  failFast: false,          // Continue on failures
+  verbose: false,           // Detailed output (VERBOSE=true)
+}
+```
+
+**CLI Usage**:
+```bash
+# Run regression tests
+npx ts-node --esm src/__tests__/anti-sycophancy-regression.test.ts
+
+# With verbose output
+VERBOSE=true npx ts-node --esm src/__tests__/anti-sycophancy-regression.test.ts
+```
+
+**Export Functions** (Jest-compatible):
+- `runRegressionTests(config)` - Full test suite
+- `runSingleTest(testCase, preset, config)` - Single test
+- `runTestCaseAllPresets(testCase, config)` - All presets for one case
+
+**Report Output**:
+- Total/passed/failed counts
+- Results by idea quality
+- Results by pushback preset
+- Failed test details with failures
+- Actionable recommendations
+
+**Acceptance Criteria**:
+- ✅ Tests run against golden test set
+- ✅ Alerts if anti-sycophancy score drops (exit code 1 on failure)
+- ✅ Run before any prompt or model changes (CLI runnable)
+
+**Build Status**: ✅ `npx tsc --noEmit` passes
+**Verified**: File exists on filesystem (2026-01-26 18:45)
+
 ---
 
 ## Issues & Resolutions

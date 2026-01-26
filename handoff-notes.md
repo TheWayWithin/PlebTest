@@ -1,7 +1,7 @@
 # PlebTest Handoff Notes
 
 > **Purpose**: Context for the next agent/session. Updated after each task completion.
-> **Last Updated**: 2026-01-26 18:40 UTC
+> **Last Updated**: 2026-01-26 18:45 UTC
 >
 ---
 
@@ -9,8 +9,17 @@
 
 **Phase**: 1 - Core Loop MVP
 **Status**: In Progress
-**Last Completed**: task-1.16.2 - Build anti-sycophancy scorecard ✅
-**Next Task**: task-1.16.3 - Add prompt regression tests (P1, depends on 1.16.2 ✅)
+**Last Completed**: task-1.16.3 - Add prompt regression tests ✅
+**Next Task**: Remaining P0 tasks blocked by Stripe setup (task-1.13.1 manual), OR continue P1 tasks
+
+### ⚠️ BLOCKING: Stripe Account Setup Required
+All remaining P0 tasks (1.13.2-1.13.5, 1.14.1) are blocked by task-1.13.1 which requires:
+- Creating Stripe account
+- Setting up 4 products (Solo, Growth, Scale, Pro)
+- Configuring webhook endpoints
+- Adding API keys to environments
+
+Once Stripe is set up, developer can proceed with webhooks, checkout flow, subscription management.
 
 ### ✅ STAGING WORKER: RUNNING WITH HEALTH CHECKS
 The staging worker is fully operational on Railway (develop branch) with:
@@ -84,6 +93,30 @@ const validated = validateBody(shareReportSchema, body);
 if (isValidationError(validated)) return validated;
 // validated is now typed as ShareReportInput
 ```
+
+### ✅ Prompt Regression Tests (task-1.16.3)
+**Implementation Complete**:
+- `src/__tests__/anti-sycophancy-regression.test.ts` - 15KB test suite
+
+**Run Tests**:
+```bash
+npx ts-node --esm src/__tests__/anti-sycophancy-regression.test.ts
+```
+
+**What It Tests**:
+- 36 test combinations (12 golden test cases × 3 presets)
+- Validates objection counts meet minimums
+- Validates anti-sycophancy scores within expected ranges
+- Flags excessive complimenting (>40%)
+
+**Exit Codes**:
+- 0 = All tests passed
+- 1 = One or more tests failed
+
+**When to Run**:
+- Before any changes to anti-sycophancy.ts prompts
+- Before switching AI models
+- After adjusting pushback preset configurations
 
 ### ✅ Anti-Sycophancy Scorecard (task-1.16.2)
 **Implementation Complete**:
