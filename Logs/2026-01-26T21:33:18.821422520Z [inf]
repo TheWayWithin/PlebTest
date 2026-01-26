@@ -1,0 +1,190 @@
+2026-01-26T21:33:18.821422520Z [inf]  
+2026-01-26T21:33:20.577260300Z [inf]  [35m[Region: us-east4][0m
+2026-01-26T21:33:20.591217731Z [inf]  [35m==============
+2026-01-26T21:33:20.591284922Z [inf]  Using Nixpacks
+2026-01-26T21:33:20.591301699Z [inf]  ==============
+2026-01-26T21:33:20.591324593Z [inf]  [0m
+2026-01-26T21:33:20.591528657Z [inf]  context: 1ht6-CJMu
+2026-01-26T21:33:20.788549555Z [inf]  ╔════════ Nixpacks v1.38.0 ═══════╗
+2026-01-26T21:33:20.788632598Z [inf]  ║ setup      │ nodejs_20, npm-9_x ║
+2026-01-26T21:33:20.788644710Z [inf]  ║─────────────────────────────────║
+2026-01-26T21:33:20.788653414Z [inf]  ║ install    │ npm ci             ║
+2026-01-26T21:33:20.788663933Z [inf]  ║─────────────────────────────────║
+2026-01-26T21:33:20.788670500Z [inf]  ║ build      │ npm run build      ║
+2026-01-26T21:33:20.788675838Z [inf]  ║─────────────────────────────────║
+2026-01-26T21:33:20.788688101Z [inf]  ║ start      │ npm run start:auto ║
+2026-01-26T21:33:20.788692462Z [inf]  ╚═════════════════════════════════╝
+2026-01-26T21:33:21.200582020Z [inf]  [internal] load build definition from Dockerfile
+2026-01-26T21:33:21.200673503Z [inf]  [internal] load build definition from Dockerfile
+2026-01-26T21:33:21.200702457Z [inf]  [internal] load build definition from Dockerfile
+2026-01-26T21:33:21.223186998Z [inf]  [internal] load build definition from Dockerfile
+2026-01-26T21:33:21.229764690Z [inf]  [internal] load metadata for ghcr.io/railwayapp/nixpacks:ubuntu-1745885067
+2026-01-26T21:33:21.324078227Z [inf]  [internal] load metadata for ghcr.io/railwayapp/nixpacks:ubuntu-1745885067
+2026-01-26T21:33:21.324543871Z [inf]  [internal] load .dockerignore
+2026-01-26T21:33:21.324663898Z [inf]  [internal] load .dockerignore
+2026-01-26T21:33:21.325653351Z [inf]  [internal] load .dockerignore
+2026-01-26T21:33:21.341668224Z [inf]  [internal] load .dockerignore
+2026-01-26T21:33:21.354963286Z [inf]  [stage-0 10/10] COPY . /app
+2026-01-26T21:33:21.355070081Z [inf]  [stage-0  9/10] RUN printf '\nPATH=/app/node_modules/.bin:$PATH' >> /root/.profile
+2026-01-26T21:33:21.355156466Z [inf]  [stage-0  8/10] RUN --mount=type=cache,id=s/711e8921-b277-4895-b324-9d735b7c79d2-next/cache,target=/app/.next/cache --mount=type=cache,id=s/711e8921-b277-4895-b324-9d735b7c79d2-node_modules/cache,target=/app/node_modules/.cache npm run build
+2026-01-26T21:33:21.355181605Z [inf]  [stage-0  7/10] COPY . /app/.
+2026-01-26T21:33:21.355201806Z [inf]  [stage-0  6/10] RUN --mount=type=cache,id=s/711e8921-b277-4895-b324-9d735b7c79d2-/root/npm,target=/root/.npm npm ci
+2026-01-26T21:33:21.355220192Z [inf]  [stage-0  5/10] COPY . /app/.
+2026-01-26T21:33:21.355256174Z [inf]  [stage-0  4/10] RUN nix-env -if .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix && nix-collect-garbage -d
+2026-01-26T21:33:21.355294361Z [inf]  [stage-0  3/10] COPY .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix
+2026-01-26T21:33:21.355311077Z [inf]  [internal] load build context
+2026-01-26T21:33:21.355331726Z [inf]  [stage-0  2/10] WORKDIR /app/
+2026-01-26T21:33:21.355358166Z [inf]  [stage-0  1/10] FROM ghcr.io/railwayapp/nixpacks:ubuntu-1745885067@sha256:d45c89d80e13d7ad0fd555b5130f22a866d9dd10e861f589932303ef2314c7de
+2026-01-26T21:33:21.355433449Z [inf]  [internal] load build context
+2026-01-26T21:33:21.355454351Z [inf]  [stage-0  1/10] FROM ghcr.io/railwayapp/nixpacks:ubuntu-1745885067@sha256:d45c89d80e13d7ad0fd555b5130f22a866d9dd10e861f589932303ef2314c7de
+2026-01-26T21:33:21.355929725Z [inf]  [internal] load build context
+2026-01-26T21:33:21.371247706Z [inf]  [stage-0  1/10] FROM ghcr.io/railwayapp/nixpacks:ubuntu-1745885067@sha256:d45c89d80e13d7ad0fd555b5130f22a866d9dd10e861f589932303ef2314c7de
+2026-01-26T21:33:21.499481888Z [inf]  [internal] load build context
+2026-01-26T21:33:21.506551115Z [inf]  [stage-0  2/10] WORKDIR /app/
+2026-01-26T21:33:21.506615023Z [inf]  [stage-0  3/10] COPY .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix
+2026-01-26T21:33:21.506630288Z [inf]  [stage-0  4/10] RUN nix-env -if .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix && nix-collect-garbage -d
+2026-01-26T21:33:21.506654431Z [inf]  [stage-0  5/10] COPY . /app/.
+2026-01-26T21:33:21.660599623Z [inf]  [stage-0  5/10] COPY . /app/.
+2026-01-26T21:33:21.664165825Z [inf]  [stage-0  6/10] RUN --mount=type=cache,id=s/711e8921-b277-4895-b324-9d735b7c79d2-/root/npm,target=/root/.npm npm ci
+2026-01-26T21:33:22.1466704Z [inf]  npm warn config production Use `--omit=dev` instead.
+
+2026-01-26T21:33:23.170381794Z [inf]  npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'pg-boss@12.6.0',
+npm warn EBADENGINE   required: { node: '>=22.12.0' },
+npm warn EBADENGINE   current: { node: 'v20.18.1', npm: '10.8.2' }
+npm warn EBADENGINE }
+
+2026-01-26T21:33:45.104829365Z [inf]  
+added 498 packages, and audited 499 packages in 23s
+
+2026-01-26T21:33:45.105052692Z [inf]  
+157 packages are looking for funding
+  run `npm fund` for details
+
+2026-01-26T21:33:45.107402105Z [inf]  
+found 0 vulnerabilities
+
+2026-01-26T21:33:45.421406895Z [inf]  [stage-0  6/10] RUN --mount=type=cache,id=s/711e8921-b277-4895-b324-9d735b7c79d2-/root/npm,target=/root/.npm npm ci
+2026-01-26T21:33:45.424699673Z [inf]  [stage-0  7/10] COPY . /app/.
+2026-01-26T21:33:45.871717734Z [inf]  [stage-0  7/10] COPY . /app/.
+2026-01-26T21:33:45.877618852Z [inf]  [stage-0  8/10] RUN --mount=type=cache,id=s/711e8921-b277-4895-b324-9d735b7c79d2-next/cache,target=/app/.next/cache --mount=type=cache,id=s/711e8921-b277-4895-b324-9d735b7c79d2-node_modules/cache,target=/app/node_modules/.cache npm run build
+2026-01-26T21:33:46.167789593Z [inf]  npm warn config production Use `--omit=dev` instead.
+
+2026-01-26T21:33:46.194935557Z [inf]  
+> plebtest@0.1.0 build
+> next build
+
+
+2026-01-26T21:33:47.312451517Z [inf]  Attention: Next.js now collects completely anonymous telemetry regarding usage.
+
+2026-01-26T21:33:47.313042715Z [inf]  This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+2026-01-26T21:33:47.31306575Z [inf]  
+
+2026-01-26T21:33:47.331296988Z [inf]  ▲ Next.js 16.1.4 (Turbopack)
+
+2026-01-26T21:33:47.331399625Z [inf]  
+
+2026-01-26T21:33:47.335080824Z [inf]  ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+
+2026-01-26T21:33:47.43542068Z [inf]    Creating an optimized production build ...
+
+2026-01-26T21:33:53.778066509Z [inf]  ✓ Compiled successfully in 5.6s
+
+2026-01-26T21:33:53.789310522Z [inf]    Running TypeScript ...
+
+2026-01-26T21:34:08.81776159Z [inf]    Collecting page data using 47 workers ...
+
+2026-01-26T21:34:12.879176444Z [inf]    Generating static pages using 47 workers (0/16) ...
+
+2026-01-26T21:34:13.404306501Z [inf]    Generating static pages using 47 workers (4/16) 
+
+2026-01-26T21:34:13.645813154Z [inf]    Generating static pages using 47 workers (8/16) 
+
+2026-01-26T21:34:13.898029501Z [inf]    Generating static pages using 47 workers (12/16) 
+
+2026-01-26T21:34:13.905748161Z [inf]  ✓ Generating static pages using 47 workers (16/16) in 1026.9ms
+
+2026-01-26T21:34:13.915342389Z [inf]    Finalizing page optimization ...
+
+2026-01-26T21:34:13.986814333Z [inf]  
+
+2026-01-26T21:34:13.991363049Z [inf]  Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/ideas
+├ ƒ /api/ideas/[ideaId]
+├ ƒ /api/ideas/[ideaId]/proposals
+├ ƒ /api/ideas/[ideaId]/proposals/[proposalId]
+├ ƒ /api/ideas/[ideaId]/proposals/[proposalId]/icps
+├ ƒ /api/ideas/[ideaId]/proposals/[proposalId]/icps/[icpId]
+├ ƒ /api/ideas/[ideaId]/proposals/[proposalId]/tests
+├ ƒ /api/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/generate-report
+├ ƒ /api/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/report/share
+├ ƒ /api/ideas/from-quick-fire
+├ ƒ /api/quick-fire
+├ ƒ /api/sessions/[sessionId]/complete
+├ ƒ /api/sessions/[sessionId]/stream
+├ ƒ /api/waitlist
+├ ƒ /api/webhooks/stripe
+├ ƒ /auth/callback
+├ ○ /auth/error
+├ ƒ /dashboard
+├ ƒ /ideas/[ideaId]
+├ ƒ /ideas/[ideaId]/proposals/[proposalId]
+├ ƒ /ideas/[ideaId]/proposals/[proposalId]/icps/[icpId]
+├ ƒ /ideas/[ideaId]/proposals/[proposalId]/icps/new
+├ ƒ /ideas/[ideaId]/proposals/[proposalId]/test/new
+├ ƒ /ideas/[ideaId]/proposals/[proposalId]/tests/[testId]
+├ ƒ /ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/report
+├ ƒ /ideas/[ideaId]/proposals/new
+├ ○ /login
+├ ○ /privacy
+├ ƒ /r/[token]
+├ ƒ /sessions/[sessionId]
+├ ƒ /settings
+├ ○ /signup
+└ ○ /terms
+
+
+ƒ Proxy (Middleware)
+
+
+2026-01-26T21:34:13.991510034Z [inf]  ○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+2026-01-26T21:34:13.991522734Z [inf]  
+
+2026-01-26T21:34:14.404791650Z [inf]  [stage-0  8/10] RUN --mount=type=cache,id=s/711e8921-b277-4895-b324-9d735b7c79d2-next/cache,target=/app/.next/cache --mount=type=cache,id=s/711e8921-b277-4895-b324-9d735b7c79d2-node_modules/cache,target=/app/node_modules/.cache npm run build
+2026-01-26T21:34:14.408282424Z [inf]  [stage-0  9/10] RUN printf '\nPATH=/app/node_modules/.bin:$PATH' >> /root/.profile
+2026-01-26T21:34:14.552152056Z [inf]  [stage-0  9/10] RUN printf '\nPATH=/app/node_modules/.bin:$PATH' >> /root/.profile
+2026-01-26T21:34:14.554586645Z [inf]  [stage-0 10/10] COPY . /app
+2026-01-26T21:34:14.648990434Z [inf]  [stage-0 10/10] COPY . /app
+2026-01-26T21:34:14.654184047Z [inf]  exporting to image
+2026-01-26T21:34:14.654239683Z [inf]  exporting to docker image format
+2026-01-26T21:35:10.998423973Z [inf]  importing to docker
+2026-01-26T21:35:20.770021480Z [inf]  [auth] sharing credentials for production-us-east4-eqdc4a.railway-registry.com
+2026-01-26T21:35:20.770097679Z [inf]  [auth] sharing credentials for production-us-east4-eqdc4a.railway-registry.com
+2026-01-26T21:35:46.788583562Z [inf]  importing to docker
+2026-01-26T21:36:50.695557273Z [inf]  === Successfully Built! ===
+2026-01-26T21:36:50.695634238Z [inf]  Run:
+2026-01-26T21:36:50.695648697Z [inf]  docker run -it production-us-east4-eqdc4a.railway-registry.com/711e8921-b277-4895-b324-9d735b7c79d2:73eb32ec-6243-443c-bb41-ac5b8d34477a
+2026-01-26T21:36:50.800854780Z [inf]  [92mBuild time: 210.21 seconds[0m
+2026-01-26T21:37:19.012270210Z [inf]  
+2026-01-26T21:37:19.012342083Z [inf]  [35m====================
+Starting Healthcheck
+====================
+[0m
+2026-01-26T21:37:19.012344583Z [inf]  [37mPath: /health[0m
+2026-01-26T21:37:19.012345953Z [inf]  [37mRetry window: 30s[0m
+2026-01-26T21:37:19.012346954Z [inf]  
+2026-01-26T21:37:19.659196086Z [inf]  [93mAttempt #1 failed with service unavailable. Continuing to retry for 29s[0m
+2026-01-26T21:37:20.787358551Z [inf]  [93mAttempt #2 failed with service unavailable. Continuing to retry for 28s[0m
+2026-01-26T21:37:22.879747843Z [inf]  [93mAttempt #3 failed with service unavailable. Continuing to retry for 26s[0m
+2026-01-26T21:37:26.963053943Z [inf]  [93mAttempt #4 failed with service unavailable. Continuing to retry for 22s[0m
+2026-01-26T21:37:35.058416502Z [inf]  [93mAttempt #5 failed with service unavailable. Continuing to retry for 13s[0m
+2026-01-26T21:37:35.138321305Z [inf]  
+2026-01-26T21:37:35.138385766Z [inf]  [91m1/1 replicas never became healthy![0m
+2026-01-26T21:37:35.138388230Z [inf]  [91mHealthcheck failed![0m
