@@ -1013,7 +1013,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.3.4
 
 #### 1.13 Billing
-- [ ] **task-1.13.1** Set up Stripe account and products
+- [x] **task-1.13.1** Set up Stripe account and products ✅ 2026-01-26
   - Agent: operator
   - Priority: p0
   - Acceptance Criteria:
@@ -1023,7 +1023,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Webhook endpoints configured
   - Dependencies: none
 
-- [ ] **task-1.13.2** Implement Stripe webhook handler
+- [x] **task-1.13.2** Implement Stripe webhook handler ✅ 2026-01-26
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -1034,15 +1034,16 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Idempotency via webhook_events table
   - Dependencies: task-1.13.1, task-1.1.4
 
-- [ ] **task-1.13.3** Implement checkout flow
+- [x] **task-1.13.3** Implement checkout flow ✅ 2026-01-26
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
     - Creates Stripe checkout session
     - Redirects to Stripe
     - Handles success/cancel callbacks
-    - Updates user subscription_tier
+    - Updates user subscription_tier (via webhook)
   - Dependencies: task-1.13.1, task-1.2.2
+  - **Completed**: POST /api/checkout, /pricing page, /checkout/success, /checkout/cancel
 
 - [ ] **task-1.13.4** Implement View Subscription (F-025)
   - Agent: developer
