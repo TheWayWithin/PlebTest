@@ -6,10 +6,10 @@ import { Input } from '@/components/ui/input'
 import { signUpWithEmail } from '@/lib/auth/actions'
 
 interface SignupFormProps {
-  selectedTier: 'solo' | 'growth'
+  redirect?: string | null
 }
 
-export function SignupForm({ selectedTier }: SignupFormProps) {
+export function SignupForm({ redirect }: SignupFormProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
@@ -27,10 +27,11 @@ export function SignupForm({ selectedTier }: SignupFormProps) {
     setError(null)
 
     const formData = new FormData(e.currentTarget)
-    formData.append('tier', selectedTier)
 
-    // Store tier for callback
-    localStorage.setItem('plebtest_signup_tier', selectedTier)
+    // Store redirect for callback
+    if (redirect) {
+      localStorage.setItem('plebtest_auth_redirect', redirect)
+    }
 
     const result = await signUpWithEmail(formData)
 

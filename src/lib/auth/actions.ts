@@ -11,7 +11,6 @@ export async function signUpWithEmail(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
   const name = formData.get('name') as string
-  const tier = formData.get('tier') as 'solo' | 'growth'
 
   if (!email || !password || !name) {
     return { error: 'All fields are required' }
@@ -28,7 +27,6 @@ export async function signUpWithEmail(formData: FormData) {
       emailRedirectTo: `${origin}/auth/callback`,
       data: {
         full_name: name,
-        signup_tier: tier,
       },
     },
   })
@@ -45,18 +43,13 @@ export async function signUpWithEmail(formData: FormData) {
 
   // If email confirmation is disabled and we have a user, create the profile
   if (data.user && data.session) {
-    const tierToSubscription = {
-      solo: 'solo',
-      growth: 'growth',
-    } as const
-
     const { error: profileError } = await supabase
       .from('users')
       .insert({
         id: data.user.id,
         email: data.user.email!,
         name: name,
-        subscription_tier: tierToSubscription[tier] || 'solo',
+        subscription_tier: 'solo', // Default tier until they subscribe
       })
 
     if (profileError) {

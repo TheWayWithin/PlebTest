@@ -5,26 +5,27 @@ import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 
 interface OAuthButtonsProps {
-  selectedTier?: 'solo' | 'growth'
   mode?: 'signup' | 'login'
+  redirect?: string | null
 }
 
-export function OAuthButtons({ selectedTier, mode = 'signup' }: OAuthButtonsProps) {
+export function OAuthButtons({ mode = 'signup', redirect }: OAuthButtonsProps) {
   const [isLoading, setIsLoading] = useState<'google' | 'github' | null>(null)
   const supabase = createClient()
 
   const handleOAuth = async (provider: 'google' | 'github') => {
     setIsLoading(provider)
 
-    // Store selected tier in localStorage for callback to use
-    if (selectedTier) {
-      localStorage.setItem('plebtest_signup_tier', selectedTier)
+    // Build callback URL with redirect parameter
+    const callbackUrl = new URL('/auth/callback', window.location.origin)
+    if (redirect) {
+      callbackUrl.searchParams.set('next', redirect)
     }
 
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: callbackUrl.toString(),
       },
     })
 
