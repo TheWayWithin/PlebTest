@@ -10,10 +10,13 @@ export async function GET(request: NextRequest) {
   const error = requestUrl.searchParams.get('error')
   const errorDescription = requestUrl.searchParams.get('error_description')
 
+  // Use the public app URL for redirects (requestUrl.origin resolves to internal Railway port)
+  const appOrigin = process.env.NEXT_PUBLIC_APP_URL || requestUrl.origin
+
   // Handle OAuth errors
   if (error) {
     console.error('OAuth error:', error, errorDescription)
-    const redirectUrl = new URL('/auth/error', requestUrl.origin)
+    const redirectUrl = new URL('/auth/error', appOrigin)
     redirectUrl.searchParams.set('error', error)
     if (errorDescription) {
       redirectUrl.searchParams.set('error_description', errorDescription)
@@ -50,7 +53,7 @@ export async function GET(request: NextRequest) {
 
     if (exchangeError) {
       console.error('Code exchange error:', exchangeError.message)
-      const redirectUrl = new URL('/auth/error', requestUrl.origin)
+      const redirectUrl = new URL('/auth/error', appOrigin)
       redirectUrl.searchParams.set('error', 'exchange_failed')
       redirectUrl.searchParams.set('error_description', exchangeError.message)
       return NextResponse.redirect(redirectUrl)
@@ -95,9 +98,9 @@ export async function GET(request: NextRequest) {
     }
 
     // Successful authentication - redirect to intended destination
-    return NextResponse.redirect(new URL(next, requestUrl.origin))
+    return NextResponse.redirect(new URL(next, appOrigin))
   }
 
   // No code provided - redirect to login
-  return NextResponse.redirect(new URL('/login', requestUrl.origin))
+  return NextResponse.redirect(new URL('/login', appOrigin))
 }
