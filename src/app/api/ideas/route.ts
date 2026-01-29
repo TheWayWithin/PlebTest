@@ -35,13 +35,35 @@ export async function POST(request: NextRequest) {
     }
 
     // Get user's subscription tier
-    const { data: userData, error: userError } = await supabase
+    let { data: userData, error: userError } = await supabase
       .from('users')
       .select('subscription_tier')
       .eq('id', user.id)
       .single();
 
-    if (userError) {
+    // If user record doesn't exist, create it (fallback for email confirmation flow)
+    if (userError && userError.code === 'PGRST116') {
+      const { data: newUser, error: createUserError } = await supabase
+        .from('users')
+        .insert({
+          id: user.id,
+          email: user.email!,
+          name: user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || 'User',
+          subscription_tier: 'solo',
+        })
+        .select('subscription_tier')
+        .single();
+
+      if (createUserError) {
+        console.error('Error creating user record:', createUserError);
+        return NextResponse.json(
+          { error: 'Failed to create user record' },
+          { status: 500 }
+        );
+      }
+      userData = newUser;
+      userError = null;
+    } else if (userError) {
       console.error('Error fetching user data:', userError);
       return NextResponse.json(
         { error: 'Failed to fetch user data' },
@@ -140,11 +162,27 @@ export async function GET() {
     }
 
     // Get user's tier info for limit display
-    const { data: userData } = await supabase
+    let { data: userData } = await supabase
       .from('users')
       .select('subscription_tier')
       .eq('id', user.id)
       .single();
+
+    // If user record doesn't exist, create it (fallback for email confirmation flow)
+    if (!userData) {
+      const { data: newUser } = await supabase
+        .from('users')
+        .insert({
+          id: user.id,
+          email: user.email!,
+          name: user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || 'User',
+          subscription_tier: 'solo',
+        })
+        .select('subscription_tier')
+        .single();
+
+      userData = newUser;
+    }
 
     const tier = userData?.subscription_tier || 'solo';
     const limit = TIER_LIMITS[tier] || 1;
