@@ -1,12 +1,10 @@
 'use server'
 
 import { createClient as createServerClient } from '@/lib/supabase/server'
-import { headers } from 'next/headers'
 
 export async function signUpWithEmail(formData: FormData) {
   const supabase = await createServerClient()
-  const headersList = await headers()
-  const origin = headersList.get('origin') || 'http://localhost:3000'
+  const origin = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
   const email = formData.get('email') as string
   const password = formData.get('password') as string
