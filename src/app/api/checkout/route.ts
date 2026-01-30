@@ -116,15 +116,24 @@ export async function POST(request: NextRequest) {
     // Apply promotional coupon if available
     if (couponId) {
       sessionParams.discounts = [{ coupon: couponId }];
-    }
-
-    // Allow promotion codes to be entered at checkout
-    if (!couponId) {
+    } else {
       sessionParams.allow_promotion_codes = true;
     }
 
-    // Create checkout session
-    const session = await getStripe().checkout.sessions.create(sessionParams);
+    // Create checkout session - retry without coupon if it fails
+    let session: Stripe.Checkout.Session;
+    try {
+      session = await getStripe().checkout.sessions.create(sessionParams);
+    } catch (couponError) {
+      if (couponError instanceof Stripe.errors.StripeError && couponId && couponError.message.includes('coupon')) {
+        console.warn(`[Checkout API] Coupon '${couponId}' failed, proceeding without discount:`, couponError.message);
+        delete sessionParams.discounts;
+        sessionParams.allow_promotion_codes = true;
+        session = await getStripe().checkout.sessions.create(sessionParams);
+      } else {
+        throw couponError;
+      }
+    }
 
     return NextResponse.json({ url: session.url });
 
