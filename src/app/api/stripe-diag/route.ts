@@ -78,6 +78,22 @@ export async function GET() {
     }
   }
 
+  // List ALL coupons in the account
+  try {
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+    const allCoupons = await stripe.coupons.list({ limit: 20 });
+    results.all_coupons_in_account = allCoupons.data.map(c => ({
+      id: c.id,
+      name: c.name,
+      percent_off: c.percent_off,
+      valid: c.valid,
+      duration: c.duration,
+      deleted: (c as Record<string, unknown>).deleted || false,
+    }));
+  } catch (err) {
+    results.all_coupons_in_account = { error: err instanceof Error ? err.message : 'Unknown error' };
+  }
+
   // Validate a sample price exists
   const samplePrice = process.env.STRIPE_PRICE_SOLO_MONTHLY;
   if (samplePrice) {
@@ -89,6 +105,9 @@ export async function GET() {
       results.sample_price = `❌ ${err instanceof Error ? err.message : 'Unknown error'}`;
     }
   }
+
+  // Stripe SDK version
+  results.stripe_sdk_version = Stripe.PACKAGE_VERSION || 'unknown';
 
   return NextResponse.json(results, { status: 200 });
 }
