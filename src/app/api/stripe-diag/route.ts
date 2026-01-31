@@ -106,8 +106,5 @@ export async function GET() {
     }
   }
 
-  // Stripe SDK version
-  results.stripe_sdk_version = Stripe.PACKAGE_VERSION || 'unknown';
-
   return NextResponse.json(results, { status: 200 });
 }
