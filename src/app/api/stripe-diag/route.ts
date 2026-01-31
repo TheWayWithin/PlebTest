@@ -88,7 +88,7 @@ export async function GET() {
       percent_off: c.percent_off,
       valid: c.valid,
       duration: c.duration,
-      deleted: (c as Record<string, unknown>).deleted || false,
+      deleted: (c as unknown as Record<string, unknown>).deleted || false,
     }));
   } catch (err) {
     results.all_coupons_in_account = { error: err instanceof Error ? err.message : 'Unknown error' };
