@@ -167,22 +167,27 @@ async function handleCheckoutCompleted(
 
   // Get subscription details to determine tier
   const subscription = await getStripe().subscriptions.retrieve(subscriptionId);
-  const priceId = subscription.items.data[0]?.price.id;
+  const item = subscription.items.data[0];
+  const priceId = item?.price.id;
   const tier = priceId ? PRICE_TO_TIER[priceId] : 'solo';
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const periodStart = (subscription as any).current_period_start as number;
+  const periodStart = item?.current_period_start;
 
   // Update user with Stripe customer ID and subscription info
+  const updateData: Record<string, unknown> = {
+    stripe_customer_id: customerId,
+    subscription_tier: tier,
+    subscription_status: 'active',
+    trial_ends_at: null, // Clear trial since they've subscribed
+    updated_at: new Date().toISOString(),
+  };
+
+  if (periodStart) {
+    updateData.billing_cycle_anchor = new Date(periodStart * 1000).toISOString();
+  }
+
   const { error } = await supabase
     .from('users')
-    .update({
-      stripe_customer_id: customerId,
-      subscription_tier: tier,
-      subscription_status: 'active',
-      billing_cycle_anchor: new Date(periodStart * 1000).toISOString(),
-      trial_ends_at: null, // Clear trial since they've subscribed
-      updated_at: new Date().toISOString(),
-    })
+    .update(updateData)
     .eq('id', userId);
 
   if (error) {
@@ -221,13 +226,16 @@ async function handleSubscriptionUpdated(
   }
 
   // Build update object
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const periodStart = (subscription as any).current_period_start as number;
+  const item = subscription.items.data[0];
+  const periodStart = item?.current_period_start;
   const updateData: Record<string, unknown> = {
     subscription_status: status,
-    billing_cycle_anchor: new Date(periodStart * 1000).toISOString(),
     updated_at: new Date().toISOString(),
   };
+
+  if (periodStart) {
+    updateData.billing_cycle_anchor = new Date(periodStart * 1000).toISOString();
+  }
 
   if (tier) {
     updateData.subscription_tier = tier;
