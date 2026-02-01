@@ -2,6 +2,15 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { Header } from '@/components/layout'
 import { LogoutButton } from '@/components/auth/logout-button'
+import { SubscriptionCard } from '@/components/settings/subscription-card'
+import { getSubscriptionDetails } from '@/lib/stripe/get-subscription-details'
+
+const TIER_LIMITS: Record<string, number> = {
+  solo: 1,
+  growth: 3,
+  scale: 10,
+  pro: 20,
+}
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -9,6 +18,32 @@ export default async function SettingsPage() {
 
   if (!user) {
     redirect('/login')
+  }
+
+  // Fetch user subscription data
+  const { data: userData } = await supabase
+    .from('users')
+    .select('subscription_tier, subscription_status, stripe_customer_id, trial_ends_at')
+    .eq('id', user.id)
+    .single()
+
+  // Count user's ideas for usage display
+  const { count: ideasCount } = await supabase
+    .from('ideas')
+    .select('*', { count: 'exact', head: true })
+    .eq('user_id', user.id)
+
+  const tier = userData?.subscription_tier || 'solo'
+  const status = userData?.subscription_status || 'trial'
+
+  // Fetch Stripe details if customer exists
+  let stripeDetails = null
+  if (userData?.stripe_customer_id) {
+    try {
+      stripeDetails = await getSubscriptionDetails(userData.stripe_customer_id)
+    } catch (error) {
+      console.error('Failed to fetch Stripe subscription details:', error)
+    }
   }
 
   return (
@@ -35,6 +70,20 @@ export default async function SettingsPage() {
               </div>
             </div>
           </div>
+
+          {/* Subscription Section */}
+          <SubscriptionCard
+            tier={tier}
+            status={status}
+            ideasUsed={ideasCount || 0}
+            ideasLimit={TIER_LIMITS[tier] || 1}
+            trialEndsAt={userData?.trial_ends_at || null}
+            nextBillingDate={stripeDetails?.currentPeriodEnd || null}
+            paymentMethodLast4={stripeDetails?.paymentMethodLast4 || null}
+            paymentMethodBrand={stripeDetails?.paymentMethodBrand || null}
+            cancelAtPeriodEnd={stripeDetails?.cancelAtPeriodEnd || false}
+            interval={stripeDetails?.interval || null}
+          />
 
           {/* Sign Out Section */}
           <div className="rounded-lg border border-rose-500/20 bg-zinc-900 p-6 shadow-sm">
