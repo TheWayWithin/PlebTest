@@ -33,15 +33,32 @@ export async function POST() {
 
     const admin = createAdminClient();
 
-    // Get user record
-    const { data: userData, error: userError } = await admin
+    // Get user record, create if missing
+    let { data: userData, error: userError } = await admin
       .from('users')
       .select('*')
       .eq('id', user.id)
       .single();
 
-    if (userError || !userData) {
-      return NextResponse.json({ error: 'User not found', details: userError }, { status: 404 });
+    if (userError?.code === 'PGRST116' || !userData) {
+      // User row doesn't exist yet - create it
+      const { data: newUser, error: insertError } = await admin
+        .from('users')
+        .insert({
+          id: user.id,
+          email: user.email || '',
+          subscription_tier: 'solo',
+          subscription_status: 'trial',
+        })
+        .select()
+        .single();
+
+      if (insertError || !newUser) {
+        return NextResponse.json({ error: 'Failed to create user record', details: insertError }, { status: 500 });
+      }
+      userData = newUser;
+    } else if (userError) {
+      return NextResponse.json({ error: 'User lookup failed', details: userError }, { status: 500 });
     }
 
     // If no stripe_customer_id, check Stripe by email
