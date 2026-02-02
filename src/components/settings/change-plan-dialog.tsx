@@ -20,13 +20,16 @@ interface ChangePlanDialogProps {
 }
 
 interface ProrationPreview {
-  prorationAmount: number;
-  recurringAmount: number;
-  immediateAmount: number;
+  currentPriceAmount: number;
   newPriceAmount: number;
   newInterval: string;
-  currency: string;
+  credit: number;
+  charge: number;
+  proratedDiff: number;
+  daysRemaining: number;
+  totalDays: number;
   currentPeriodEnd: string;
+  currency: string;
 }
 
 const TIERS = ['solo', 'growth', 'scale', 'pro'] as const;
@@ -45,6 +48,10 @@ function getDirection(currentTier: string, newTier: string): 'upgrade' | 'downgr
   if (newIdx > currentIdx) return 'upgrade';
   if (newIdx < currentIdx) return 'downgrade';
   return 'same';
+}
+
+function formatMoney(amount: number): string {
+  return `$${Math.abs(amount).toFixed(2)}`;
 }
 
 export function ChangePlanDialog({
@@ -148,7 +155,6 @@ export function ChangePlanDialog({
       }
 
       setSuccess(true);
-      // Reload the page after a brief delay so the server component re-fetches data
       setTimeout(() => {
         window.location.reload();
       }, 1500);
@@ -164,6 +170,10 @@ export function ChangePlanDialog({
   const isCurrentSelection = (tier: Tier) => {
     return tier === currentTier && billingInterval === (currentInterval === 'year' ? 'annual' : 'monthly');
   };
+
+  const isUpgrade = selectedTier ? getDirection(currentTier, selectedTier) === 'upgrade' : false;
+  const isDowngrade = selectedTier ? getDirection(currentTier, selectedTier) === 'downgrade' : false;
+  const intervalChanged = selectedTier && selectedTier === currentTier; // same tier, different interval
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -267,16 +277,16 @@ export function ChangePlanDialog({
           {loadingPreview && (
             <div className="flex items-center justify-center gap-2 py-4 text-sm text-zinc-400">
               <Loader2 className="h-4 w-4 animate-spin" />
-              Calculating proration...
+              Calculating...
             </div>
           )}
 
           {preview && selectedTier && !loadingPreview && (
             <div className="rounded-lg border border-zinc-800 bg-zinc-800/30 p-4 space-y-3">
               <div className="flex items-center gap-2 text-sm font-medium text-white">
-                {getDirection(currentTier, selectedTier) === 'upgrade' ? (
+                {isUpgrade ? (
                   <ArrowUp className="h-4 w-4 text-emerald-400" />
-                ) : getDirection(currentTier, selectedTier) === 'downgrade' ? (
+                ) : isDowngrade ? (
                   <ArrowDown className="h-4 w-4 text-amber-400" />
                 ) : (
                   <Minus className="h-4 w-4 text-zinc-400" />
@@ -285,41 +295,42 @@ export function ChangePlanDialog({
               </div>
 
               <div className="space-y-1.5 text-sm">
+                {/* Price comparison */}
                 <div className="flex justify-between">
-                  <span className="text-zinc-400">New plan price</span>
+                  <span className="text-zinc-400">Current price</span>
+                  <span className="text-zinc-300">
+                    {formatMoney(preview.currentPriceAmount)}/{preview.newInterval === 'year' ? 'yr' : 'mo'}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-zinc-400">New price</span>
                   <span className="text-white">
-                    ${preview.newPriceAmount.toFixed(2)}/{preview.newInterval === 'year' ? 'yr' : 'mo'}
+                    {formatMoney(preview.newPriceAmount)}/{preview.newInterval === 'year' ? 'yr' : 'mo'}
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400">Prorated adjustment</span>
-                  <span className={cn(
-                    preview.prorationAmount >= 0 ? 'text-white' : 'text-emerald-400'
-                  )}>
-                    {preview.prorationAmount >= 0
-                      ? `$${preview.prorationAmount.toFixed(2)}`
-                      : `-$${Math.abs(preview.prorationAmount).toFixed(2)} credit`
+
+                {/* Proration breakdown */}
+                <div className="border-t border-zinc-700 pt-1.5 mt-1.5">
+                  <div className="flex justify-between">
+                    <span className="text-zinc-400">
+                      Prorated for {preview.daysRemaining} day{preview.daysRemaining !== 1 ? 's' : ''} remaining
+                    </span>
+                    <span className={cn(
+                      'font-medium',
+                      preview.proratedDiff > 0 ? 'text-white' : 'text-emerald-400'
+                    )}>
+                      {preview.proratedDiff >= 0
+                        ? `+${formatMoney(preview.proratedDiff)}`
+                        : `-${formatMoney(preview.proratedDiff)} credit`
+                      }
+                    </span>
+                  </div>
+                  <p className="text-xs text-zinc-500 mt-0.5">
+                    {preview.proratedDiff >= 0
+                      ? 'Added to your next invoice'
+                      : 'Credit applied to your next invoice'
                     }
-                  </span>
-                </div>
-                {preview.prorationAmount >= 0 && (
-                  <p className="text-xs text-zinc-500 pt-0.5">
-                    Difference for the rest of this billing period
                   </p>
-                )}
-                {preview.prorationAmount < 0 && (
-                  <p className="text-xs text-zinc-500 pt-0.5">
-                    Credit applied to your next invoice
-                  </p>
-                )}
-                <div className="flex justify-between border-t border-zinc-700 pt-1.5">
-                  <span className="font-medium text-zinc-300">Due now</span>
-                  <span className="font-medium text-white">
-                    {preview.immediateAmount > 0
-                      ? `$${preview.immediateAmount.toFixed(2)}`
-                      : '$0.00'
-                    }
-                  </span>
                 </div>
               </div>
             </div>

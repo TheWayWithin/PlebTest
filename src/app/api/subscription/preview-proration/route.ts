@@ -1,7 +1,10 @@
 /**
  * Proration Preview API
  *
- * Returns a preview of what the customer will be charged when switching plans.
+ * Calculates what the customer will owe when switching plans, using the
+ * subscription's own period and price data rather than trying to parse
+ * Stripe's opaque preview-invoice line items.
+ *
  * POST /api/subscription/preview-proration
  * Body: { newPriceId: string }
  */
@@ -72,69 +75,46 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Already on this plan' }, { status: 400 });
     }
 
-    // Create an invoice preview to show proration
-    const preview = await stripe.invoices.createPreview({
-      customer: userData.stripe_customer_id,
-      subscription: subscription.id,
-      subscription_details: {
-        items: [
-          {
-            id: currentItem.id,
-            price: newPriceId,
-          },
-        ],
-        proration_behavior: 'create_prorations',
-      },
-    });
-
-    // Separate proration line items from the regular subscription charge.
-    // The preview invoice contains both proration adjustments AND the next
-    // billing cycle charge. We only want to show the proration cost.
-    //
-    // Proration lines have a period that falls WITHIN the current billing cycle.
-    // The next subscription charge has a period that starts AT the current period end.
-    const periodEnd = currentItem.current_period_end;
-    let prorationTotal = 0;
-    let recurringTotal = 0;
-    const currency = preview.currency;
-
-    // Debug: log line items to understand structure
-    const debugLines = preview.lines.data.map((line) => ({
-      amount: line.amount,
-      description: line.description,
-      periodStart: line.period.start,
-      periodEnd: line.period.end,
-      subscriptionPeriodEnd: periodEnd,
-      isBeforePeriodEnd: line.period.start < periodEnd,
-    }));
-    console.log('[Preview Proration] Line items:', JSON.stringify(debugLines, null, 2));
-
-    for (const line of preview.lines.data) {
-      // Lines whose period starts BEFORE the current period end are prorations
-      // (adjustments for the remainder of the current billing cycle).
-      // Lines whose period starts AT or AFTER the current period end are
-      // the regular next-cycle subscription charge.
-      if (line.period.start < periodEnd) {
-        prorationTotal += line.amount;
-      } else {
-        recurringTotal += line.amount;
-      }
-    }
-
     // Get the new price details
     const newPrice = await stripe.prices.retrieve(newPriceId);
-    const newAmount = newPrice.unit_amount || 0;
+    const newAmount = newPrice.unit_amount || 0; // cents
     const newInterval = newPrice.recurring?.interval || 'month';
 
+    // Calculate proration from subscription data directly.
+    //
+    // This is transparent math the user can verify:
+    //   remaining_ratio  = (period_end - now) / (period_end - period_start)
+    //   credit           = current_price × remaining_ratio
+    //   charge           = new_price     × remaining_ratio
+    //   prorated_diff    = charge - credit
+    //
+    const currentAmount = currentItem.price.unit_amount || 0; // cents
+    const periodStart = currentItem.current_period_start;
+    const periodEnd = currentItem.current_period_end;
+    const now = Math.floor(Date.now() / 1000);
+
+    const totalSeconds = periodEnd - periodStart;
+    const remainingSeconds = Math.max(periodEnd - now, 0);
+    const remainingRatio = totalSeconds > 0 ? remainingSeconds / totalSeconds : 0;
+
+    const daysRemaining = Math.ceil(remainingSeconds / 86400);
+    const totalDays = Math.ceil(totalSeconds / 86400);
+
+    const creditCents = Math.round(currentAmount * remainingRatio);
+    const chargeCents = Math.round(newAmount * remainingRatio);
+    const proratedDiffCents = chargeCents - creditCents;
+
     return NextResponse.json({
-      prorationAmount: prorationTotal / 100,
-      recurringAmount: recurringTotal / 100,
-      immediateAmount: preview.amount_due / 100,
+      currentPriceAmount: currentAmount / 100,
       newPriceAmount: newAmount / 100,
       newInterval,
-      currency,
+      credit: creditCents / 100,
+      charge: chargeCents / 100,
+      proratedDiff: proratedDiffCents / 100,
+      daysRemaining,
+      totalDays,
       currentPeriodEnd: new Date(periodEnd * 1000).toISOString(),
-      _debug: debugLines,
+      currency: currentItem.price.currency || 'usd',
     });
   } catch (error) {
     console.error('[Preview Proration] Error:', error);
