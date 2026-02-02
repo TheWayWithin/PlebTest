@@ -1777,7 +1777,232 @@ VERBOSE=true npx ts-node --esm src/__tests__/anti-sycophancy-regression.test.ts
 
 ---
 
+### 2026-01-29 Deliverable: Auth Email Redirect Fix + Staging Domain Setup
+
+**Description**: Fixed email confirmation redirect pointing to localhost, set up staging.plebtest.com custom domain
+
+**Changes**:
+1. **fix(auth): Use env var for email redirect** - `src/lib/auth/actions.ts` was using `headers().get('origin')` which returned null on Railway, falling back to `localhost:3000`. Changed to use `NEXT_PUBLIC_APP_URL` env var.
+2. **fix(auth): Use NEXT_PUBLIC_APP_URL for callback redirects** - `src/app/auth/callback/route.ts` used `requestUrl.origin` for all redirects which resolved to `localhost:8080` (Railway internal port). Changed all redirects to use `NEXT_PUBLIC_APP_URL`.
+3. **Resend domain verification** - Added and verified `plebtest.com` in Resend via Cloudflare auto-DNS setup.
+4. **Supabase SMTP configured** - Custom SMTP (Resend) configured in Supabase staging and production projects.
+5. **staging.plebtest.com domain setup** - CNAME DNS record in Cloudflare, custom domain added in Railway staging, SSL verified.
+6. **Supabase URL Configuration updated** - Site URL and Redirect URLs updated to use `staging.plebtest.com`.
+7. **NEXT_PUBLIC_APP_URL** set on Railway staging (`https://staging.plebtest.com`) and production.
+
+**Commits**: 47ab6da, 3138588
+**Verified**: Playwright automated tests + manual signup with real email confirmed working on staging.plebtest.com (2026-01-29)
+
+**Issue Encountered**: Railway GitHub authorization expired during domain setup. Fixed by reauthorizing Railway App in GitHub Settings → Installations.
+
+---
+
+### 2026-01-31 Deliverable: Stripe Coupon Fix + Checkout Resilience
+
+**Description**: Fixed coupon ID mismatch and added resilient checkout that retries without coupon on failure.
+
+**Changes**:
+1. **Diagnosed coupon mismatch** - Created temporary `/api/stripe-diag` endpoint. Discovered Stripe auto-generated coupon IDs (`wRBqhZBg`, `7QNUrlgp`) but Railway env vars had coupon NAMES (`FIRST_MONTH_20`, `FIRST_YEAR_20`). User updated Railway vars with correct IDs.
+2. **Resilient checkout** - `src/app/api/checkout/route.ts` now retries without coupon if coupon fails (inner try/catch), falling back to `allow_promotion_codes: true`.
+3. **Stripe API key** - Re-pasting the same key in Railway fixed an "Invalid API Key" error (Railway env var caching issue).
+
+**Commits**: Multiple across session
+**Verified**: Checkout flow works end-to-end on staging (2026-01-31)
+
+---
+
+### 2026-01-31 Deliverable: View Subscription - Settings Page (task-1.13.4)
+
+**Description**: Added subscription info section to settings page showing current plan, usage, billing date, and payment method.
+
+**Files Created**:
+- `src/lib/stripe/index.ts` - Shared lazy-init Stripe client (DRY, was duplicated in checkout + webhook)
+- `src/lib/stripe/get-subscription-details.ts` - Fetches subscription + payment method from Stripe API
+- `src/components/settings/subscription-card.tsx` - Display component with status badges, usage progress bar, alert banners
+
+**Files Modified**:
+- `src/app/settings/page.tsx` - Added subscription data fetching (Supabase + Stripe) and SubscriptionCard rendering
+
+**Features**:
+- Status badges: green (active), amber (past_due), red (cancelled), gray (trial)
+- Usage progress bar (ideas used / limit) with color thresholds
+- Alert banners for past_due and cancel-at-period-end states
+- Payment method display (brand + last 4)
+- Upgrade CTA for trial/free users linking to /pricing
+
+**Build Status**: ✅ `npm run build` passes
+**Commit**: f96e474
+**Verified**: Deployed to staging (2026-01-31)
+
+---
+
+### 2026-01-31 Deliverable: Google OAuth Setup
+
+**Description**: Enabled Google sign-in on staging.
+
+**Changes**:
+1. Created Google Cloud Console project with OAuth consent screen (external)
+2. Created OAuth client credentials with redirect URI `https://erkvlsaegregxdwfjxgv.supabase.co/auth/v1/callback`
+3. Enabled Google provider in Supabase staging with client ID/secret
+
+**Verified**: Google OAuth login works on staging (2026-01-31)
+
+---
+
+### 2026-01-31 Deliverable: Stripe Webhook Fix
+
+**Description**: Fixed webhook crash caused by Stripe SDK API version change.
+
+**Root Cause**: Newer Stripe SDK moved `current_period_start`/`current_period_end` from `Subscription` to `SubscriptionItem` (`subscription.items.data[0]`). Old code used `(subscription as any).current_period_start` which returned undefined, causing `new Date(undefined * 1000)` → "Invalid time value" error.
+
+**Files Modified**:
+- `src/app/api/webhooks/stripe/route.ts` - Fixed `handleCheckoutCompleted` and `handleSubscriptionUpdated` to use `subscription.items.data[0]?.current_period_start` with null checks
+
+**Commit**: 8be2447
+**Verified**: Webhook resend from Stripe returns 200 OK (2026-01-31)
+
+---
+
+### 2026-01-31 Deliverable: Subscription Sync Endpoint (temporary)
+
+**Description**: Created `/api/sync-subscription` POST endpoint to manually sync Stripe subscription data to DB, bypassing webhook idempotency issues.
+
+**Files Created**:
+- `src/app/api/sync-subscription/route.ts` - Authenticated endpoint that reads user's Stripe subscription and updates DB
+
+**Context**: After fixing webhook crash, resending the event returned 200 but idempotency check in `webhook_events` table skipped the already-processed event. This endpoint provides a manual workaround.
+
+**Commit**: dde950f, 9d43a35 (added auto-create user record if missing)
+**Note**: Temporary diagnostic tool - remove before production.
+
+---
+
+### 2026-02-01 Deliverable: Stripe Webhook Event Configuration Fix
+
+**Description**: `customer.subscription.updated` event was not configured in Stripe webhook endpoint, so plan changes made in Stripe were not being sent to our webhook handler.
+
+**Changes**:
+1. Added `customer.subscription.updated` to Stripe staging webhook event list
+2. Verified `customer.subscription.deleted` was already present
+
+**Verified**: Changed subscription from Scale → Pro in Stripe dashboard, settings page updated automatically to show Pro/$49.95/month/0 of 20 ideas (2026-02-01)
+
+---
+
+### 2026-02-01 Verification: End-to-End Billing Flow
+
+**Tests Passed**:
+1. ✅ Stripe checkout flow (signup → Stripe → success page → dashboard)
+2. ✅ Subscription sync endpoint (manual DB repair for users with broken webhook history)
+3. ✅ Webhook processes `customer.subscription.updated` events (Scale → Pro updated automatically)
+4. ✅ Settings page shows correct plan, price, usage limits, billing date, payment method
+5. ✅ Google OAuth login works on staging
+
+**Known Issue**: User record not auto-created on Google OAuth first login - sync endpoint now handles this, but dashboard/ideas routes also have PGRST116 fallback.
+
+---
+
 ## Issues & Resolutions
+
+### 2026-02-01 Issue: Webhook not receiving subscription update events
+
+**Symptom**: Changing subscription plan in Stripe dashboard did not update settings page
+**Context**: Changed from Scale to Pro in Stripe, settings still showed Growth
+
+**Attempt 1** - 2026-02-01
+- Action: Checked Stripe webhook event deliveries - no `customer.subscription.updated` events in list
+- Rationale: If events aren't being sent, the handler code doesn't matter
+- Result: ✅ Diagnosed - event type was not enabled in Stripe webhook endpoint configuration
+- Learning: When setting up Stripe webhooks, must explicitly enable ALL event types the handler needs
+
+**Root Cause**: Stripe webhook endpoint was only configured for `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.deleted`, `invoice.payment_succeeded`, `invoice.payment_failed`. The `customer.subscription.updated` event was missing.
+**Prevention**: Maintain a checklist of required webhook events in handoff-notes.md. Verify event configuration whenever modifying webhook handler.
+
+---
+
+### 2026-02-01 Issue: Sync endpoint "User not found" on Google OAuth login
+
+**Symptom**: `/api/sync-subscription` returned 404 "User not found" for authenticated user
+**Context**: User logged in with Google OAuth, had auth session but no row in `users` table
+
+**Attempt 1** - 2026-02-01
+- Action: Updated sync endpoint to auto-create user record (insert with PGRST116 fallback) before syncing
+- Result: ✅ Resolved - sync endpoint created user record then synced subscription data
+- Learning: Google OAuth creates auth user but doesn't guarantee a row in the `users` table
+
+**Root Cause**: Google OAuth login creates a Supabase auth user but the application `users` table row is only created by specific routes (ideas API). The sync endpoint assumed the row existed.
+**Prevention**: Ensure all authenticated API endpoints handle missing user records gracefully, or add a middleware/trigger that creates the user row on first auth.
+
+---
+
+### 2026-01-31 Issue: Stripe coupon "No such coupon: FIRST_MONTH_20"
+
+**Symptom**: Checkout returned 400 with "No such coupon: 'FIRST_MONTH_20'"
+**Context**: After fixing Stripe API key issue, checkout still failed
+
+**Attempt 1** - 2026-01-31
+- Action: Created `/api/stripe-diag` diagnostic endpoint to inspect all Stripe env vars and coupons
+- Rationale: Need to see what Stripe actually has vs what env vars say
+- Result: ✅ Diagnosed - Stripe auto-generated coupon IDs but env vars had coupon names
+- Learning: When creating Stripe coupons without setting a custom ID, Stripe generates random IDs. Must use the ID, not the name.
+
+**Root Cause**: Coupons were created in Stripe without explicit IDs, so Stripe auto-generated IDs (`wRBqhZBg`, `7QNUrlgp`). Railway env vars had the coupon names instead.
+**Prevention**: Always set explicit coupon IDs when creating Stripe coupons, or verify the actual ID in Stripe dashboard.
+
+---
+
+### 2026-01-31 Issue: Webhook 500 "Invalid time value" on checkout.session.completed
+
+**Symptom**: All `checkout.session.completed` webhook events returned 500 with `{"error": "Invalid time value"}`
+**Context**: User completed Stripe checkout for Growth plan but settings showed Solo/trial
+
+**Attempt 1** - 2026-01-31
+- Action: Fixed webhook to use `subscription.items.data[0]?.current_period_start` instead of `(subscription as any).current_period_start`
+- Rationale: Newer Stripe SDK moved period dates to subscription item level
+- Result: ✅ Webhook returns 200 on resend
+
+**Attempt 2** - 2026-01-31
+- Action: Resent webhook event from Stripe dashboard
+- Rationale: Original event failed, resending should update DB
+- Result: ❌ 200 OK but DB unchanged - idempotency check skipped the event (already marked 'processed' from the failed-then-retried event)
+- Learning: Webhook idempotency table needs handling for events that were marked processed during a 500 error recovery
+
+**Attempt 3** - 2026-01-31
+- Action: Created `/api/sync-subscription` manual sync endpoint
+- Rationale: Bypass webhook entirely, read Stripe data directly and update DB
+- Result: ⏳ Deployed, awaiting user test
+- Learning: Always have a manual sync mechanism as fallback for webhook-dependent data
+
+**Root Cause**: Two-part issue: (1) Stripe SDK API change broke date extraction in webhook, (2) After fixing, idempotency table prevented re-processing of already-seen events.
+**Prevention**: Pin Stripe SDK version in package.json. Add admin tool for manual subscription sync. Consider allowing re-processing of events that were previously marked as 'failed'.
+
+---
+
+### 2026-01-29 Issue: Email confirmation link redirects to localhost
+
+**Symptom**: After signing up, confirmation email link redirected to `localhost:3000` then `localhost:8080/dashboard`
+**Context**: Testing signup flow on Railway staging deployment
+
+**Attempt 1** - 2026-01-29
+- Action: Changed Supabase Site URL from `localhost:3000` to Railway staging URL
+- Rationale: Site URL is used as default redirect for email confirmation
+- Result: ❌ Failed - now redirected to `localhost:8080/dashboard` instead
+- Learning: The Site URL fix helped Supabase, but the callback route had its own localhost issue
+
+**Attempt 2** - 2026-01-29
+- Action: Changed `src/lib/auth/actions.ts` to use `NEXT_PUBLIC_APP_URL` env var instead of `headers().get('origin')`
+- Rationale: The origin header was unreliable on Railway, returning null and falling back to localhost:3000
+- Result: ❌ Partial - fixed the emailRedirectTo but callback still redirected to localhost:8080
+- Learning: Two separate localhost issues - one in signup action, one in callback route
+
+**Attempt 3** - 2026-01-29
+- Action: Changed `src/app/auth/callback/route.ts` to use `NEXT_PUBLIC_APP_URL` instead of `requestUrl.origin` for all redirects
+- Rationale: On Railway, `requestUrl.origin` resolves to internal port `localhost:8080`, not the public URL
+- Result: ✅ Resolved
+- Learning: Railway runs apps on internal ports; `request.url` reflects the internal URL, not the public-facing domain
+
+**Root Cause**: Railway's internal networking means `request.url` and `headers().get('origin')` don't reflect the public URL. All server-side redirects must use an explicit env var (`NEXT_PUBLIC_APP_URL`).
+**Prevention**: Always use `NEXT_PUBLIC_APP_URL` for constructing redirect URLs in server-side code. Never rely on request headers for the public origin on Railway.
 
 <!-- Format:
 ### [YYYY-MM-DD HH:MM] Issue: [Title]
@@ -1793,6 +2018,32 @@ VERBOSE=true npx ts-node --esm src/__tests__/anti-sycophancy-regression.test.ts
 **Root Cause** (when resolved): [Why it happened]
 **Prevention**: [How to prevent in future]
 -->
+
+---
+
+### 2026-02-01 22:56 Deliverable: Upgrade/Downgrade Plan Change (task-1.13.5)
+
+**Files Created**:
+- `src/app/api/subscription/preview-proration/route.ts` - Proration preview API using `stripe.invoices.createPreview()` with `subscription_details.items`
+- `src/app/api/subscription/change-plan/route.ts` - Plan change API using `stripe.subscriptions.update()` with proration
+- `src/components/settings/change-plan-dialog.tsx` - Plan selection dialog with tier grid, billing interval toggle, proration preview, confirmation flow
+
+**Files Modified**:
+- `src/components/settings/subscription-card.tsx` - Added `'use client'` directive, "Change plan" button for active subscribers, wired ChangePlanDialog
+- `src/app/settings/page.tsx` - Added `getPriceConfig()` helper, passes `priceConfig` prop to SubscriptionCard
+
+**Implementation Details**:
+- Plan selection UI shows all 4 tiers (Solo/Growth/Scale/Pro) with monthly/annual toggle
+- Proration preview fetches real-time Stripe invoice preview showing prorated amount due
+- Upgrades charge immediately via proration; downgrades apply credit to next invoice
+- Webhook (`customer.subscription.updated`) handles DB tier/status sync automatically
+- Price IDs validated server-side against env vars (same VALID_PRICE_IDS pattern as checkout)
+- Dialog reloads page after successful change to refresh server component data
+
+**Build**: ✅ `npm run build` passes
+**Verified**: ✅ All files verified on filesystem - 2026-02-01 22:56
+
+**Issue Encountered**: Stripe SDK type error - `subscription_items` param doesn't exist on `InvoiceCreatePreviewParams`. Fixed by using `subscription_details.items` instead (newer Stripe API shape).
 
 ---
 

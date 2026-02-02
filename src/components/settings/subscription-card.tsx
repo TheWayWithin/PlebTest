@@ -1,5 +1,9 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
-import { CreditCard, Calendar, Zap, AlertTriangle, ArrowUpRight } from 'lucide-react';
+import { CreditCard, Calendar, Zap, AlertTriangle, ArrowUpRight, ArrowLeftRight } from 'lucide-react';
+import { ChangePlanDialog } from './change-plan-dialog';
 
 const TIER_PRICES: Record<string, { monthly: number; annual: number }> = {
   solo: { monthly: 9.95, annual: 99.50 },
@@ -7,6 +11,13 @@ const TIER_PRICES: Record<string, { monthly: number; annual: number }> = {
   scale: { monthly: 29.95, annual: 299.50 },
   pro: { monthly: 49.95, annual: 499.50 },
 };
+
+interface PriceConfig {
+  solo: { monthly: string; annual: string };
+  growth: { monthly: string; annual: string };
+  scale: { monthly: string; annual: string };
+  pro: { monthly: string; annual: string };
+}
 
 interface SubscriptionCardProps {
   tier: string;
@@ -19,6 +30,7 @@ interface SubscriptionCardProps {
   paymentMethodBrand: string | null;
   cancelAtPeriodEnd: boolean;
   interval: 'month' | 'year' | null;
+  priceConfig: PriceConfig | null;
 }
 
 function StatusBadge({ status }: { status: string }) {
@@ -60,11 +72,14 @@ export function SubscriptionCard({
   paymentMethodBrand,
   cancelAtPeriodEnd,
   interval,
+  priceConfig,
 }: SubscriptionCardProps) {
+  const [changePlanOpen, setChangePlanOpen] = useState(false);
   const tierPrices = TIER_PRICES[tier];
   const usagePercent = ideasLimit > 0 ? Math.min((ideasUsed / ideasLimit) * 100, 100) : 0;
   const isFreeTier = status === 'trial' || status === 'expired' || (status === 'cancelled' && !nextBillingDate);
   const showUpgradeCta = isFreeTier || tier === 'solo';
+  const hasActiveSubscription = status === 'active' && !isFreeTier;
 
   return (
     <div className="rounded-lg border border-zinc-800 bg-zinc-900 p-6 shadow-sm">
@@ -163,9 +178,9 @@ export function SubscriptionCard({
         )}
       </div>
 
-      {/* Upgrade CTA */}
-      {showUpgradeCta && (
-        <div className="mt-6 border-t border-zinc-800 pt-4">
+      {/* Plan Actions */}
+      <div className="mt-6 border-t border-zinc-800 pt-4 flex items-center gap-4">
+        {showUpgradeCta && (
           <Link
             href="/pricing"
             className="inline-flex items-center gap-1 text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
@@ -173,7 +188,27 @@ export function SubscriptionCard({
             {isFreeTier ? 'Upgrade your plan' : 'View plans'}
             <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
-        </div>
+        )}
+        {hasActiveSubscription && priceConfig && (
+          <button
+            onClick={() => setChangePlanOpen(true)}
+            className="inline-flex items-center gap-1 text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+          >
+            <ArrowLeftRight className="h-3.5 w-3.5" />
+            Change plan
+          </button>
+        )}
+      </div>
+
+      {/* Change Plan Dialog */}
+      {priceConfig && (
+        <ChangePlanDialog
+          open={changePlanOpen}
+          onClose={() => setChangePlanOpen(false)}
+          currentTier={tier}
+          currentInterval={interval}
+          priceConfig={priceConfig}
+        />
       )}
     </div>
   );

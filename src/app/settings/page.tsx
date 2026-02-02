@@ -12,6 +12,27 @@ const TIER_LIMITS: Record<string, number> = {
   pro: 20,
 }
 
+function getPriceConfig() {
+  return {
+    solo: {
+      monthly: process.env.STRIPE_PRICE_SOLO_MONTHLY!,
+      annual: process.env.STRIPE_PRICE_SOLO_ANNUAL!,
+    },
+    growth: {
+      monthly: process.env.STRIPE_PRICE_GROWTH_MONTHLY!,
+      annual: process.env.STRIPE_PRICE_GROWTH_ANNUAL!,
+    },
+    scale: {
+      monthly: process.env.STRIPE_PRICE_SCALE_MONTHLY!,
+      annual: process.env.STRIPE_PRICE_SCALE_ANNUAL!,
+    },
+    pro: {
+      monthly: process.env.STRIPE_PRICE_PRO_MONTHLY!,
+      annual: process.env.STRIPE_PRICE_PRO_ANNUAL!,
+    },
+  }
+}
+
 export default async function SettingsPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -83,6 +104,7 @@ export default async function SettingsPage() {
             paymentMethodBrand={stripeDetails?.paymentMethodBrand || null}
             cancelAtPeriodEnd={stripeDetails?.cancelAtPeriodEnd || false}
             interval={stripeDetails?.interval || null}
+            priceConfig={status === 'active' ? getPriceConfig() : null}
           />
 
           {/* Sign Out Section */}

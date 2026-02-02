@@ -1045,7 +1045,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
   - Dependencies: task-1.13.1, task-1.2.2
   - **Completed**: POST /api/checkout, /pricing page, /checkout/success, /checkout/cancel
 
-- [ ] **task-1.13.4** Implement View Subscription (F-025)
+- [x] **task-1.13.4** Implement View Subscription (F-025) ✅ 2026-01-31
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -1054,8 +1054,9 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Shows billing date
     - Shows payment method (last 4 digits)
   - Dependencies: task-1.13.2
+  - **Completed**: SubscriptionCard component, shared Stripe client, get-subscription-details helper, settings page wired up
 
-- [ ] **task-1.13.5** Implement Upgrade/Downgrade (F-026)
+- [x] **task-1.13.5** Implement Upgrade/Downgrade (F-026) - ✅ 2026-02-01 22:56
   - Agent: developer
   - Priority: p0
   - Acceptance Criteria:
@@ -1064,6 +1065,7 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Confirms change
     - Updates via Stripe
   - Dependencies: task-1.13.4
+  - **Completed**: Plan change dialog in settings, proration preview API, change-plan API, build passes
 
 - [ ] **task-1.13.6** Implement Manage Payment Method (F-027)
   - Agent: developer
@@ -1295,6 +1297,13 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Priorities assigned
     - Ready to start Phase 2
   - Dependencies: All Phase 1 tasks complete
+
+### Pre-Production Checklist
+- [ ] Add `customer.subscription.updated` event to **production** Stripe webhook endpoint
+- [ ] Add `customer.subscription.deleted` event to **production** Stripe webhook endpoint (verify present)
+- [ ] Verify all webhook event types match between staging and production Stripe endpoints
+- [ ] Remove temporary diagnostic endpoints before production (`/api/stripe-diag`, `/api/sync-subscription`)
+- [ ] Update Stripe webhook URL to production domain when ready
 
 ### Quality Gates
 - [ ] Build passes (`npm run build`)
