@@ -21,6 +21,7 @@ interface ChangePlanDialogProps {
 
 interface ProrationPreview {
   prorationAmount: number;
+  recurringAmount: number;
   immediateAmount: number;
   newPriceAmount: number;
   newInterval: string;
@@ -293,25 +294,33 @@ export function ChangePlanDialog({
                 <div className="flex justify-between">
                   <span className="text-zinc-400">Prorated adjustment</span>
                   <span className={cn(
-                    preview.immediateAmount > 0 ? 'text-white' : 'text-emerald-400'
+                    preview.prorationAmount >= 0 ? 'text-white' : 'text-emerald-400'
                   )}>
-                    {preview.immediateAmount >= 0
-                      ? `$${preview.immediateAmount.toFixed(2)}`
-                      : `-$${Math.abs(preview.immediateAmount).toFixed(2)} credit`
+                    {preview.prorationAmount >= 0
+                      ? `$${preview.prorationAmount.toFixed(2)}`
+                      : `-$${Math.abs(preview.prorationAmount).toFixed(2)} credit`
                     }
                   </span>
                 </div>
-                {preview.immediateAmount > 0 && (
-                  <div className="flex justify-between border-t border-zinc-700 pt-1.5">
-                    <span className="font-medium text-zinc-300">Due now</span>
-                    <span className="font-medium text-white">${preview.immediateAmount.toFixed(2)}</span>
-                  </div>
-                )}
-                {preview.immediateAmount <= 0 && (
-                  <p className="text-xs text-zinc-500 pt-1">
-                    Credit will be applied to your next invoice.
+                {preview.prorationAmount >= 0 && (
+                  <p className="text-xs text-zinc-500 pt-0.5">
+                    Difference for the rest of this billing period
                   </p>
                 )}
+                {preview.prorationAmount < 0 && (
+                  <p className="text-xs text-zinc-500 pt-0.5">
+                    Credit applied to your next invoice
+                  </p>
+                )}
+                <div className="flex justify-between border-t border-zinc-700 pt-1.5">
+                  <span className="font-medium text-zinc-300">Due now</span>
+                  <span className="font-medium text-white">
+                    {preview.immediateAmount > 0
+                      ? `$${preview.immediateAmount.toFixed(2)}`
+                      : '$0.00'
+                    }
+                  </span>
+                </div>
               </div>
             </div>
           )}

@@ -87,11 +87,24 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Calculate the proration amount
-    // The preview shows what the next invoice would look like
-    const prorationAmount = preview.total; // in cents
-    const immediateAmount = preview.amount_due; // what they'd pay now
+    // Separate proration line items from the regular subscription charge.
+    // The preview invoice contains both proration adjustments AND the next
+    // billing cycle charge. We only want to show the proration cost.
+    let prorationTotal = 0;
+    let recurringTotal = 0;
     const currency = preview.currency;
+
+    for (const line of preview.lines.data) {
+      const isProration =
+        line.parent?.invoice_item_details?.proration ||
+        line.parent?.subscription_item_details?.proration ||
+        false;
+      if (isProration) {
+        prorationTotal += line.amount;
+      } else {
+        recurringTotal += line.amount;
+      }
+    }
 
     // Get the new price details
     const newPrice = await stripe.prices.retrieve(newPriceId);
@@ -99,8 +112,9 @@ export async function POST(request: NextRequest) {
     const newInterval = newPrice.recurring?.interval || 'month';
 
     return NextResponse.json({
-      prorationAmount: prorationAmount / 100,
-      immediateAmount: immediateAmount / 100,
+      prorationAmount: prorationTotal / 100,
+      recurringAmount: recurringTotal / 100,
+      immediateAmount: preview.amount_due / 100,
       newPriceAmount: newAmount / 100,
       newInterval,
       currency,
