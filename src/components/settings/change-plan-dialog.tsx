@@ -30,6 +30,9 @@ interface ProrationPreview {
   totalDays: number;
   currentPeriodEnd: string;
   currency: string;
+  isUpgrade: boolean;
+  immediateCharge: boolean;
+  prorationDate: number;
 }
 
 const TIERS = ['solo', 'growth', 'scale', 'pro'] as const;
@@ -144,7 +147,10 @@ export function ChangePlanDialog({
       const res = await fetch('/api/subscription/change-plan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ newPriceId }),
+        body: JSON.stringify({
+          newPriceId,
+          prorationDate: preview?.prorationDate, // Use same timestamp as preview for consistency
+        }),
       });
 
       const data = await res.json();
@@ -326,9 +332,13 @@ export function ChangePlanDialog({
                     </span>
                   </div>
                   <p className="text-xs text-zinc-500 mt-0.5">
-                    {preview.proratedDiff >= 0
-                      ? 'Added to your next invoice'
-                      : 'Credit applied to your next invoice'
+                    {preview.immediateCharge
+                      ? preview.proratedDiff >= 0
+                        ? 'Charged to your payment method now'
+                        : 'Refunded to your payment method'
+                      : preview.proratedDiff >= 0
+                        ? 'Added to your next invoice'
+                        : 'Credit applied to your next invoice'
                     }
                   </p>
                 </div>
@@ -373,8 +383,10 @@ export function ChangePlanDialog({
             {confirming ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Confirming...
+                {preview?.immediateCharge ? 'Processing Payment...' : 'Confirming...'}
               </>
+            ) : preview?.immediateCharge && preview.proratedDiff > 0 ? (
+              `Pay ${formatMoney(preview.proratedDiff)} & Upgrade`
             ) : (
               'Confirm Change'
             )}

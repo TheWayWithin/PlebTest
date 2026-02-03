@@ -1,9 +1,12 @@
 /**
  * Proration Preview API
  *
- * Calculates what the customer will owe when switching plans, using the
- * subscription's own period and price data rather than trying to parse
- * Stripe's opaque preview-invoice line items.
+ * Uses Stripe's invoices.createPreview() to show exactly what will be charged
+ * when switching plans. This accounts for coupons, partial periods, and Stripe's
+ * internal rounding — ensuring the preview matches the actual charge.
+ *
+ * - Upgrades: proration_behavior 'always_invoice' (charges immediately)
+ * - Downgrades: proration_behavior 'create_prorations' (credit on next invoice)
  *
  * POST /api/subscription/preview-proration
  * Body: { newPriceId: string }
@@ -75,34 +78,62 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Already on this plan' }, { status: 400 });
     }
 
-    // Get the new price details
+    // Get the new price details and determine direction
     const newPrice = await stripe.prices.retrieve(newPriceId);
-    const newAmount = newPrice.unit_amount || 0; // cents
+    const newAmount = newPrice.unit_amount || 0;
     const newInterval = newPrice.recurring?.interval || 'month';
+    const currentAmount = currentItem.price.unit_amount || 0;
 
-    // Calculate proration from subscription data directly.
-    //
-    // This is transparent math the user can verify:
-    //   remaining_ratio  = (period_end - now) / (period_end - period_start)
-    //   credit           = current_price × remaining_ratio
-    //   charge           = new_price     × remaining_ratio
-    //   prorated_diff    = charge - credit
-    //
-    const currentAmount = currentItem.price.unit_amount || 0; // cents
-    const periodStart = currentItem.current_period_start;
+    // Determine if this is an upgrade or downgrade based on price
+    const isUpgrade = newAmount > currentAmount;
+    const prorationBehavior = isUpgrade ? 'always_invoice' : 'create_prorations';
+
+    // Use Stripe's preview API for accurate proration (accounts for coupons, etc.)
+    const prorationDate = Math.floor(Date.now() / 1000);
+
+    const previewInvoice = await stripe.invoices.createPreview({
+      customer: userData.stripe_customer_id,
+      subscription: subscription.id,
+      subscription_details: {
+        items: [
+          {
+            id: currentItem.id,
+            price: newPriceId,
+          },
+        ],
+        proration_behavior: prorationBehavior,
+        proration_date: prorationDate,
+      },
+    });
+
+    // Extract proration amounts from the preview invoice
+    // Proration lines are identified by parent.subscription_item_details.proration
+    // or by checking if the period doesn't match the full billing cycle
+    let creditCents = 0;
+    let chargeCents = 0;
+
+    for (const line of previewInvoice.lines.data) {
+      // Check for proration flag in the newer Stripe SDK structure
+      const isProration = line.parent?.subscription_item_details?.proration ?? false;
+
+      if (isProration) {
+        if (line.amount < 0) {
+          creditCents += Math.abs(line.amount); // negative = credit for old plan
+        } else {
+          chargeCents += line.amount; // positive = charge for new plan
+        }
+      }
+    }
+
+    const proratedDiffCents = chargeCents - creditCents;
+
+    // Calculate days remaining for UI messaging
     const periodEnd = currentItem.current_period_end;
-    const now = Math.floor(Date.now() / 1000);
-
+    const periodStart = currentItem.current_period_start;
     const totalSeconds = periodEnd - periodStart;
-    const remainingSeconds = Math.max(periodEnd - now, 0);
-    const remainingRatio = totalSeconds > 0 ? remainingSeconds / totalSeconds : 0;
-
+    const remainingSeconds = Math.max(periodEnd - prorationDate, 0);
     const daysRemaining = Math.ceil(remainingSeconds / 86400);
     const totalDays = Math.ceil(totalSeconds / 86400);
-
-    const creditCents = Math.round(currentAmount * remainingRatio);
-    const chargeCents = Math.round(newAmount * remainingRatio);
-    const proratedDiffCents = chargeCents - creditCents;
 
     return NextResponse.json({
       currentPriceAmount: currentAmount / 100,
@@ -115,6 +146,9 @@ export async function POST(request: NextRequest) {
       totalDays,
       currentPeriodEnd: new Date(periodEnd * 1000).toISOString(),
       currency: currentItem.price.currency || 'usd',
+      isUpgrade,
+      immediateCharge: isUpgrade, // upgrades charge now, downgrades credit at next invoice
+      prorationDate, // pass back so change-plan uses same timestamp
     });
   } catch (error) {
     console.error('[Preview Proration] Error:', error);

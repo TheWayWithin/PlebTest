@@ -2,8 +2,11 @@
  * Change Plan API
  *
  * Updates the user's Stripe subscription to a new price/plan.
+ * - Upgrades use 'always_invoice' (charges the prorated difference immediately)
+ * - Downgrades use 'create_prorations' (credit applied to next invoice)
+ *
  * POST /api/subscription/change-plan
- * Body: { newPriceId: string }
+ * Body: { newPriceId: string, prorationDate?: number }
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -31,7 +34,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { newPriceId } = await request.json();
+    const { newPriceId, prorationDate } = await request.json();
 
     if (!newPriceId || !VALID_PRICE_IDS.has(newPriceId)) {
       return NextResponse.json({ error: 'Invalid price ID' }, { status: 400 });
@@ -72,27 +75,62 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Already on this plan' }, { status: 400 });
     }
 
-    // Update the subscription with proration
-    const updatedSubscription = await stripe.subscriptions.update(subscription.id, {
+    // Determine direction based on price comparison
+    const currentAmount = currentItem.price.unit_amount || 0;
+    const newPrice = await stripe.prices.retrieve(newPriceId);
+    const newAmount = newPrice.unit_amount || 0;
+    const isUpgrade = newAmount > currentAmount;
+
+    // Build update params with direction-aware proration behavior
+    const updateParams: Stripe.SubscriptionUpdateParams = {
       items: [
         {
           id: currentItem.id,
           price: newPriceId,
         },
       ],
-      proration_behavior: 'create_prorations',
-    });
+      // Upgrades: charge immediately via always_invoice
+      // Downgrades: credit applied to next invoice via create_prorations
+      proration_behavior: isUpgrade ? 'always_invoice' : 'create_prorations',
+    };
+
+    // Use the same proration date from preview for consistency
+    if (prorationDate && typeof prorationDate === 'number') {
+      updateParams.proration_date = prorationDate;
+    }
+
+    // For upgrades, expand latest_invoice to check payment status
+    const updatedSubscription = await stripe.subscriptions.update(subscription.id, updateParams);
 
     // The webhook (customer.subscription.updated) will handle updating the
     // user's tier and status in our database, but we return the new state
     // for immediate UI feedback
     const newPriceIdFromSub = updatedSubscription.items.data[0]?.price.id;
 
+    // For upgrades with always_invoice, get the invoice status
+    let invoiceStatus: string | undefined;
+    let invoiceId: string | undefined;
+    if (isUpgrade && updatedSubscription.latest_invoice) {
+      const invoiceRef = updatedSubscription.latest_invoice;
+      if (typeof invoiceRef === 'string') {
+        // Need to fetch the invoice to get status
+        const invoice = await stripe.invoices.retrieve(invoiceRef);
+        invoiceStatus = invoice.status ?? undefined;
+        invoiceId = invoice.id;
+      } else {
+        invoiceStatus = invoiceRef.status ?? undefined;
+        invoiceId = invoiceRef.id;
+      }
+    }
+
     return NextResponse.json({
       success: true,
       subscriptionId: updatedSubscription.id,
       newPriceId: newPriceIdFromSub,
       status: updatedSubscription.status,
+      isUpgrade,
+      invoiceStatus, // 'paid', 'open', etc. for upgrades
+      invoiceId,
     });
   } catch (error) {
     console.error('[Change Plan] Error:', error);
