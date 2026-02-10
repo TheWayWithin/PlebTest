@@ -5,6 +5,8 @@ import { createClient } from '@/lib/supabase/server';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { TestAutoRefresh } from '@/components/tests/test-auto-refresh';
+import { RetryTestButton } from '@/components/tests/retry-test-button';
 
 interface PageProps {
   params: Promise<{
@@ -116,6 +118,12 @@ export default async function TestViewPage({ params }: PageProps) {
 
   const status = (test.status || 'pending') as keyof typeof STATUS_CONFIG;
   const statusConfig = STATUS_CONFIG[status];
+  const isActive = status === 'pending' || status === 'in_progress';
+
+  // Detect stuck tests: pending for over 2 minutes with no sessions created
+  const createdAt = test.created_at ? new Date(test.created_at).getTime() : Date.now();
+  const minutesSinceCreation = (Date.now() - createdAt) / (1000 * 60);
+  const isStuck = status === 'pending' && minutesSinceCreation > 2 && (!sessions || sessions.length === 0);
 
   // Calculate progress
   const totalSessions = sessions?.length || 0;
@@ -135,6 +143,9 @@ export default async function TestViewPage({ params }: PageProps) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
+      {/* Auto-refresh while test is active */}
+      <TestAutoRefresh isActive={isActive} />
+
       {/* Header */}
       <div className="mb-8">
         <Link
@@ -177,12 +188,18 @@ export default async function TestViewPage({ params }: PageProps) {
           <div className="text-center">
             <p className="text-lg text-white font-medium">{statusConfig.description}</p>
             <p className="text-sm text-gray-400 mt-1">
-              {status === 'pending' && 'Personas are being generated...'}
+              {status === 'pending' && !isStuck && 'Personas are being generated...'}
+              {status === 'pending' && isStuck && 'The test appears to be stuck. Try re-queuing it.'}
               {status === 'in_progress' && 'This usually takes a few minutes'}
               {status === 'completed' && 'Click below to view your full report'}
             </p>
           </div>
         </div>
+        {isStuck && (
+          <div className="mt-4 flex justify-center">
+            <RetryTestButton ideaId={ideaId} proposalId={proposalId} testId={testId} />
+          </div>
+        )}
       </div>
 
       {/* Test Configuration Summary */}
