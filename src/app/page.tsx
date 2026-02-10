@@ -1,3 +1,4 @@
+import { Header } from "@/components/layout"
 import {
   Hero,
   ProblemSection,
@@ -23,6 +24,8 @@ export default function Home() {
       >
         Skip to main content
       </a>
+
+      <Header />
 
       <main id="main-content">
         <Hero />
