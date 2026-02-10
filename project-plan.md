@@ -1298,12 +1298,56 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
     - Ready to start Phase 2
   - Dependencies: All Phase 1 tasks complete
 
+#### 1.19 Infrastructure Fixes (2026-02-09)
+> **Purpose**: Fix test execution flow — worker crashes, stuck tests, missing auto-refresh, connection exhaustion.
+
+- [x] **task-1.19.1** Fix worker connection pool exhaustion - ✅ 2026-02-09
+  - Agent: developer
+  - Priority: p0
+  - **Completed**: Set `max: 3` in pg-boss config (`src/lib/jobs/boss.ts`) to prevent exceeding Supabase free tier limits
+
+- [x] **task-1.19.2** Add test page auto-refresh - ✅ 2026-02-09
+  - Agent: developer
+  - Priority: p0
+  - **Completed**: `TestAutoRefresh` client component polls via `router.refresh()` every 5s while test is active
+
+- [x] **task-1.19.3** Add stuck test retry mechanism - ✅ 2026-02-09
+  - Agent: developer
+  - Priority: p0
+  - **Completed**: `RetryTestButton` component + retry API endpoint. Detects stuck tests (pending > 2 min, no sessions)
+
+- [x] **task-1.19.4** Create `queue_pgboss_job` database function - ✅ 2026-02-09
+  - Agent: developer
+  - Priority: p0
+  - **Completed**: SECURITY DEFINER function inserts directly into `pgboss.job` table, bypassing pg-boss SDK. Retry endpoint uses this to avoid connection exhaustion from web server.
+
+- [x] **task-1.19.5** Fix PostHog double-init and capture_pageview - ✅ 2026-02-09
+  - Agent: developer
+  - Priority: p1
+  - **Completed**: Added `initialized` guard, disabled `capture_pageview` (handled manually by PostHogProvider)
+
+- [x] **task-1.19.6** Add landing page auth navigation - ✅ 2026-02-09
+  - Agent: developer
+  - Priority: p1
+  - **Completed**: Added `<Header />` to `src/app/page.tsx` for sign-in/sign-up links
+
+- [x] **task-1.19.7** Auto-create user record on OAuth signup - ✅ 2026-02-09
+  - Agent: developer
+  - Priority: p0
+  - **Completed**: Migration `20260209000001` with `handle_new_user()` trigger on `auth.users` + INSERT RLS policy
+
+- [x] **task-1.19.8** Remove diagnostic endpoints - ✅ 2026-02-09
+  - Agent: developer
+  - Priority: p1
+  - **Completed**: Deleted `/api/stripe-diag` and `/api/sync-subscription`
+
 ### Pre-Production Checklist
 - [ ] Add `customer.subscription.updated` event to **production** Stripe webhook endpoint
 - [ ] Add `customer.subscription.deleted` event to **production** Stripe webhook endpoint (verify present)
 - [ ] Verify all webhook event types match between staging and production Stripe endpoints
-- [ ] Remove temporary diagnostic endpoints before production (`/api/stripe-diag`, `/api/sync-subscription`)
+- [x] Remove temporary diagnostic endpoints before production (`/api/stripe-diag`, `/api/sync-subscription`) - ✅ 2026-02-09
 - [ ] Update Stripe webhook URL to production domain when ready
+- [ ] Migrate test creation endpoint (`POST /api/.../tests/route.ts`) from pg-boss SDK to `queue_pgboss_job` RPC
 
 ### Quality Gates
 - [ ] Build passes (`npm run build`)
@@ -1452,15 +1496,16 @@ Give founders who can't—or won't—pick up the phone a way to validate ideas u
 | 2026-01-22 | Interactive mode as default | Spectator is fallback, not primary |
 | 2026-01-22 | Full billing from Phase 1 | Build once, avoid rework |
 | 2026-01-22 | Anti-sycophancy QA harness | Core differentiator requires verification |
+| 2026-02-09 | Never start pg-boss SDK from web server | Each `getBoss()` opens 3+ DB connections; Supabase free tier has ~20-30 limit. Use `queue_pgboss_job` DB function instead. |
 
 ---
 
 ## Next Actions
 
-1. **Start Phase 0** - Create repository and set up project
-2. **Build landing page** - Get live and collecting waitlist signups
-3. **Create demo walkthrough** - Show product credibility before it exists
-4. **Begin Phase 1** - Database schema and auth setup
+1. **Verify test flow end-to-end on staging** - Click Retry Test on stuck test, confirm worker picks up job, confirm test completes
+2. **Migrate test creation endpoint** - `POST /api/.../tests/route.ts` still uses `queueUniqueJob()` (pg-boss SDK) — migrate to `queue_pgboss_job` RPC
+3. **Complete billing** - task-1.13.6 (Manage Payment Method) and task-1.13.7 (Cancel Subscription)
+4. **Continue remaining Phase 1 tasks** - Profile management, onboarding, tier limits, etc.
 
 ---
 

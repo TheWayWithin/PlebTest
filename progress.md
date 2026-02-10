@@ -2047,7 +2047,108 @@ VERBOSE=true npx ts-node --esm src/__tests__/anti-sycophancy-regression.test.ts
 
 ---
 
+### 2026-02-09 Deliverable: Fix Known Issues (Landing Page Nav, OAuth User Creation, Diagnostic Endpoints)
+
+**Commit**: `d413185` - fix: Add landing page auth nav, auto-create user on OAuth, remove diag endpoints
+
+**Files Modified**:
+- `src/app/page.tsx` - Added `<Header />` component import and render for auth-aware navigation on landing page
+
+**Files Created**:
+- `supabase/migrations/20260209000001_auto_create_user_record.sql` - INSERT RLS policy on `users` table + `handle_new_user()` trigger on `auth.users` (SECURITY DEFINER) to auto-create user record on OAuth signup
+
+**Files Deleted**:
+- `src/app/api/stripe-diag/route.ts` - Temporary diagnostic endpoint (exposed Stripe env info)
+- `src/app/api/sync-subscription/route.ts` - Temporary sync endpoint
+
+**Root Causes**:
+1. **Landing page no nav**: `Header` component existed but was only used on settings page, not imported on `page.tsx`
+2. **OAuth user record not created**: `users` table had SELECT and UPDATE RLS policies but NO INSERT policy. Auth callback used anon client (respects RLS), so inserts silently failed. Fixed with INSERT policy + database trigger.
+3. **Diagnostic endpoints**: Temporary dev tools that should never reach production
+
+**Migration Applied**: ✅ Staging (via `supabase db push --linked`) - 2026-02-09
+
+---
+
+### 2026-02-09 Deliverable: Fix Worker Connection Pool Exhaustion
+
+**Commit**: `4cbe47d` - fix: Limit pg-boss connection pool to 3 to prevent max connections error
+
+**Files Modified**:
+- `src/lib/jobs/boss.ts` - Added `max: 3` to pg-boss constructor options to limit connection pool
+
+**Root Cause**: pg-boss default pool size is 10 connections. Combined with the web app's Supabase connections, this exceeded Supabase free tier connection limits. Worker crashed on startup with `error: Max client connections reached` (code XX000, severity FATAL).
+
+**Worker Status After Fix**: ✅ All handlers registered (run-test, generate-personas, run-session, generate-report, check-session-timeout), waiting for jobs.
+
+---
+
+### 2026-02-09 Deliverable: Test Page Auto-Refresh and Retry Mechanism
+
+**Commit**: `f4b1423` - fix: Add auto-refresh polling and retry mechanism for stuck tests
+
+**Files Created**:
+- `src/components/tests/test-auto-refresh.tsx` - Client component that calls `router.refresh()` every 5 seconds while test is in pending/in_progress state
+- `src/components/tests/retry-test-button.tsx` - Client component with retry button that POSTs to retry API endpoint
+- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/retry/route.ts` - API endpoint to re-queue stuck test jobs
+
+**Files Modified**:
+- `src/app/(protected)/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/page.tsx` - Added TestAutoRefresh, RetryTestButton, stuck test detection (pending > 2 min with no sessions)
+
+**Root Cause**: Test view page was a pure server component that rendered once and never updated. When the worker was down and the pg-boss job expired (15 min TTL), the test stayed stuck in "pending" forever with no way to re-queue or see status changes.
+
+---
+
+### 2026-02-09 Issue: Retry Endpoint 500 - Connection Pool Exhaustion (Again)
+
+**Symptom**: Clicking "Retry Test" button returned HTTP 500. Console log: `POST .../retry 500 (Internal Server Error)`
+
+**Root Cause**: Retry endpoint called `queueUniqueJob()` → `getBoss()` → `new PgBoss().start()` which opened 3 additional database connections from the web server. Combined with existing web + worker connections, this exceeded Supabase free tier limits again.
+
+**Fix Attempt 1** (❌): Direct SQL insert via `adminClient.rpc('exec_sql', ...)` - Failed because Supabase doesn't expose `pgboss` schema via PostgREST and no such RPC exists.
+
+**Fix Attempt 2** (✅): Created a database function `public.queue_pgboss_job()` (SECURITY DEFINER) that inserts directly into `pgboss.job` table. Called via `adminClient.rpc('queue_pgboss_job', {...})` from the retry endpoint - uses admin client's existing connection, zero extra connections.
+
+**Commit**: `2f260f2` - fix: Use direct SQL for test retry to avoid connection exhaustion
+
+**Files Created/Modified**:
+- `supabase/migrations/20260210000001_add_queue_pgboss_job_function.sql` - Database function for queuing pg-boss jobs without SDK
+- `src/app/api/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/retry/route.ts` - Rewritten to use `queue_pgboss_job` RPC instead of pg-boss SDK
+- `src/lib/posthog.ts` - Added `initialized` guard to prevent double-init, disabled `capture_pageview` (handled manually by provider)
+
+**Migration Applied**: ✅ Staging (via `supabase db push --linked`) - 2026-02-09
+
+**Lesson**: On Supabase free tier, NEVER start a pg-boss instance from the web server. Use the `queue_pgboss_job` database function instead. Only the worker should run `getBoss()`.
+
+---
+
+### 2026-02-09 Current Status: Retry Deployed, Awaiting Verification
+
+**Status**: Code pushed to `develop`, Railway staging deploy in progress. The retry button should now work after deploy completes. User needs to test by clicking "Retry Test" on the stuck test page.
+
+**Pending Verification**:
+- [ ] Retry button returns 200 and queues job
+- [ ] Worker picks up re-queued RUN_TEST job
+- [ ] Test progresses from pending → in_progress → completed
+- [ ] Auto-refresh shows status updates in real-time
+
+---
+
 ## Lessons Learned
 
-<!-- Add patterns and insights discovered during this mission -->
+### Supabase Free Tier Connection Limits
+- Default pg-boss pool (10 connections) + web app connections easily exceeds free tier limits
+- Fix: Set `max: 3` on pg-boss config for worker
+- NEVER start pg-boss SDK from web server API routes - use `queue_pgboss_job` database function instead
+- Each pg-boss `start()` call opens connections for monitoring, maintenance, and polling
+
+### Server Components Don't Auto-Refresh
+- Next.js server components render once and return static HTML
+- For pages that need live updates (e.g., test status), add a tiny client component that calls `router.refresh()` on an interval
+- `router.refresh()` re-renders server components with fresh data without a full page reload
+
+### pg-boss Job Expiry
+- Default `expireInSeconds: 60 * 15` (15 min) means jobs expire if the worker is down for > 15 minutes
+- Always have a retry mechanism for stuck jobs
+- Consider longer expiry times for critical jobs, or auto-retry cron for stuck pending tests
 

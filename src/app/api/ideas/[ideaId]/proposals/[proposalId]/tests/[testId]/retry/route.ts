@@ -89,7 +89,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
       job_data: jobData,
       retry_limit: 3,
       expire_minutes: 15,
-      singleton_key: `test-${testId}-retry-${Date.now()}`,
+      p_singleton_key: `test-${testId}-retry-${Date.now()}`,
     });
 
     if (jobError) {
