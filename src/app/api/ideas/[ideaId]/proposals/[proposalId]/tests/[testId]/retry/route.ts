@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { queueUniqueJob, JobTypes } from '@/lib/jobs';
-import type { RunTestPayload } from '@/lib/jobs/types';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 interface RouteContext {
   params: Promise<{
@@ -14,8 +13,10 @@ interface RouteContext {
 /**
  * POST /api/ideas/[ideaId]/proposals/[proposalId]/tests/[testId]/retry
  *
- * Re-queues a stuck test job. Used when the original pg-boss job expired
- * (e.g., worker was down) but the test is still in pending state.
+ * Re-queues a stuck test job by calling a database function that inserts
+ * directly into the pgboss.job table. This avoids starting a full pg-boss
+ * instance on the web server (which would open additional DB connections
+ * and exhaust Supabase free tier connection limits).
  */
 export async function POST(request: NextRequest, context: RouteContext) {
   try {
@@ -70,25 +71,38 @@ export async function POST(request: NextRequest, context: RouteContext) {
         .eq('id', testId);
     }
 
-    // Re-queue the RUN_TEST job with a new idempotency key (timestamp-based)
-    const retryKey = `test-${testId}-retry-${Date.now()}`;
-    await queueUniqueJob<RunTestPayload>(
-      JobTypes.RUN_TEST,
-      {
-        testId: test.id,
-        proposalId,
-        icpIds: test.icp_ids as string[],
-        personaCount: test.persona_count,
-        testMode: (test.test_mode || 'standard') as 'quick' | 'standard' | 'deep',
-        validationMode: (test.validation_mode || 'spectator') as 'interactive' | 'spectator',
-        pushbackPreset: (test.pushback_preset || 'pragmatist') as 'cheerleader' | 'pragmatist' | 'critic',
-      },
-      retryKey
-    );
+    // Queue the job via database function (bypasses pg-boss SDK entirely)
+    const adminClient = createAdminClient();
+    const jobData = {
+      testId: test.id,
+      proposalId,
+      icpIds: test.icp_ids,
+      personaCount: test.persona_count,
+      testMode: test.test_mode || 'standard',
+      validationMode: test.validation_mode || 'spectator',
+      pushbackPreset: test.pushback_preset || 'pragmatist',
+    };
 
-    console.log(`[POST /tests/${testId}/retry] Re-queued RUN_TEST job`);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: jobId, error: jobError } = await (adminClient.rpc as any)('queue_pgboss_job', {
+      job_name: 'run-test',
+      job_data: jobData,
+      retry_limit: 3,
+      expire_minutes: 15,
+      singleton_key: `test-${testId}-retry-${Date.now()}`,
+    });
 
-    return NextResponse.json({ success: true, message: 'Test re-queued' });
+    if (jobError) {
+      console.error(`[POST /tests/${testId}/retry] Failed to queue job:`, jobError);
+      return NextResponse.json(
+        { error: 'Failed to queue test job' },
+        { status: 500 }
+      );
+    }
+
+    console.log(`[POST /tests/${testId}/retry] Re-queued RUN_TEST job: ${jobId}`);
+
+    return NextResponse.json({ success: true, message: 'Test re-queued', jobId });
   } catch (error) {
     console.error('Error retrying test:', error);
     return NextResponse.json(

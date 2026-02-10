@@ -1,7 +1,10 @@
 import posthog from "posthog-js"
 
+let initialized = false
+
 export const initPostHog = () => {
   if (typeof window === "undefined") return
+  if (initialized) return
 
   const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY
   const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com"
@@ -20,8 +23,8 @@ export const initPostHog = () => {
     // IP anonymization for privacy
     ip: false,
 
-    // Capture page views automatically
-    capture_pageview: true,
+    // Disable automatic page view capture (handled manually in PostHogProvider)
+    capture_pageview: false,
 
     // Capture page leaves for session duration
     capture_pageleave: true,
@@ -40,6 +43,8 @@ export const initPostHog = () => {
       }
     },
   })
+
+  initialized = true
 }
 
 export { posthog }
