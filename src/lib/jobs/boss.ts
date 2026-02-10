@@ -54,6 +54,9 @@ export async function getBoss(): Promise<PgBoss> {
 
   boss = new PgBoss({
     connectionString: databaseUrl,
+    // Limit connection pool to avoid exceeding Supabase free tier limits
+    // Default pg pool is 10 connections - too many when web app also connects
+    max: 3,
     // Monitor interval for detecting stuck jobs
     monitorIntervalSeconds: 30,
     // Maintenance interval for cleanup tasks
