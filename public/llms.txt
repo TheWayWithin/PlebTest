@@ -1,0 +1,26 @@
+# plebtest.com
+
+> PlebTest is an AI-powered startup idea validation tool. It simulates market conversations using AI customer personas to challenge your assumptions and deliver clear kill/pivot/build verdicts. Built for founders who need honest feedback before they build.
+
+## What PlebTest Does
+
+- Validates startup ideas using AI-simulated customer conversations
+- Tests assumptions against realistic customer personas
+- Delivers clear verdicts: kill, pivot, or build
+- Provides structured feedback on market fit, pricing, and positioning
+- No phone calls needed. AI does the customer discovery for you.
+
+## Who It's For
+
+- Solo founders validating ideas before investing time and money
+- Indie hackers choosing between multiple project ideas
+- Anyone who needs honest market feedback but can't do traditional customer interviews
+
+## Key Pages
+
+- [Home](https://plebtest.com/): AI-powered startup validation tool
+
+## Built By
+
+Jamie Watters. Part of a portfolio of AI micro-businesses.
+- Website: https://jamiewatters.work
