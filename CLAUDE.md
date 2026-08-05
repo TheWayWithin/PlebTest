@@ -95,6 +95,30 @@ main branch    → GitHub → Railway Production → plebtest.com
 
 **⚠️ NEVER apply schema changes directly to Production. Always migrate through Staging first.**
 
+### Database Migration Sync Protocol [LEARNED 2026-02-10]
+
+**CRITICAL LESSON**: Railway auto-deploys code when you push to `main`, but **Supabase migrations are NOT auto-applied**. You must manually push migrations to each Supabase project. Code deploys without matching migrations = 500 errors.
+
+**When deploying code to production (merging to main):**
+1. **Before or immediately after merge**, push migrations to production Supabase:
+   ```bash
+   # Temporarily link to production
+   npx supabase link --project-ref wemszisfzevffudenqzi
+   npx supabase db push --linked
+   # Relink back to staging
+   npx supabase link --project-ref erkvlsaegregxdwfjxgv
+   ```
+2. **Verify** the migration list shows all migrations applied to Remote
+3. **Test** the affected endpoint on production
+
+**Supabase Project References:**
+| Environment | Project Ref | Project Name |
+|-------------|-------------|--------------|
+| Staging | `erkvlsaegregxdwfjxgv` | plebtest-staging |
+| Production | `wemszisfzevffudenqzi` | PlebTest |
+
+**Current CLI default link**: Staging (erkvlsaegregxdwfjxgv). Always relink back to staging after production operations.
+
 ### Environment-Specific Commands Reference
 
 | Action | Staging | Production |
@@ -147,6 +171,8 @@ main branch    → GitHub → Railway Production → plebtest.com
 - [ ] User has confirmed they want to replace the live site
 - [ ] PR created with clear description of what's changing
 - [ ] User has approved the PR in GitHub (required review)
+- [ ] **Database migrations pushed to production Supabase** (see Migration Sync Protocol above)
+- [ ] **Production endpoint smoke test** after deploy (curl key endpoints)
 
 ---
 
